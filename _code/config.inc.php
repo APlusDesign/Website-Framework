@@ -4,16 +4,16 @@
 */
 
 // Site definitions
-$site_name 					= 'Website framework BUILD';
-$site_email 				= 'admin@website-framework-build.com';
-$site_class 				= 'example';
+$site_name					= 'Website framework BUILD';
+$site_email					= 'admin@website-framework-build.com';
+$site_class					= 'example';
 
 // Local environmanet details
-$local_path 				= 'C:/wamp/www/website-framework-build/';
-$local_url 					= 'http://local.wf-build.com/';
+$local_path					= 'C:/wamp/www/website-framework-build/';
+$local_url					= 'http://local.wf-build.com/';
 
 // Analytics tracking code
-$analytics_tracking_code 	= 'UA-XXXXXXXX-X';
+$analytics_tracking_code	= 'UA-XXXXXXXX-X';
 
 
 /* Top level server switches for local development (true = local) */
