@@ -70,13 +70,13 @@
 					$subject 	= $site_name . " - Account Activation"; 
 					$headers 	= 'From: '.$site_name.' <'.$site_email.'>' . "\r\n";
 					$body 		= "Thanks for registering with us ".$data['username'].", All you have to do is click the confirmation link below to activate your account."; 
-					$makeURL 	= 'http://'.$url."/_inc_content/ajax/activate?c=" . $reg; 
+					$makeURL 	= 'http://'.$url."/_content/ajax/activate?c=" . $reg; 
 					$body 		.= "\r\n".$makeURL;
 					$send		= mail($to, $subject, $body, $headers); 
 				}
 				
 				// Redirect to a thank you page
-				//_redirect("http://".$_SERVER['HTTP_HOST']."/_inc_content/ajax/registered", 'Thanks for registering');
+				//_redirect("http://".$_SERVER['HTTP_HOST']."/_content/ajax/registered", 'Thanks for registering');
 
 				// Or use an ajax response and redirect.. This approach is not recommended
 				$results = array (    
@@ -107,7 +107,7 @@
 						$subject 	= $site_name . " - Password Reset"; 
 						$headers 	= 'From: '.$site_name.' <'.$site_email.'>' . "\r\n";
 						$body 		= "Hi " . $res['username']. " please click the link below and enter a new password."; 
-						$makeURL 	= 'http://'.$url."/_inc_content/ajax/change_password?c=" . $res['hash']; 
+						$makeURL 	= 'http://'.$url."/_content/ajax/change_password?c=" . $res['hash']; 
 						$body 		.= "\r\n".$makeURL;
 						$send		= mail($to, $subject, $body, $headers); 
 					}

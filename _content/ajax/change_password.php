@@ -50,7 +50,7 @@
 		</ul>
 	</div>
 	<?php if(!$passChanged) { ?>
-    <form method="post" action="/_inc_content/ajax/change_password">
+    <form method="post" action="/_content/ajax/change_password">
     	<input name="c" type="hidden" value="<?php echo $_GET['c'] ;?>">    
         <label>New Password:</label><span class="required">*</span>
         <input name="password" type="password" autocomplete="off">        

@@ -17,7 +17,7 @@
 				$subject 	= $site_name . " - Password Reset"; 
 				$headers 	= 'From: '.$site_name.' <'.$site_email.'>' . "\r\n";
 				$body 		= "Hi " . $res['username']. " please click the link below and enter a new password."; 
-				$makeURL 	= 'http://'.$url."/_inc_content/ajax/change_password?c=" . $res['hash']; 
+				$makeURL 	= 'http://'.$url."/_content/ajax/change_password?c=" . $res['hash']; 
 				$body 		.= "\r\n".$makeURL;
 				$send		= mail($to, $subject, $body, $headers); 
 			}
