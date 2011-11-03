@@ -26,7 +26,7 @@ Version 0.14
 
 2. Create a database for Website Framework on your web server, as well as a MySQL user who has all privileges for accessing and modifying it. For more detailed descriptions on creating a database please see. (http://www.youtube.com/watch?v=nBz2lG_jm-A)
 
-3. In your phpMyAdmin run the SQL below (***** User table MySQL ******)
+3. In your phpMyAdmin run the MySQL below 
 
 --
 -- Table structure for table `users`
@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=0 ;
 
 
-4. Open '_code/config.inc.php' in a text editor and fill in the fields marked with XXXXXXXXX including your database details. Detailed help can be found here (www.website-framwork.com/#config) Or at the bottom of this file
+4. Open '_code/config.inc.php' in a text editor and fill in the fields marked with XXXXXXXXX including your database details. More detailed instruction can be found here (www.website-framwork.com/config) 
 
 5. Upload the Website Framework files into the root directory of your web server (e.g. http://example.com/)
 
@@ -56,83 +56,6 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 
 Guess that is really only 6 steps ;)
-
-
-
-
-
-
-
-
-
-
-/***************************************************/
-/***************** Config.inc.php *****************/
-
-
-// Site definitions
-$site_name 			= 'Website framework';
-$site_email 			= 'admin@website-framework.com';
-$site_class 			= 'example';
-
-
-$site_name (String) - Name of your website, used primarily for the h1 
-$site_email (String) - The email you wish to use for user generated contacts
-$site_class (Obj Name) - This variable is very important to the framework, it needs to be a valid className for the site to function. The default of 'example' is obviously a valid className. 'site_class' refers to a default class obj for the entire web-site, there is nothing in it except for the 'helloWorld' method, you can add to it as necessary. 
-
-
-If you choose to re-name $site_class from example to something else, you need to follow the steps below.
-
-$site_class renaming steps
---------------------------
-1. $site_class = 'newClassName';
-2. Rename the file '/_code/class.example.php' to '/_code/class.newClassName.php'
-3. Open 'class.newClassName.php' and change the class name from 'class example' to 'class newClassName'
-4. Save those files and refresh your web-site.
-
-
-
-
-// Local environment details
-
-The local environment details allow you to distinguish between environments. Most PHP developers will have a local environment that they can develop on and a Live environment that they publish to via FTP.
-
-The problem is the environments are rarely ever the same, so we need a way to provide different database details and de-bugging options. Hence the next two variables.
-
-$local_path 			= 'C:/wamp/www/website-framework/';
-$local_url 			= 'http://local.website-framework.com/';
-
-
-$local_path (String) - This needs to be the root folder on your local environment for this web-site, the example is a typical location of a local environment.
-$local_url (String) - To view your site on your local enviroment you obviously need a URL, add the full URL of your local version here.
-
-
-Once this is done correctly, you will have access to two important variables.
-
-$dev (bool) - Is local or not
-$href (string) - The 'base URL' of either your local environment or the live environment depending on which one you are viewing, allowing for easy ajax implementations and non-relative linking. 
-An example is (local = 'http://local.website-framework.com/' || live = 'http://www.example.com/')
-
-
-
-
-// Analytics tracking code
-$analytics_tracking_code 	= 'UA-XXXXXXXX-X';
-
-Every web-site should have analytics installed for tracking purposes, it is included in the framework, all you need is the tracking code when you add another site to your analytics account. Leaving this as the default of 'UA-XXXXXXXX-X' if you do not wish to use analytics is fine.
-
-
-
-
-
-// Database config
-
-You have two sections in Databse config, you will need to provide the details for your local environment, and then the details for your live environment. On your dev/local you may leave the live fields blank and vice versa if you're not currently making use of both environments.
-
-For more detailed descriptions on creating a database and entering the right details please see.
-
-http://www.youtube.com/watch?v=nBz2lG_jm-A
-
 
 
 
