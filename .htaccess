@@ -4,11 +4,17 @@ RewriteEngine On
 # content headers
 AddDefaultCharset UTF-8
 
-# seo url re-writes
+
+# NICE url's
+
+# /user.php?value=pair = /user/value/value
+RewriteRule ^user/(.*)/?$ user.php/$1/$2 
+
 # /page.php = /page
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}\.php -f
 RewriteRule ^(.*)$ $1.php
+
 
 # BEGIN Seo url with params
 # /user.php?pair=value becomes /user/value

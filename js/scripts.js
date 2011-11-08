@@ -296,7 +296,7 @@ var logoutUser = function (o, parent) {
 		url		: siteObj.BASE_URL+'ajax/switch.php',
 		data	: {'flag':'logout'},
 		complete : function(data) {
-			//window.location.reload();
+			window.location.reload();
 		}
 	});
 }
