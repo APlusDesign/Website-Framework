@@ -1,6 +1,6 @@
 <?php
 /*
- For detailed descriptions please see www.website-framework.com/#config
+ For detailed descriptions please see www.website-framework.com/config
 */
 
 // Site definitions

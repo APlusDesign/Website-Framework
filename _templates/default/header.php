@@ -14,7 +14,7 @@
 			// User signed in
 			else: ?>    
 			<a href="user/<?php echo $user->id;?>" iclass="fancy-link update-user"><?php echo ucfirst($user->username); ?></a>
-			<a href="/_content/ajax/login.php" class="framework-button fancy-link btn-logout">Logout</a>
+			<a href="#" class="framework-button fancy-link btn-logout">Logout</a>
 			<?php endif; ?>	
 		</div>
 	</div>

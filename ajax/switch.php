@@ -177,7 +177,6 @@
 				$send=mail($to, $subject, $body, $from); 
 				
 				// Send a verification response to user if valid email
-				/*
 				if($email_field!='') {
 					$to = $email_field; 
 					$subject = $site_name." - Contact Confirmation"; 
@@ -185,7 +184,6 @@
 					$body = "Thanks for contacting us $name_field\n\n We will be in contact with you shortly\n\n\n Your Message to '".$site_name."': $email_message"; 
 					$send=mail($to, $subject, $body, $headers); 
 				}  
-				*/
 				
 				$results['html'] = '<h2>Thanks for contacting us</h2> <p>We will respond shortly</p>';  
 			}
