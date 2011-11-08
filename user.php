@@ -12,8 +12,6 @@
 	$uri = $_SERVER['PATH_INFO'];
 	$uriArr = explode('/', $uri);
     
-    print_r($uriArr);
-    
     // User id
     $isView = isset($uriArr[1]);
     if ($isView) {

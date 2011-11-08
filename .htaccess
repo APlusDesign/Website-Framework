@@ -1,4 +1,6 @@
 Options +FollowSymlinks
+
+
 RewriteEngine On
 
 # content headers
@@ -8,7 +10,7 @@ AddDefaultCharset UTF-8
 # NICE url's
 
 # /user.php?value=pair = /user/value/value
-RewriteRule ^user/(.*)/?$ user.php/$1/$2 
+RewriteRule ^user/(.*)/?$ user.php/$1/$2
 
 # /page.php = /page
 RewriteCond %{REQUEST_FILENAME} !-d
@@ -58,6 +60,7 @@ RewriteRule ^(.*)$ $1.php
   <filesMatch "\.(x?html?|php)$">
     Header set Cache-Control "private, must-revalidate"
   </filesMatch>
+  Header unset ETag
 </ifModule>
  
 # BEGIN Turn ETags Off
@@ -66,3 +69,4 @@ FileETag None
 # BEGIN Own error docs
 ErrorDocument 403 /404.php
 ErrorDocument 404 /404.php
+
