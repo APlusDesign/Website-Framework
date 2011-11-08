@@ -1,28 +1,22 @@
 Options +FollowSymlinks
-
-
 RewriteEngine On
+
 
 # content headers
 AddDefaultCharset UTF-8
 
 
-# NICE url's
-
+# USER url's
 # /user.php?value=pair = /user/value/value
 RewriteRule ^user/(.*)/?$ user.php/$1/$2
 
+
+# NICE url's
 # /page.php = /page
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}\.php -f
 RewriteRule ^(.*)$ $1.php
 
-
-# BEGIN Seo url with params
-# /user.php?pair=value becomes /user/value
-<Files user>
-    ForceType application/x-httpd-php
-</Files>
 
 # BEGIN Compress text files
 <ifModule mod_deflate.c>
