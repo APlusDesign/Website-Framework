@@ -18,6 +18,7 @@ http://www.website-framework.com/
 
 3. In your phpMyAdmin run the MySQL below 
 
+
 	CREATE TABLE IF NOT EXISTS `users` (
 	`user_id` int(7) NOT NULL AUTO_INCREMENT,
 	`username` varchar(15) NOT NULL,
@@ -30,6 +31,7 @@ http://www.website-framework.com/
 	`group_id` int(2) NOT NULL DEFAULT '1',
 	PRIMARY KEY (`user_id`)
 	) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 4. Open '_code/config.inc.php' in a text editor and fill in the fields marked with XXXXXXXXX including your database details. More detailed instruction can be found here (www.website-framwork.com/config) 
 
