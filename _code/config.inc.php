@@ -5,7 +5,7 @@
 
 // Site definitions
 $site_name					= 'Website framework BUILD';
-$site_email					= 'admin@website-framework-build.com';
+$site_email					= 'admin@website-framework.com';
 $site_class					= 'example';
 
 // Local environmanet details

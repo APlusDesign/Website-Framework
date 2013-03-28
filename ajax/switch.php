@@ -24,7 +24,7 @@
 			$username 	= $_REQUEST['username'];
 			$password 	= $_REQUEST['password'];
 			$auto 		= (isset($_REQUEST['auto']) ? $_REQUEST['auto'] : 0 );  
-			$user 		= new uFlex($username,$password,$auto);
+			$user->login($username,$password,$auto);
 			if($user->signed){
 				$html = "<div class='responses'>";
 				$html .= "<p>Thanks for Logging in.</p>";
@@ -53,7 +53,7 @@
 		
 		/* Registration, activation email */
 		case 'register':
-			$user = new uFlex(); 
+			
 			$url = $_SERVER['SERVER_NAME'];	
 
 			$data = array (    
@@ -66,9 +66,10 @@
 			$reg = $user->register($data,true);
 			if($reg){
 				if(isset($data['email'])) {
+					
 					$to 		= $data['email']; 
 					$subject 	= $site_name . " - Account Activation"; 
-					$headers 	= 'From: '.$site_name.' <'.$site_email.'>' . "\r\n";
+					$headers 	= 'From: '.$site_name.' <'.$email_field.'>' . "\r\n";
 					$body 		= "Thanks for registering with us ".$data['username'].", All you have to do is click the confirmation link below to activate your account."; 
 					$makeURL 	= 'http://'.$url."/_content/ajax/activate?c=" . $reg; 
 					$body 		.= "\r\n".$makeURL;

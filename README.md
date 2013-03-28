@@ -1,26 +1,18 @@
-/*
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+Website Framework
+==========
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+Website Framework is a free & efficient HTML5 web site template with a powerful built-in PHP framework, allowing for rapid development of any type of web project.
 
 
-Version 0.14
+Documentation
+==========
+
+http://www.website-framework.com/
 
 
-/*********************************/
-/* Installation in 7 easy steps */
-/*******************************/
 
+Installing
+==========
 
 1. Download and unzip the Website Framework package, if you haven't already.
 
@@ -56,7 +48,3 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 
 Guess that is really only 6 steps ;)
-
-
-
-

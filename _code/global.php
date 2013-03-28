@@ -28,7 +28,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/_code/config.inc.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/_code/class.registry.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/_code/class.json.php'); 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/_code/class.database.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/_code/class.user.php'); 
+require_once($_SERVER['DOCUMENT_ROOT'] . '/_code/class.uFlex.php'); 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/_code/class.'.$site_class.'.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/_code/functions.php'); 
 
@@ -39,6 +39,10 @@ registry::add('db', $db);
 
 // User object 
 $user = new uFlex();
+$user->db['host'] = DB_SERVER;
+$user->db['user'] = DB_USER;
+$user->db['pass'] = DB_PASS;
+$user->db['name'] = DB_DATABASE;
 registry::add('user', $user);
 
 // Your sites very own class object 
