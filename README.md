@@ -18,21 +18,21 @@ http://www.website-framework.com/
 
 3. In your phpMyAdmin run the MySQL below 
 
-	--
-	-- Table structure for table `users`
-	--
+--	
+Table structure for table `users`
+--
 
 	CREATE TABLE IF NOT EXISTS `users` (
-	  `user_id` int(7) NOT NULL AUTO_INCREMENT,
-	  `username` varchar(15) NOT NULL,
-	  `password` varchar(35) NOT NULL,
-	  `email` varchar(35) NOT NULL,
-	  `activated` int(1) NOT NULL DEFAULT '0',
-	  `confirmation` varchar(35) NOT NULL,
-	  `reg_date` int(11) NOT NULL,
-	  `last_login` int(11) NOT NULL DEFAULT '0',
-	  `group_id` int(2) NOT NULL DEFAULT '1',
-	  PRIMARY KEY (`user_id`)
+	`user_id` int(7) NOT NULL AUTO_INCREMENT,
+	`username` varchar(15) NOT NULL,
+	`password` varchar(35) NOT NULL,
+	`email` varchar(35) NOT NULL,
+	`activated` int(1) NOT NULL DEFAULT '0',
+	`confirmation` varchar(35) NOT NULL,
+	`reg_date` int(11) NOT NULL,
+	`last_login` int(11) NOT NULL DEFAULT '0',
+	`group_id` int(2) NOT NULL DEFAULT '1',
+	PRIMARY KEY (`user_id`)
 	) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
 
 
