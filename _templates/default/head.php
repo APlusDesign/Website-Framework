@@ -2,11 +2,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="description" content="<?php echo $page_desc;?>" /> 
 <meta name="keywords" content="<?php echo $page_keywords;?>" /> 
-<meta name="author" content="Website Framework">
+<meta name="author" content="website-framework.com">
 <link type="text/css" rel="stylesheet" href="/css/style.css" /> 
 <link type="image/png" rel="icon" href="/favicon.ico" /> 
 <?php echo '<base href="'.$href.'" />'; ?>
-
 <script id="loader" src="/js/head.js" type="text/javascript"></script>
 <script>
 // Optional : Change all instances of siteObj to an alias for your own site
@@ -31,7 +30,7 @@ head.ready(function() {
 		}
 	}
 	?>
-// Google Analytics
+	// Google Analytics
 	var tracker=_gat._getTracker ("<?php echo $analytics_tracking_code; ?>");
 	tracker._trackPageview ();
 });

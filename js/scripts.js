@@ -92,7 +92,7 @@ function registerUser (el, options) {
 			.html('<div></div><span>Register with us<span>')
 			.addClass('framework-button large register-button')
 			.click(function (e) { 
-				e.preventDefault();																																										
+				e.preventDefault();		
 				obj.regCheck();
 				return false;
 			});
@@ -433,14 +433,14 @@ function ajaxLoader (el, options) {
 		this.remove(); 
 		// Create the overlay 
 		var overlay = $('<div></div>').css({
-				'background-color': this.options.bgColor,
-				'opacity':this.options.opacity,
-				'width':container.width(),
-				'height':container.height(),
-				'position':'absolute',
-				'top':'0px',
-				'left':'0px',
-				'z-index':1000
+			'background-color': this.options.bgColor,
+			'opacity':this.options.opacity,
+			'width':container.width(),
+			'height':container.height(),
+			'position':'absolute',
+			'top':'0px',
+			'left':'0px',
+			'z-index':1000
 		}).addClass('ajax_overlay');
 		// add an overiding class name to set new loader style 
 		if (this.options.classOveride) {

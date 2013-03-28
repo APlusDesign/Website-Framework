@@ -5,7 +5,7 @@ Basic example class
 Methods
 **/
 
-class example {
+class yourSiteName {
 	
 	/**
 	Constructing the class with references to 

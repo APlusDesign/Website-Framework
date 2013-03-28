@@ -10,7 +10,7 @@
 			echo $user->console['errors']['activation'][0];
 		}
 	} else {
-		header( 'Location: http://local.fridigy.com ' ) ;
+		header( 'Location: http://website-framework.com ' ) ;
 	}
 	exit;
 ?>
