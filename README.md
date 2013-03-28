@@ -18,9 +18,9 @@ http://www.website-framework.com/
 
 3. In your phpMyAdmin run the MySQL below 
 
---	
-Table structure for table `users`
---
+
+**Table structure for table `users`**
+
 
 	CREATE TABLE IF NOT EXISTS `users` (
 	`user_id` int(7) NOT NULL AUTO_INCREMENT,
