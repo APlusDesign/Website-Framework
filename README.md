@@ -12,11 +12,11 @@ http://www.website-framework.com/
 
 ###Installation in 7 easy steps
 
-1. Download and unzip the Website Framework package, if you haven't already.
+1. Unzip the Website Framework package into the new website space you are creating (e.g. c:\wamp\www\mysite).
 
-2. Create a database for Website Framework on your web server, as well as a MySQL user who has all privileges for accessing and modifying it. For more detailed descriptions on creating a database please see. (http://www.youtube.com/watch?v=nBz2lG_jm-A)
+2. Open your phpMyAdmin and create a database for your website, (as well as a MySQL user who has all privileges). For more detailed descriptions on creating a database please see. (http://www.youtube.com/watch?v=nBz2lG_jm-A)
 
-3. In your phpMyAdmin run the MySQL below 
+3. Open your phpMyAdmin and run the MySQL below to create a table in the database you just created 
 
 
 		CREATE TABLE IF NOT EXISTS `users` (
@@ -33,11 +33,11 @@ http://www.website-framework.com/
 		) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
 
 
-4. Open '_code/config.inc.php' in a text editor and fill in the fields marked with XXXXXXXXX including your database details. More detailed instruction can be found here (www.website-framwork.com/config) 
+4. Open '/_code/config.inc.php' in a text editor and fill in the fields marked XXXXXXXXX with your site details, including your new database settings. More detailed instruction can be found here (www.website-framwork.com/config). 
 
-5. Upload the Website Framework files into the root directory of your web server (e.g. http://example.com/)
+5. Double check your website settings in wamp, hosts file and apache.conf files are correct.
 
-6. Browse to http://example.com/
+6. Browse to your new website (e.g. http://local.mysite.com/)
 
 7. Enjoy!
 
