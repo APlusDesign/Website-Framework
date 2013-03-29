@@ -22,8 +22,9 @@
 /*
  Use this file as your top level global include for classes, libraries and adding to the registry 
 */
-// Boot strap
-error_reporting(E_ALL ^ E_STRICT);
+ 
+// This prevents the myrad of differing environments breaking the framework
+error_reporting(0);
  
 // Classes and libraries
 require_once($_SERVER['DOCUMENT_ROOT'] . '/_code/config.inc.php');
@@ -31,11 +32,12 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/_code/class.registry.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/_code/class.json.php'); 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/_code/class.database.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/_code/class.uFlex.php'); 
+require_once($_SERVER['DOCUMENT_ROOT'] . '/_code/class.phpmailer.php'); 
+require_once($_SERVER['DOCUMENT_ROOT'] . '/_code/class.smtp.php'); 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/_code/class.'.$site_class.'.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/_code/functions.php'); 
 
 // Database object + connection
-//$db = new Database(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE); 
 $db = Database::obtain(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
 $db->connect();
 registry::add('db', $db);
@@ -51,5 +53,16 @@ registry::add('user', $user);
 // Your sites very own class object 
 $siteClass = new $site_class();
 registry::add($site_class, $siteClass);
+
+// Mail object
+$mail = new PHPMailer;  
+$mail->IsSMTP();    
+$mail->SMTPAuth = "true";                       
+$mail->SMTPSecure = 'ssl';  
+$mail->Host = MAIL_HOST;
+$mail->Username = MAIL_USERNAME;                            
+$mail->Password = MAIL_PASSWORD; 
+$mail->Port = MAIL_PORT;  
+registry::add('mail', $mail);
 
 ?>

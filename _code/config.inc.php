@@ -28,6 +28,13 @@ if($local) {
 	define('DB_PASS', "");
 	//Local database name
 	define('DB_DATABASE', "xxxxxxxxxx");
+	
+	// SMTP settings, if you don't have SMTP you can't send emails
+	define('MAIL_HOST', "smtp.gmail.com");
+	define('MAIL_PORT', "465");
+	define('MAIL_USERNAME', "xxxxxxxxxx");
+	define('MAIL_PASSWORD', "xxxxxxxxxx");
+	
 } else {
 	//Live database server
 	define('DB_SERVER', "localhost");
@@ -37,6 +44,12 @@ if($local) {
 	define('DB_PASS', "xxxxxxxxxx");
 	//Live database name
 	define('DB_DATABASE', "xxxxxxxxxx");	
+	
+	// SMTP settings, if you don't have SMTP you can't send emails
+	define('MAIL_HOST', "smtp.localhost.com");
+	define('MAIL_PORT', "25");
+	define('MAIL_USERNAME', "xxxxxxxxxx");
+	define('MAIL_PASSWORD', "xxxxxxxxxx");
 }
 
 // Smart to define your table names also. We only have one currently, ie. users

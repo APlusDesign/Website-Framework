@@ -1,4 +1,7 @@
 		<?php 
+		
+			
+		
 			// Your example class but called using the registry Pattern 
 			$yourSiteName = registry::get($site_class);
 		?>	

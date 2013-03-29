@@ -67,13 +67,14 @@
 			if($reg){
 				if(isset($data['email'])) {
 					
-					$to 		= $data['email']; 
-					$subject 	= $site_name . " - Account Activation"; 
-					$headers 	= 'From: '.$site_name.' <'.$site_email.'>' . "\r\n";
-					$body 		= "Thanks for registering with us ".$data['username'].", All you have to do is click the confirmation link below to activate your account."; 
-					$makeURL 	= 'http://'.$url."/_content/ajax/activate?c=" . $reg; 
-					$body 		.= "\r\n".$makeURL;
-					$send		= mail($to, $subject, $body, $headers); 
+					$mail->FromName = 'Website Framework';
+					$mail->AddAddress($data['email']);  
+
+					$mail->Subject = $site_name . " - Account Activation";
+					$mail->Body    = "Thanks for registering with us ".$data['username'].", All you have to do is click the confirmation link below to activate your account.\r\n" . 'http://'.$url."/_content/ajax/activate?c=" . $reg; 
+					
+					$mail->Send();
+					
 				}
 				
 				// Redirect to a thank you page
@@ -103,6 +104,16 @@
 					//In this demo we will just redirect the user directly
 					
 					if(isset($res['email'])) {
+						
+						$mail->FromName = 'Website Framework';
+						$mail->AddAddress($res['email']);  
+
+						$mail->Subject = $site_name . " - Password Reset";
+						$mail->Body    = "Hi " . $res['username']. " please click the link below and enter a new password.\r\n" . 'http://'.$url."/_content/ajax/change_password?c=" . $res['hash']; 
+						
+						$mail->Send();
+						
+						/*
 						$to 		= $res['email']; 
 						$subject 	= $site_name . " - Password Reset"; 
 						$headers 	= 'From: '.$site_name.' <'.$site_email.'>' . "\r\n";
@@ -110,6 +121,7 @@
 						$makeURL 	= 'http://'.$url."/_content/ajax/change_password?c=" . $res['hash']; 
 						$body 		.= "\r\n".$makeURL;
 						$send		= mail($to, $subject, $body, $headers); 
+						*/
 					}
 						
 					//$url = "change_password.php?c=" . $res['hash'];
@@ -169,20 +181,22 @@
 				$db->close();
 				*/
 				 
-				// Send email to client
-				$to = $site_email; 
-				$subject = "$name_field has contacted " . $site_name;
-				$from = "From: ".$site_name." contact <".$site_email."> \r\n";
-				$body = "From: $name_field\n\n E-Mail: $email_field\n\n Message: $email_message\n\n "; 
-				$send=mail($to, $subject, $body, $from); 
+				$mail->FromName = 'Website Framework';
+				$mail->AddAddress($site_email);  
+				$mail->Subject = "$name_field has contacted " . $site_name;
+				$mail->Body    = "From: $name_field\n\n E-Mail: $email_field\n\n Message: $email_message\n\n "; 
+				$mail->Send();
+				
 				
 				// Send a verification response to user if valid email
 				if($email_field!='') {
-					$to = $email_field; 
-					$subject = $site_name." - Contact Confirmation"; 
-					$headers = 'From: Do not reply at  <'.$site_email.'>' . "\r\n";
-					$body = "Thanks for contacting us $name_field\n\n We will be in contact with you shortly\n\n\n Your Message to '".$site_name."': $email_message"; 
-					$send=mail($to, $subject, $body, $headers); 
+					
+					$mail->FromName = 'Website Framework (Do not reply)';
+					$mail->AddAddress($email_field);  
+					$mail->Subject = $site_name." - Contact Confirmation"; 
+					$mail->Body    = "Thanks for contacting us $name_field\n\n We will be in contact with you shortly\n\n\n Your Message to '".$site_name."': $email_message"; 
+					$mail->Send();
+					
 				}  
 				
 				$results['html'] = '<h2>Thanks for contacting us</h2> <p>We will respond shortly</p>';  
