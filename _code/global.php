@@ -22,7 +22,9 @@
 /*
  Use this file as your top level global include for classes, libraries and adding to the registry 
 */
-
+// Boot strap
+error_reporting(E_ALL ^ E_STRICT);
+ 
 // Classes and libraries
 require_once($_SERVER['DOCUMENT_ROOT'] . '/_code/config.inc.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/_code/class.registry.php');

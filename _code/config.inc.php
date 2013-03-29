@@ -16,7 +16,7 @@ $analytics_tracking_code	= 'UA-XXXXXXXX-X';
 /* Top level server switches for local development (true = local) */
 // Don't change
 $local = ($_SERVER['DOCUMENT_ROOT'] == $local_path ? true : false);
-$href = ($dev ? $local_url : 'http://'.$_SERVER['SERVER_NAME'].'/');
+$href = ($local ? $local_url : 'http://'.$_SERVER['SERVER_NAME'].'/');
 
 
 // Database config for both Local and Live versions of your site
