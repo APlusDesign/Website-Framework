@@ -69,7 +69,7 @@
 					
 					$to 		= $data['email']; 
 					$subject 	= $site_name . " - Account Activation"; 
-					$headers 	= 'From: '.$site_name.' <'.$email_field.'>' . "\r\n";
+					$headers 	= 'From: '.$site_name.' <'.$site_email.'>' . "\r\n";
 					$body 		= "Thanks for registering with us ".$data['username'].", All you have to do is click the confirmation link below to activate your account."; 
 					$makeURL 	= 'http://'.$url."/_content/ajax/activate?c=" . $reg; 
 					$body 		.= "\r\n".$makeURL;

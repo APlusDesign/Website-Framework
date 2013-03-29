@@ -1024,10 +1024,6 @@ class uFlex{
 	function check_sql($sql, $args=false){
 		$st = $this->getStatement($sql);
 		
-		print_r($st);
-		exit;
-		
-		
 		if(!$st) return false;
 		
 		if($args){
