@@ -40,7 +40,6 @@ function userControls () {
 		});
 	}
 	
-	
 	// Contact Button event + Contact page actions
 	var btnContact = $('.btn-contact');
 	if(btnContact.length) {
@@ -99,7 +98,7 @@ function registerUser (el, options) {
 	
 	this.regCheck = function() {
 		this.button.attr('disabled', 'disabled');
-		this.overlay = new ajaxLoader('#fancybox-content');
+		this.overlay = new ajaxLoader('.fancybox-wrap');
 		this.data = {	
 			'username' 	: this.userName.attr('value'),
 			'password' 	: this.userPass.attr('value'),
@@ -119,7 +118,7 @@ function registerUser (el, options) {
 				obj.error.insertErrors(res);
 				obj.button.attr('disabled', false);
 			} else {
-				$('#fancybox-content').find("#pre-window-wrap").html(res.html);
+				$('.fancybox-wrap').find("#pre-window-wrap").html(res.html);
 			}
 		}
 		$.getJSON(siteObj.BASE_URL+'ajax/switch.php', this.data, oCallback);
@@ -160,7 +159,7 @@ function loginUser (el, options) {
 		var btnForgot = $('.forgot-password');
 		if(btnForgot.length) {
 			btnForgot.fancybox({
-				onComplete : function() {
+				afterShow : function() {
 					new forgotUser();
 				}
 			});	
@@ -180,7 +179,7 @@ function loginUser (el, options) {
 	
 	this.regCheck = function() {
 		this.button.attr('disabled', 'disabled');
-		this.overlay = new ajaxLoader('#fancybox-content');
+		this.overlay = new ajaxLoader('.fancybox-wrap');
 		this.data = {	
 			'username' 	: this.userName.attr('value'),
 			'password' 	: this.userPass.attr('value'),
@@ -192,7 +191,6 @@ function loginUser (el, options) {
 	
 	this.save = function() {
 		
-		this.container = $('#fancybox-content').children(":first");
 		var obj = this;
 		var oCallback = function (response) {
 				var res = response;
@@ -254,7 +252,7 @@ function forgotUser (el, options) {
 	
 	this.regCheck = function() {
 		this.button.attr('disabled', 'disabled');
-		this.overlay = new ajaxLoader('#fancybox-content');
+		this.overlay = new ajaxLoader('.fancybox-wrap');
 		this.data = {	
 			'email' 	: this.userEmail.attr('value'),
 			'flag'		: 'forgot'
@@ -263,7 +261,6 @@ function forgotUser (el, options) {
 	},	
 	
 	this.save = function() {
-		this.container = $('#fancybox-content').children(":first");
 		var obj = this;
 		var oCallback = function (response) {
 			var res = response;
@@ -272,7 +269,7 @@ function forgotUser (el, options) {
 				obj.error.insertErrors(res);
 				obj.button.attr('disabled', false);
 			} else {
-				$('#fancybox-content').find("#pre-window-wrap").html(res.html);
+				$('.fancybox-wrap').find("#pre-window-wrap").html(res.html);
 			}
 		}
 		$.getJSON(siteObj.BASE_URL+'ajax/switch.php', this.data, oCallback);
@@ -287,6 +284,7 @@ function forgotUser (el, options) {
 
 var logoutUser = function (o, parent) {
 	var options = o;
+	new ajaxLoader('body');
 	$.ajax({
 		type	: "POST",
 		cache	: false,
@@ -337,7 +335,7 @@ function contact (el, options) {
 	
 	this.formCheck = function() {
 		this.button.attr('disabled', 'disabled');
-		this.overlay = new ajaxLoader('#fancybox-content');
+		this.overlay = new ajaxLoader('.fancybox-wrap');
 		this.data = {	
 			'name' 		: this.name.attr('value'),
 			'email' 	: this.email.attr('value'),
@@ -356,7 +354,7 @@ function contact (el, options) {
 				obj.error.insertErrors(res);
 				obj.button.attr('disabled', false);
 			} else {
-				$('#fancybox-content').find("#pre-window-wrap").html(res.html);
+				$('.fancybox-wrap').find("#pre-window-wrap").html(res.html);
 			}
 		}
 		$.getJSON(siteObj.BASE_URL+'ajax/switch.php', this.data, oCallback);

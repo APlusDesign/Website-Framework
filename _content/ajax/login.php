@@ -15,7 +15,7 @@
                 <input type="checkbox" name="auto" class="check">
             </div>
             <div id="" class="input-wrap">
-               <a href="/_content/ajax/forgot" class="forgot-password">Forgot password?</a>
+               <a href="/_content/ajax/forgot" class="forgot-password fancybox.ajax">Forgot password?</a>
             </div>
             <div class="login-action">
             	<input type="submit" value="Login" class="framework-button large login-button" />
