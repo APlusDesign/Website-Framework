@@ -6,16 +6,15 @@ $site_name					= 'xxxxxxxxxx';
 $site_email					= 'xxxxxxxxxx';
 // Do not change this without reading (www.website-framework.com/config)
 $site_class					= 'yourSiteName';
-// Local environmanet details
-$local_path					= 'C:/wamp/www/website-framework-build/';
+// Local environment url (used to determine local environment or not)
 $local_url					= 'http://local.website-framework-build.com/';
 // Google analytics tracking code, analytics is installed by default.
 $analytics_tracking_code	= 'UA-XXXXXXXX-X';
 
 
-/* Top level server switches for local development (true = local) */
-// Don't change
-$local = ($_SERVER['DOCUMENT_ROOT'] == $local_path ? true : false);
+/* Top level server switches for local development */
+// Don't change $local and $href
+$local = ('http://'.$_SERVER['SERVER_NAME'].'/' == $local_url ? true : false);
 $href = ($local ? $local_url : 'http://'.$_SERVER['SERVER_NAME'].'/');
 
 

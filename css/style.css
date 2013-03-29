@@ -56,7 +56,6 @@ header {
 	margin:0 auto;
 	width:980px;
 	text-align:left;
-	height:auto!important;
 }
 /* Footer */
 footer {
@@ -74,7 +73,7 @@ h1 {
 	font-size:1.5em;
 }
 h2 {
-	margin:10px 0;
+	
 }
 p {
 	margin:10px 0;
@@ -169,18 +168,22 @@ p {
 /* Response errors */
 .error-wrap {float:left;color:#b10000;font-weight:bold;line-height:1em;overflow:hidden;}
 .error-wrap span {display:block;margin:2px 0 7px;font-size:0.75em;}
-.login-action .error-wrap, .contact-action .error-wrap, .forgot-action .error-wrap {max-width:240px;}
+.login-action .error-wrap, 
+.contact-action .error-wrap, 
+.forgot-action .error-wrap {max-width:240px;}
 
 /* Login form */
 #reg-auto label {font-size:12px;}
-
-/* Registration form */
-#registration {width:705px;}
-#reg-password2 label {padding: 0 5px 0 4px;}
 .forgot-password {font-size:0.69em;margin:0 32px 0 0;padding:0 5px 5px;}
 
+/* Registration form */
+#registration {width:520px;}
+#registration label {width:190px}
+#registration input {width:300px}
+
 /* Contact us form */
-#contact input, #contact textarea {width:400px;}
+#contact input, 
+#contact textarea {width:400px;}
 #contact textarea {height:250px;}
 
 

@@ -94,7 +94,6 @@
 		case 'forgot':
 			
 			if($_REQUEST['email']){
-				$user = new uFlex(); 	
 				$res = $user->pass_reset($_REQUEST['email']);
 				$url = $_SERVER['SERVER_NAME'];
 				
