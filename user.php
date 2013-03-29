@@ -28,7 +28,6 @@
     	$switch = $uriArr[2];
     }
     
-    
     // Edit page for signed in users eg. /user/1/edit
     if ($isView && $isSwitch && $switch == "edit") {
   		
@@ -37,7 +36,7 @@
         
             // Select the user
             $query .= " WHERE u.user_id = '{$uid}'"; 
-            $aUser = $db->fetch_all_array($query);
+            $aUser = $db->fetch_array($query);
             
             // exit if no user to 404
             if($aUser[0]['user_id']) {
@@ -70,8 +69,9 @@
         
 		// Select the user
         $query .= " WHERE u.user_id = '{$uid}'"; 
-        $aUser = $db->fetch_all_array($query);
-        
+       
+        $aUser = $db->fetch_array($query);
+       
         // exit if no user to 404
         if($aUser[0]['user_id']) {
         	$aUser = $aUser[0];
