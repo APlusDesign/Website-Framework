@@ -9,7 +9,7 @@ function userControls () {
 	var btnLogin = $('.btn-login');
 	if(btnLogin.length) {
 		btnLogin.fancybox({
-			onComplete : function() {
+			afterShow : function() {
 				new loginUser();
 			}
 		});
@@ -19,10 +19,10 @@ function userControls () {
 	var btnRegister = $('.btn-register');
 	if(btnRegister.length) {
 		btnRegister.fancybox({
-			onComplete : function() {
+			afterShow : function() {
 				new registerUser();
 			},
-			onClosed: function() {
+			afterClose: function() {
 				// Do you need a redirect after login?
 	    		// window.location.reload();
 			}
@@ -45,14 +45,11 @@ function userControls () {
 	var btnContact = $('.btn-contact');
 	if(btnContact.length) {
 		btnContact.fancybox({
-			onComplete : function() {
+			afterShow : function() {
 				new contact();
 			}
 		});	
 	}
-	
-	// Fade in the user controls for a nice effect
-	$('.user-controls').fadeIn();
 	
 }
 

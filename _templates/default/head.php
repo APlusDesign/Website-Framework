@@ -4,6 +4,7 @@
 <meta name="keywords" content="<?php echo $page_keywords;?>" /> 
 <meta name="author" content="website-framework.com">
 <link type="text/css" rel="stylesheet" href="/css/style.css" /> 
+<link type="text/css" rel="stylesheet" href="/css/fancybox/jquery.fancybox.css" /> 
 <link type="image/png" rel="icon" href="/favicon.ico" /> 
 <?php echo '<base href="'.$href.'" />'; ?>
 <script id="loader" src="/js/head.js" type="text/javascript"></script>
@@ -13,7 +14,7 @@ var siteObj = {} || null;
 //  Asynchronous loading of scripts
 head.js(
 	'/js/jquery.js',
-	'/js/jquery.fancybox-1.3.4.pack.js',
+	'/js/jquery.fancybox.pack.js',
 	'/js/scripts.js',
 	'http://www.google-analytics.com/ga.js'
 );
