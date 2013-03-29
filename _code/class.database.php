@@ -1,10 +1,10 @@
 <?php
-# Name: Database.class.php
-# File Description: MySQL Class to allow easy and clean access to common mysql commands
+# Name: Database.singleton.php
+# File Description: MySQL Singleton Class to allow easy and clean access to common mysql commands
 # Author: ricocheting
 # Web: http://www.ricocheting.com/
-# Update: 2010-05-08
-# Version: 2.2.5
+# Update: 2010-07-19
+# Version: 3.1.4
 # Copyright 2003 ricocheting.com
 
 
@@ -24,58 +24,75 @@
 */
 
 
-
 //require("config.inc.php");
-//$db = new Database(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
+//$db = Database::obtain(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
+
+//$db = Database::obtain();
 
 
 ###################################################################################################
 ###################################################################################################
 ###################################################################################################
-class Database {
+class Database{
 
+	// debug flag for showing error messages
+	public	$debug = true;
 
-var $server   = ""; //database server
-var $user     = ""; //database login name
-var $pass     = ""; //database login password
-var $database = ""; //database name
-var $pre      = ""; //table prefix
+	// Store the single instance of Database
+	private static $instance;
 
+	private	$server   = ""; //database server
+	private	$user     = ""; //database login name
+	private	$pass     = ""; //database login password
+	private	$database = ""; //database name
 
-#######################
-//internal info
-var $error = "";
-var $errno = 0;
+	private	$error = "";
 
-//number of rows affected by SQL query
-var $affected_rows = 0;
+	#######################
+	//number of rows affected by SQL query
+	public	$affected_rows = 0;
 
-var $link_id = 0;
-var $query_id = 0;
+	private	$link_id = 0;
+	private	$query_id = 0;
 
 
 #-#############################################
 # desc: constructor
-function Database($server, $user, $pass, $database, $pre=''){
+private function __construct($server=null, $user=null, $pass=null, $database=null){
+	// error catching if not passed in
+	if($server==null || $user==null || $database==null){
+		$this->oops("Database information must be passed in when the object is first created.");
+	}
+
 	$this->server=$server;
 	$this->user=$user;
 	$this->pass=$pass;
 	$this->database=$database;
-	$this->pre=$pre;
 }#-#constructor()
+
+
+#-#############################################
+# desc: singleton declaration
+public static function obtain($server=null, $user=null, $pass=null, $database=null){
+	if (!self::$instance){ 
+		self::$instance = new Database($server, $user, $pass, $database); 
+	} 
+
+	return self::$instance; 
+}#-#obtain()
 
 
 #-#############################################
 # desc: connect and select database using vars above
 # Param: $new_link can force connect() to open a new link, even if mysql_connect() was called before with the same parameters
-function connect($new_link=false) {
+public function connect($new_link=false){
 	$this->link_id=@mysql_connect($this->server,$this->user,$this->pass,$new_link);
 
-	if (!$this->link_id) {//open failed
+	if (!$this->link_id){//open failed
 		$this->oops("Could not connect to server: <b>$this->server</b>.");
 		}
 
-	if(!@mysql_select_db($this->database, $this->link_id)) {//no database
+	if(!@mysql_select_db($this->database, $this->link_id)){//no database
 		$this->oops("Could not open database: <b>$this->database</b>.");
 		}
 
@@ -87,9 +104,10 @@ function connect($new_link=false) {
 }#-#connect()
 
 
+
 #-#############################################
 # desc: close the connection
-function close() {
+public function close(){
 	if(!@mysql_close($this->link_id)){
 		$this->oops("Connection close failed.");
 	}
@@ -100,7 +118,7 @@ function close() {
 # Desc: escapes characters to be mysql ready
 # Param: string
 # returns: string
-function escape($string) {
+public function escape($string){
 	if(get_magic_quotes_runtime()) $string = stripslashes($string);
 	return @mysql_real_escape_string($string,$this->link_id);
 }#-#escape()
@@ -110,11 +128,11 @@ function escape($string) {
 # Desc: executes SQL query to an open connection
 # Param: (MySQL query) to execute
 # returns: (query_id) for fetching results etc
-function query($sql) {
+public function query($sql){
 	// do query
 	$this->query_id = @mysql_query($sql, $this->link_id);
 
-	if (!$this->query_id) {
+	if (!$this->query_id){
 		$this->oops("<b>MySQL Query fail:</b> $sql");
 		return 0;
 	}
@@ -126,75 +144,62 @@ function query($sql) {
 
 
 #-#############################################
-# desc: fetches and returns results one line at a time
-# param: query_id for mysql run. if none specified, last used
-# return: (array) fetched record(s)
-function fetch_array($query_id=-1) {
-	// retrieve row
-	if ($query_id!=-1) {
-		$this->query_id=$query_id;
-	}
-
-	if (isset($this->query_id)) {
-		$record = @mysql_fetch_assoc($this->query_id);
-	}else{
-		$this->oops("Invalid query_id: <b>$this->query_id</b>. Records could not be fetched.");
-	}
-
-	return $record;
-}#-#fetch_array()
-
-
-#-#############################################
-# desc: returns all the results (not one row)
-# param: (MySQL query) the query to run on server
-# returns: assoc array of ALL fetched results
-function fetch_all_array($sql) {
-	$query_id = $this->query($sql);
-	$out = array();
-
-	while ($row = $this->fetch_array($query_id)){
-		$out[] = $row;
-	}
-
-	$this->free_result($query_id);
-	return $out;
-}#-#fetch_all_array()
-
-
-#-#############################################
-# desc: frees the resultset
-# param: query_id for mysql run. if none specified, last used
-function free_result($query_id=-1) {
-	if ($query_id!=-1) {
-		$this->query_id=$query_id;
-	}
-	if($this->query_id!=0 && !@mysql_free_result($this->query_id)) {
-		$this->oops("Result ID: <b>$this->query_id</b> could not be freed.");
-	}
-}#-#free_result()
-
-
-#-#############################################
 # desc: does a query, fetches the first row only, frees resultset
 # param: (MySQL query) the query to run on server
 # returns: array of fetched results
-function query_first($query_string) {
+public function query_first($query_string){
 	$query_id = $this->query($query_string);
-	$out = $this->fetch_array($query_id);
+	$out = $this->fetch($query_id);
 	$this->free_result($query_id);
 	return $out;
 }#-#query_first()
 
 
 #-#############################################
-# desc: does an update query with an array
-# param: table (no prefix), assoc array with data (doesn't need escaped), where condition
-# returns: (query_id) for fetching results etc
-function query_update($table, $data, $where='1') {
-	$q="UPDATE `".$this->pre.$table."` SET ";
+# desc: fetches and returns results one line at a time
+# param: query_id for mysql run. if none specified, last used
+# return: (array) fetched record(s)
+public function fetch($query_id=-1){
+	// retrieve row
+	if ($query_id!=-1){
+		$this->query_id=$query_id;
+	}
 
-	foreach($data as $key=>$val) {
+	if (isset($this->query_id)){
+		$record = @mysql_fetch_assoc($this->query_id);
+	}else{
+		$this->oops("Invalid query_id: <b>$this->query_id</b>. Records could not be fetched.");
+	}
+
+	return $record;
+}#-#fetch()
+
+
+#-#############################################
+# desc: returns all the results (not one row)
+# param: (MySQL query) the query to run on server
+# returns: assoc array of ALL fetched results
+public function fetch_array($sql){
+	$query_id = $this->query($sql);
+	$out = array();
+
+	while ($row = $this->fetch($query_id)){
+		$out[] = $row;
+	}
+
+	$this->free_result($query_id);
+	return $out;
+}#-#fetch_array()
+
+
+#-#############################################
+# desc: does an update query with an array
+# param: table, assoc array with data (not escaped), where condition (optional. if none given, all records updated)
+# returns: (query_id) for fetching results etc
+public function update($table, $data, $where='1'){
+	$q="UPDATE `$table` SET ";
+
+	foreach($data as $key=>$val){
 		if(strtolower($val)=='null') $q.= "`$key` = NULL, ";
 		elseif(strtolower($val)=='now()') $q.= "`$key` = NOW(), ";
         elseif(preg_match("/^increment\((\-?\d+)\)$/i",$val,$m)) $q.= "`$key` = `$key` + $m[1], "; 
@@ -204,18 +209,18 @@ function query_update($table, $data, $where='1') {
 	$q = rtrim($q, ', ') . ' WHERE '.$where.';';
 
 	return $this->query($q);
-}#-#query_update()
+}#-#update()
 
 
 #-#############################################
 # desc: does an insert query with an array
-# param: table (no prefix), assoc array with data
+# param: table, assoc array with data (not escaped)
 # returns: id of inserted record, false if error
-function query_insert($table, $data) {
-	$q="INSERT INTO `".$this->pre.$table."` ";
+public function insert($table, $data){
+	$q="INSERT INTO `$table` ";
 	$v=''; $n='';
 
-	foreach($data as $key=>$val) {
+	foreach($data as $key=>$val){
 		$n.="`$key`, ";
 		if(strtolower($val)=='null') $v.="NULL, ";
 		elseif(strtolower($val)=='now()') $v.="NOW(), ";
@@ -225,26 +230,40 @@ function query_insert($table, $data) {
 	$q .= "(". rtrim($n, ', ') .") VALUES (". rtrim($v, ', ') .");";
 
 	if($this->query($q)){
-		//$this->free_result();
 		return mysql_insert_id($this->link_id);
 	}
 	else return false;
 
-}#-#query_insert()
+}#-#insert()
+
+
+#-#############################################
+# desc: frees the resultset
+# param: query_id for mysql run. if none specified, last used
+private function free_result($query_id=-1){
+	if ($query_id!=-1){
+		$this->query_id=$query_id;
+	}
+	if($this->query_id!=0 && !@mysql_free_result($this->query_id)){
+		$this->oops("Result ID: <b>$this->query_id</b> could not be freed.");
+	}
+}#-#free_result()
 
 
 #-#############################################
 # desc: throw an error message
 # param: [optional] any custom error to display
-function oops($msg='') {
-	if($this->link_id>0){
-		$this->error=mysql_error($this->link_id);
-		$this->errno=mysql_errno($this->link_id);
+private function oops($msg=''){
+	if(!empty($this->link_id)){
+		$this->error = mysql_error($this->link_id);
 	}
 	else{
-		$this->error=mysql_error();
-		$this->errno=mysql_errno();
+		$this->error = mysql_error();
+		$msg="<b>WARNING:</b> No link_id found. Likely not be connected to database.<br />$msg";
 	}
+
+	// if no debug, done here
+	if(!$this->debug) return;
 	?>
 		<table align="center" border="1" cellspacing="0" style="background:white;color:black;width:80%;">
 		<tr><th colspan=2>Database Error</th></tr>

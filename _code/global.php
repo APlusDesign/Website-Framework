@@ -33,7 +33,8 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/_code/class.'.$site_class.'.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/_code/functions.php'); 
 
 // Database object + connection
-$db = new Database(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE); 
+//$db = new Database(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE); 
+$db = Database::obtain(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
 $db->connect();
 registry::add('db', $db);
 

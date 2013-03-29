@@ -191,7 +191,8 @@ class uFlex{
 		//Prepare New User	Query
 		$sql = "INSERT INTO :table ({$intoStr})
 				VALUES({$values})";
-
+		
+			
 		//Enter New user to Database
 		if($this->check_sql($sql, $data)){
 			$this->report("New User has been registered");
@@ -1022,6 +1023,10 @@ class uFlex{
 	 */
 	function check_sql($sql, $args=false){
 		$st = $this->getStatement($sql);
+		
+		print_r($st);
+		exit;
+		
 		
 		if(!$st) return false;
 		
