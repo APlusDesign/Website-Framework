@@ -13,7 +13,7 @@
 				<?php 
 				// User signed in
 				else: ?>    
-				<a href="user/<?php echo $user->id;?>" class="update-user fancybox.ajax"><?php echo ucfirst($user->username); ?></a>
+				<a href="user?id=<?php echo $user->id;?>" class="update-user fancybox.ajax"><?php echo ucfirst($user->username); ?></a>
 				<a href="#" class="framework-button  btn-logout">Logout</a>
 				<?php endif; ?>	
 			</div>
