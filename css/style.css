@@ -166,7 +166,7 @@ p {
 .responses p {margin:10px;}
 
 /* Response errors */
-.error-wrap {float:left;color:#b10000;font-weight:bold;line-height:1em;overflow:hidden;}
+.error-wrap {color:#b10000;font-weight:bold;line-height:1em;overflow:hidden;padding-right: 10px;}
 .error-wrap span {display:block;margin:2px 0 7px;font-size:0.75em;}
 .login-action .error-wrap, 
 .contact-action .error-wrap, 

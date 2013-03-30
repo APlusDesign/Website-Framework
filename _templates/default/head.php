@@ -1,12 +1,13 @@
 <title><?php echo $page_title;?></title> 
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta name="description" content="<?php echo $page_desc;?>" /> 
-<meta name="keywords" content="<?php echo $page_keywords;?>" /> 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="description" content="<?php echo $page_desc;?>"> 
+<meta name="keywords" content="<?php echo $page_keywords;?>"> 
 <meta name="author" content="website-framework.com">
-<link type="text/css" rel="stylesheet" href="/css/style.css" /> 
-<link type="text/css" rel="stylesheet" href="/css/fancybox/jquery.fancybox.css" /> 
-<link type="image/png" rel="icon" href="/favicon.ico" /> 
+<link type="text/css" rel="stylesheet" href="/css/style.css"> 
+<link type="text/css" rel="stylesheet" href="/css/fancybox/jquery.fancybox.css">
+<link type="image/png" rel="icon" href="/favicon.png"> 
 <?php echo '<base href="'.$href.'" />'; ?>
+
 <script id="loader" src="/js/head.js" type="text/javascript"></script>
 <script>
 // Optional : Change all instances of siteObj to an alias for your own site
@@ -37,6 +38,6 @@ head.ready(function() {
 });
 </script> 
 <!--[if lt IE 9]>
-<link type="text/css" rel="stylesheet" href="/css/ie.css" />
+<link type="text/css" rel="stylesheet" href="/css/ie.css">
 <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
