@@ -15,20 +15,6 @@ function userControls () {
 		});
 	}
 	
-	// Register Button event + Register page actions
-	var btnRegister = $('.btn-register');
-	if(btnRegister.length) {
-		btnRegister.fancybox({
-			afterShow : function() {
-				new registerUser();
-			},
-			afterClose: function() {
-				// Do you need a redirect after login?
-	    		// window.location.reload();
-			}
-		});	
-	}
-	
 	// Logout Button event + Logout actions
 	var btnLogout = $('.btn-logout');
 	if(btnLogout.length) {
@@ -38,6 +24,20 @@ function userControls () {
 			logoutUser();
 		  }
 		});
+	}
+
+	// Register Button event + Register page actions
+	var btnRegister = $('.btn-register');
+	if(btnRegister.length) {
+		btnRegister.fancybox({
+			afterShow : function() {
+				new registerUser();
+			},
+			afterClose: function() {
+				// Do you need a redirect after login?
+				// window.location.reload();
+			}
+		});	
 	}
 	
 	// Contact Button event + Contact page actions
@@ -50,11 +50,18 @@ function userControls () {
 		});	
 	}
 	
+	return {
+		'login'		: btnLogin,
+		'logout'	: btnLogout,
+		'register'	: btnRegister,
+		'contact' 	: btnContact
+	}
+	
 }
 
 
 /*********************************************************/
-/* Controls and actions for the USER system 			*/
+/* Controls and actions for the AJAXIAN USER system 	*/
 /*******************************************************/
 
 /***********************/
@@ -121,7 +128,7 @@ function registerUser (el, options) {
 				$('.fancybox-wrap').find("#pre-window-wrap").html(res.html);
 			}
 		}
-		$.getJSON(siteObj.BASE_URL+'ajax/switch.php', this.data, oCallback);
+		$.getJSON(websiteFramework.BASE_URL+'ajax/switch.php', this.data, oCallback);
 	}	
 	
 	this.init();
@@ -210,7 +217,7 @@ function loginUser (el, options) {
 				}
 			
 		}
-		$.getJSON(siteObj.BASE_URL+'ajax/switch.php', this.data, oCallback);
+		$.getJSON(websiteFramework.BASE_URL+'ajax/switch.php', this.data, oCallback);
 	}	
 	
 	this.init();
@@ -243,8 +250,8 @@ function forgotUser (el, options) {
 		var obj = this;
 		this.button = $("<button>").html('<div></div><span>Reset</span>').addClass('framework-button large forgot-button').click(function (e) {
 			e.preventDefault();																																							
-		  	obj.regCheck();
-		  	return false;
+			obj.regCheck();
+			return false;
 		});
 		this.wrapper.append(this.button);
 		this.error = new errorHelper(this.wrapper);	
@@ -272,7 +279,7 @@ function forgotUser (el, options) {
 				$('.fancybox-wrap').find("#pre-window-wrap").html(res.html);
 			}
 		}
-		$.getJSON(siteObj.BASE_URL+'ajax/switch.php', this.data, oCallback);
+		$.getJSON(websiteFramework.BASE_URL+'ajax/switch.php', this.data, oCallback);
 	}	
 	
 	this.init();
@@ -288,7 +295,7 @@ var logoutUser = function (o, parent) {
 	$.ajax({
 		type	: "POST",
 		cache	: false,
-		url		: siteObj.BASE_URL+'ajax/switch.php',
+		url		: websiteFramework.BASE_URL+'ajax/switch.php',
 		data	: {'flag':'logout'},
 		complete : function(data) {
 			window.location.reload();
@@ -326,8 +333,8 @@ function contact (el, options) {
 		
 		this.button = $("<button>").html('<div></div><span>Contact us</span>').addClass('framework-button large contact-button').click(function (e) {
 			e.preventDefault();																																							
-		  	obj.formCheck();
-		  	return false;
+			obj.formCheck();
+			return false;
 		});
 		this.wrapper.append(this.button);
 		this.error = new errorHelper(this.wrapper);	
@@ -357,7 +364,7 @@ function contact (el, options) {
 				$('.fancybox-wrap').find("#pre-window-wrap").html(res.html);
 			}
 		}
-		$.getJSON(siteObj.BASE_URL+'ajax/switch.php', this.data, oCallback);
+		$.getJSON(websiteFramework.BASE_URL+'ajax/switch.php', this.data, oCallback);
 	}	
 	
 	this.init();
@@ -447,7 +454,7 @@ function ajaxLoader (el, options) {
 				$('<div></div>').addClass('ajax_loader')
 			).fadeIn(this.options.duration)
 		);
-    };
+	};
 	
 	this.remove = function(flag){
 		var overlay = this.container.children(".ajax_overlay");
@@ -462,7 +469,7 @@ function ajaxLoader (el, options) {
 		}	
 	}
 
-    this.init();
+	this.init();
 }	
 
 

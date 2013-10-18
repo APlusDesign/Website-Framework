@@ -6,16 +6,24 @@ RewriteEngine On
 AddDefaultCharset UTF-8
 
 
-# USER url's
-# /user.php?value=pair = /user/value/value
-RewriteRule ^user/(.*)/?$ user.php/$1/$2
+# redirect: http://yourSiteName.com (to) http://www.yourSiteName.com
+RewriteCond %{REMOTE_ADDR} !127.0.0.1
+RewriteCond %{HTTP_HOST} !^www\.
+RewriteRule ^(.*)$ http://www.%{HTTP_HOST}/$1 [R=301,L]
 
 
-# NICE url's
-# /page.php = /page
+# url key/value rewrites
+RewriteRule ^(user.php)/([^/]*)/([^/]*)(/.*)?$ /$1/$4?$2=$3 [L,QSA,NC]
+RewriteRule ^(user)/?$ /$1.php [L,NC]
+
+RewriteRule ^(test.php)/([^/]*)/([^/]*)(/.*)?$ /$1/$4?$2=$3 [L,QSA,NC]
+RewriteRule ^(test)/?$ /$1.php [L,NC]
+
+
+# Pretty url's
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}\.php -f
-RewriteRule ^(.*)$ $1.php
+RewriteRule ^(.*)$ $1.php [L]
 
 
 # BEGIN Compress text files
@@ -23,6 +31,7 @@ RewriteRule ^(.*)$ $1.php
   AddOutputFilterByType DEFLATE text/html text/plain text/xml application/xml application/xhtml+xml text/css text/javascript application/javascript application/x-javascript
 </ifModule>
  
+
 # BEGIN Expire headers
 <ifModule mod_expires.c>
   ExpiresActive On
@@ -40,6 +49,7 @@ RewriteRule ^(.*)$ $1.php
   ExpiresByType application/xhtml+xml "access plus 600 seconds"
 </ifModule>
  
+
 # BEGIN Cache-Control Headers
 <ifModule mod_headers.c>
   <filesMatch "\.(ico|jpe?g|png|gif|swf)$">
@@ -57,10 +67,14 @@ RewriteRule ^(.*)$ $1.php
   Header unset ETag
 </ifModule>
  
+
 # BEGIN Turn ETags Off
 FileETag None
 
-# BEGIN Own error docs
-ErrorDocument 403 /404.php
-ErrorDocument 404 /404.php
 
+# BEGIN Own error docs
+ErrorDocument 401 /404
+ErrorDocument 402 /404
+ErrorDocument 403 /404
+ErrorDocument 404 /404
+ErrorDocument 500 /404

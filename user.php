@@ -1,7 +1,11 @@
+<?php include($_SERVER['DOCUMENT_ROOT'] .'/_code/global.php'); ?>
 <?php 
-    /* Global Include */ 
-    include($_SERVER['DOCUMENT_ROOT'] .'/_code/global.php'); 
-	
+    
+    //print_r($_REQUEST);
+    //exit;
+
+    /* Not MVC - just do procedurally for now. */
+
 	/* No errors yet */
 	$error = false;
 	
@@ -39,14 +43,13 @@
 
     
 ?>
-
 <?php
-// Page Variables
-$page_title 	= (isset($display_title)?$display_title:'A generic title');
-$page_desc 		= (isset($display_message)?$display_message:'A generic description');
-$page_keywords 	= (isset($display_keywords)?$display_keywords:'some, generic, keywords');
-$page_path 		= "/user/";
-$page_name 		= $display;
-include($_SERVER['DOCUMENT_ROOT'] .'/_templates/default/index.php'); 
+    // Define VIEW data
+    $page_title     = (isset($display_title)?$display_title:'A generic title');
+    $page_desc      = (isset($display_message)?$display_message:'A generic description');
+    $page_keywords  = (isset($display_keywords)?$display_keywords:'some, generic, keywords');
+    $page_path      = "/user/";
+    $page_name      = $display;
+    $template       = "default";
 ?>
-
+<?php include($_SERVER['DOCUMENT_ROOT'] .'/_templates/'.$template.'/index.php'); ?>

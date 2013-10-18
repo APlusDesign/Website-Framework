@@ -23,18 +23,19 @@
  Use this file as your top level global include for classes, libraries and adding to the registry 
 */
  
-// This prevents the myrad of differing environments breaking the framework
+// This prevents the myriad of differing environments breaking the framework
 error_reporting(0);
  
-// Classes and libraries
+// Config
 require_once($_SERVER['DOCUMENT_ROOT'] . '/_code/config.inc.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/_code/class.registry.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/_code/class.json.php'); 
-require_once($_SERVER['DOCUMENT_ROOT'] . '/_code/class.database.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/_code/class.uFlex.php'); 
-require_once($_SERVER['DOCUMENT_ROOT'] . '/_code/class.phpmailer.php'); 
-require_once($_SERVER['DOCUMENT_ROOT'] . '/_code/class.smtp.php'); 
-require_once($_SERVER['DOCUMENT_ROOT'] . '/_code/class.'.$site_class.'.php');
+// Classes
+require_once($_SERVER['DOCUMENT_ROOT'] . '/_code/classes/phpmailer/PHPMailerAutoload.php'); 
+require_once($_SERVER['DOCUMENT_ROOT'] . '/_code/classes/class.registry.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/_code/classes/class.json.php'); 
+require_once($_SERVER['DOCUMENT_ROOT'] . '/_code/classes/class.database.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/_code/classes/class.uFlex.php'); 
+require_once($_SERVER['DOCUMENT_ROOT'] . '/_code/classes/class.'.$site_class.'.php');
+// Functions
 require_once($_SERVER['DOCUMENT_ROOT'] . '/_code/functions.php'); 
 
 // Database object + connection
@@ -55,14 +56,14 @@ $siteClass = new $site_class();
 registry::add($site_class, $siteClass);
 
 // Mail object
-$mail = new PHPMailer;  
-$mail->IsSMTP();    
-$mail->SMTPAuth = "true";                       
-$mail->SMTPSecure = 'ssl';  
-$mail->Host = MAIL_HOST;
-$mail->Username = MAIL_USERNAME;                            
-$mail->Password = MAIL_PASSWORD; 
-$mail->Port = MAIL_PORT;  
+$mail = new PHPMailer;
+$mail->isSMTP();                            // Set mailer to use SMTP
+$mail->SMTPAuth = true;                     // Enable SMTP authentication
+$mail->Host = MAIL_HOST;  					// Specify main and backup server
+$mail->Username = MAIL_USERNAME;            // SMTP username
+$mail->Password = MAIL_PASSWORD;            // SMTP password
+$mail->Port = MAIL_PORT;  					// SMTP port
+$mail->SMTPSecure = 'ssl';                  // Enable encryption
 registry::add('mail', $mail);
 
 ?>

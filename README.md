@@ -1,22 +1,25 @@
 Website Framework
-==========
+===================
 
-Website Framework is a free & efficient HTML5 web site template with a powerful built-in PHP framework, allowing for rapid development of any type of web project.
+Website Framework is a free HTML5 website template allowing for rapid development of web projects.
 
 
-###Documentation
+###Documentation/API
 
 http://www.website-framework.com/
 
 
 
-###Installation in 7 easy steps
+
+###Installation in 8 easy steps
 
 1. Unzip the Website Framework package into the new website space you are creating (e.g. c:\wamp\www\mysite).
 
-2. Open your phpMyAdmin and create a database for your website, (as well as a MySQL user who has all privileges). For more detailed descriptions on creating a database please see. (http://www.youtube.com/watch?v=nBz2lG_jm-A)
+2. Set up a new localhost record for this website. (You should know how to do this by now)
 
-3. Open your phpMyAdmin and run the MySQL below to create a table in the database you just created 
+3. Connect to your localhost server and create a database for your website, (as well as a MySQL user who has all privileges). For more detailed descriptions on creating a database please see. (http://www.youtube.com/watch?v=nBz2lG_jm-A)
+
+4. Open your phpMyAdmin and run the MySQL below to create a table in the database you just created 
 
 
 		CREATE TABLE IF NOT EXISTS `users` (
@@ -33,13 +36,31 @@ http://www.website-framework.com/
 		) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
 
 
-4. Open '/_code/config.inc.php' in a text editor and fill in the fields marked XXXXXXXXX with your site details, including your new database settings. More detailed instruction can be found here (www.website-framwork.com/config). 
+5. Open '/_code/config.inc.php' in a text editor and fill in the fields marked XXXXXXXXX with your site details, including your database settings. More detailed instruction can be found here (www.website-framwork.com/config). 
 
-5. Double check your website settings in wamp, hosts file and apache.conf files are correct.
+6. Double check you've configured your localhost correctly ('Configuring WAMPP or your local server'), (www.website-framwork.com/configure-wamp)
 
-6. Browse to your new website (e.g. http://local.mysite.com/)
+7. Browse to your new website (e.g. http://local.mysite.com/)
 
-7. Enjoy!
+8. Enjoy!
 
 
-Guess that is actually only 6 steps ;)
+Guess that is actually only 7 steps ;)
+
+
+
+
+###Configuring WAMPP or (xampp, nginx) to run with website-framework 
+
+1. PHP EXTENSIONS
+
+	You'll need to activate the 'php_openssl' extension
+
+
+2. APACHE MODULES
+	
+	You'll need to activate the 'rewrite_module'
+
+	You should activate the 'headers_module'
+	You should activate the 'expires_module'
+	You should activate the 'deflate_module'

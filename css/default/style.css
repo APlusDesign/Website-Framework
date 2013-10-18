@@ -12,8 +12,8 @@ ins{text-decoration:none;}
 del{text-decoration:line-through;}
 table{border-collapse:collapse;border-spacing:0;}
 a{text-decoration:none}
-button::-moz-focus-inner { border: 0; }
-html {height: 100%;}
+button::-moz-focus-inner {border:0;}
+html {height:100%;}
 body {height:100%;color:#000;font:100%/1.4 Arial,Helvetica,sans-serif;text-align:center;overflow-x: hidden;}
 header, footer, nav, section, aside, article {display:block;}
 input, select, option, textarea, a, a:active {outline:none;}
@@ -27,20 +27,19 @@ input, select, option, textarea, a, a:active {outline:none;}
 /* Prevent multiple requests for image sprite            */
 /* Declare all elements that use your image sprite once */
 .framework-button div {
-	background: url("../images/sprite.png") no-repeat;
+	background: url("../../images/default/sprite.png") no-repeat;
 }
+
 
 
 /*************/
 /* Globals  */
-
-img {
-	border:none;
-}
 a {
 	color:#007ed6;
 	text-decoration:none;
 }
+
+
 
 
 /*************/
@@ -72,9 +71,6 @@ h1 {
 	padding:25px 0 0 0;
 	font-size:1.5em;
 }
-h2 {
-	
-}
 p {
 	margin:10px 0;
 	font-size:0.75em;
@@ -93,7 +89,7 @@ p {
 	z-index:66557;
 }
 .ajax_loader {
-	background: url("/images/spinner_squares_circle.gif") no-repeat center center transparent;
+	background: url("../../images/spinner_squares_circle.gif") no-repeat center center transparent;
 	width:100%;
 	height:100%;
 }
@@ -117,7 +113,9 @@ p {
 	padding: 0 10px 0 0;
 	border-right: 1px solid #D3CCD3;
 }
-
+.user-controls a:last-child {
+	border-right:none;
+}
 
 
 
@@ -132,7 +130,7 @@ p {
 
 /* 404 page */
 ._404 {}
-._404 h2 {text-align:center;}
+
 
 
 
@@ -150,7 +148,7 @@ p {
 .user-form .input-wrap {margin:0 0 15px 0;clear:both;overflow:hidden;padding:0 7px 0 0;}
 .user-form label {color:#6c6c6c;font-size:1.25em;width:120px;padding:10px 5px 0 4px;float:left;line-height:1.12em;}
 .user-form .input-wrap input, 
-.user-form textarea {border:1px solid #BFBFBF;color:#333333;font-size:1.37em;height:32px;line-height:32px;padding:5px;width:225px;float:left;}
+.user-form textarea {border:1px solid #bfbfbf;color:#333;font-size:1.37em;height:32px;line-height:32px;padding:5px;width:225px;float:left;}
 .user-form textarea {height:100px;}
 .user-form .input-wrap .check {width:auto;margin:1px 0 0;}
 
@@ -193,17 +191,15 @@ p {
 
 .framework-button {
 	border-radius:4px;
-	-moz-border-radius:4px;
-	-webkit-border-radius:4px;
 	background: #efefef; /* for non-css3 browsers */
-	background:-moz-linear-gradient(center top , #ffffff, #efefef)  repeat scroll 0 0 #F6F6F6;
-	background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#efefef));
+	background: -moz-linear-gradient(center top , #fff, #efefef)  repeat scroll 0 0 #f6f6f6;
+	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#efefef));
 	/* For IE 8 */
-	-ms-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#efefef');
+	-ms-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff', endColorstr='#efefef');
 	/* For IE 5.5 - 7 */
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#efefef'); 
-	border:1px solid #CCCCCC;
-	color:#000000;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff', endColorstr='#efefef'); 
+	border:1px solid #ccc;
+	color:#000;
 	cursor:pointer;
 	display:inline-block;
 	padding:1px 0.5em!important;
@@ -211,33 +207,48 @@ p {
 	outline:none;
 }
 
-.framework-button:hover, .framework-button:focus {-moz-box-shadow:0px 0px 3px #999;-webkit-box-shadow:0px 0px 3px #999;box-shadow:0px 0px 3px #999;}
+.framework-button:hover, 
+.framework-button:focus {
+	box-shadow:0px 0px 3px #999;
+}
 
 .framework-button:active {
 	box-shadow:0 0 3px #666;
-	-moz-box-shadow:0 0 3px #666;
-	-webkit-box-shadow:0 0 3px #666;
-	background:-moz-linear-gradient(center top , #ececec, #ffffff)  repeat scroll 0 0 #F6F6F6;
-	background:-webkit-gradient(linear, left top, left bottom, from(#ececec), to(#ffffff));
+	background:-moz-linear-gradient(center top , #ececec, #fff)  repeat scroll 0 0 #f6f6f6;
+	background:-webkit-gradient(linear, left top, left bottom, from(#ececec), to(#fff));
 	/* For IE 8 */
-	-ms-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ececec', endColorstr='#ffffff');
+	-ms-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ececec', endColorstr='#fff');
 	/* For IE 5.5 - 7 */
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ececec', endColorstr='#ffffff');
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ececec', endColorstr='#fff');
 }
 
 /* Large style ajax buttons */
 .register-button, 
 .login-button, 
 .contact-button,
-.forgot-button {float:right;font-size:1.18em;height:2.4em;margin-right:5px;}
+.forgot-button {
+	float:right;
+	font-size:1.18em;
+	height:2.4em;
+	margin-right:5px;
+}
 
 
 /* Sprites in large buttons  */
-.framework-button div {float:left;overflow:hidden;width:26px;height:22px;margin:0 8px 0 3px;}
+.framework-button div {
+	float:left;
+	overflow:hidden;
+	width:26px;
+	height:22px;
+	margin:0 8px 0 3px;}
 .register-button div, 
-.contact-button div {background-position:-1px -114px;}
+.contact-button div {
+	background-position:-1px -114px;
+}
 .login-button div,
-.forgot-button div {background-position:-29px -114px;}
+.forgot-button div {
+	background-position:-29px -114px;
+}
 
 
 

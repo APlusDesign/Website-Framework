@@ -10,7 +10,9 @@
 			echo $user->console['errors']['activation'][0];
 		}
 	} else {
-		header( 'Location: http://website-framework.com ' ) ;
+		header( 'Location: ' . $href) ;
 	}
-	exit;
+	
 ?>
+
+<p>Return to <a href="<?php echo $href; ?>"><?php echo $href; ?></a></p>

@@ -1,11 +1,12 @@
 <?php
-/**
-Basic example class
+/*******************************************
+ Basic example class, please rename to something useful and make sure you read the config on 
+ (www.website-framework.com/config)
 
-Methods
-**/
+ Methods
+*/
 
-class yourSiteName {
+class xxxxxxxxxx {
 	
 	/**
 	Constructing the class with references to 
@@ -13,7 +14,7 @@ class yourSiteName {
 	@$this->user - the user object
 	**/
 	function __construct(){
-		$this->db = registry::get('db');
+		$this->db 	= registry::get('db');
 		$this->user = registry::get('user');
 	}
 	
