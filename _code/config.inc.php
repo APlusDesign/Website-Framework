@@ -38,8 +38,8 @@ if($local) {
 	// MAIL settings, you can actually just use your gmail for emailing
 	define('MAIL_HOST', 		"smtp.gmail.com");
 	define('MAIL_PORT', 		"465");
-	define('MAIL_USERNAME', 	"simon.ilett@gmail.com");
-	define('MAIL_PASSWORD', 	"Tamulie01");
+	define('MAIL_USERNAME', 	"xxxxxxxxxx");
+	define('MAIL_PASSWORD', 	"xxxxxxxxxx");
 } else {
 	// Live database server details, see (www.website-framework.com/config)
 	define('DB_SERVER', 		"xxxxxxxxxx");
