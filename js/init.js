@@ -32,15 +32,10 @@ if(id != 'UA-XXXXXXXX-X') {
 
 
 /*******************
- document.ready - Do stuff :)
+ document.ready 
 */  
 head.ready(function() {
-	// Base url for all your ajax calls
-  	websiteFramework.BASE_URL = document.getElementsByTagName('base')[0].href;
-	// User login, register, logout, contact controls
-	websiteFramework.controls = userControls();
-	// View the website object
-	console.log(websiteFramework)
+	startApplication();
 });
 
 
