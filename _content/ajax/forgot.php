@@ -38,13 +38,13 @@
 <div id="pre-window-wrap">
     <h3>Forgotten your password?</h3>
     <div class="user-form">
-        <form id="forgot" method="post" action="/ajax/switch.php?flag=forgot">
+        <form id="forgot" method="post" action="/_ajax/switch.php?flag=forgot">
             <div id="forgot-email" class="input-wrap">
                 <label>Email: </label>
                 <input name="email" type="text" value="">
             </div>
             <div class="forgot-action">
-            	<input type="submit" value="Reset" />
+            	<input type="submit" value="Reset">
             </div>
         </form>
     </div>

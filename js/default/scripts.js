@@ -128,7 +128,7 @@ function registerUser (el, options) {
 				$('.fancybox-wrap').find("#pre-window-wrap").html(res.html);
 			}
 		}
-		$.getJSON(websiteFramework.BASE_URL+'ajax/switch.php', this.data, oCallback);
+		$.getJSON(websiteFramework.BASE_URL+'_ajax/switch.php', this.data, oCallback);
 	}	
 	
 	this.init();
@@ -217,7 +217,7 @@ function loginUser (el, options) {
 				}
 			
 		}
-		$.getJSON(websiteFramework.BASE_URL+'ajax/switch.php', this.data, oCallback);
+		$.getJSON(websiteFramework.BASE_URL+'_ajax/switch.php', this.data, oCallback);
 	}	
 	
 	this.init();
@@ -279,7 +279,7 @@ function forgotUser (el, options) {
 				$('.fancybox-wrap').find("#pre-window-wrap").html(res.html);
 			}
 		}
-		$.getJSON(websiteFramework.BASE_URL+'ajax/switch.php', this.data, oCallback);
+		$.getJSON(websiteFramework.BASE_URL+'_ajax/switch.php', this.data, oCallback);
 	}	
 	
 	this.init();
@@ -295,7 +295,7 @@ var logoutUser = function (o, parent) {
 	$.ajax({
 		type	: "POST",
 		cache	: false,
-		url		: websiteFramework.BASE_URL+'ajax/switch.php',
+		url		: websiteFramework.BASE_URL+'_ajax/switch.php',
 		data	: {'flag':'logout'},
 		complete : function(data) {
 			window.location.reload();
@@ -364,7 +364,7 @@ function contact (el, options) {
 				$('.fancybox-wrap').find("#pre-window-wrap").html(res.html);
 			}
 		}
-		$.getJSON(websiteFramework.BASE_URL+'ajax/switch.php', this.data, oCallback);
+		$.getJSON(websiteFramework.BASE_URL+'_ajax/switch.php', this.data, oCallback);
 	}	
 	
 	this.init();

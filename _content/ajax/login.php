@@ -1,14 +1,14 @@
 <div id="pre-window-wrap">
     <h3>Login</h3>
     <div class="user-form">
-        <form id="login" method="post" action="/ajax/switch.php?flag=login">
+        <form id="login" method="post" action="/_ajax/switch.php?flag=login">
             <div id="reg-username" class="input-wrap">
                 <label>Username:</label>
-                <input type="text" name="username" />
+                <input type="text" name="username">
             </div>
             <div id="reg-password" class="input-wrap">
                 <label>Password:</label>
-                <input type="password" name="password" />
+                <input type="password" name="password">
             </div>
             <div id="reg-auto" class="input-wrap">
                 <label>Remember me?:</label>
@@ -18,7 +18,7 @@
                <a href="/_content/ajax/forgot" class="forgot-password fancybox.ajax">Forgot password?</a>
             </div>
             <div class="login-action">
-            	<input type="submit" value="Login" class="framework-button large login-button" />
+            	<input type="submit" value="Login" class="framework-button large login-button">
             </div>
         </form>
     </div>

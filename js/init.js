@@ -8,8 +8,8 @@ var websiteFramework = {} || null;
  Asynchronous loading of scripts
 */   
 head.js(
-	'/js/_plugins/jquery.js',
-	'/js/_plugins/jquery.fancybox.pack.js',
+	'//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js',
+	'//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.pack.js',
 	'/js/default/scripts.js'
 );
 
