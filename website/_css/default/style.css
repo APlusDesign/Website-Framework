@@ -1,0 +1,259 @@
+/*************/
+/*  Reset   */
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:top;background:transparent;vertical-align: baseline}
+body{line-height:1;}
+td {vertical-align: top}
+ol,ul{list-style:none;}
+blockquote,q{quotes:none;}
+blockquote:before,blockquote:after,
+q:before,q:after{content:'';content:none;}
+:focus{outline:0;}
+ins{text-decoration:none;}
+del{text-decoration:line-through;}
+table{border-collapse:collapse;border-spacing:0;}
+a{text-decoration:none}
+button::-moz-focus-inner {border:0;}
+html {height:100%;}
+body {height:100%;color:#333;font:100%/1.4 Arial,Helvetica,sans-serif;text-align:center;overflow-x: hidden;}
+header, footer, nav, section, aside, article {display:block;}
+input, select, option, textarea, a, a:active {outline:none;}
+
+
+
+
+
+
+/**********************************************************/
+/* Prevent multiple requests for image sprite            */
+/* Declare all elements that use your image sprite once */
+.framework-button div {
+	background: url("../../_images/default/sprite.png") no-repeat;
+}
+
+
+
+/*************/
+/* Globals  */
+a {
+	color:#007ed6;
+	text-decoration:none;
+}
+
+
+
+
+/*************/
+/* Template */
+
+/* Header */
+header {
+	height:100px;
+	position: relative;
+}
+/* Content Wrapper - with sticky footer */
+.wrapper {
+	margin:0 auto;
+	width:980px;
+	text-align:left;
+}
+/* Footer */
+footer {
+	
+}
+
+
+
+
+/***************/
+/* Typography */
+h1 {
+	float:left;
+	padding:25px 0 0 0;
+	font-size:1.5em;
+}
+h3 {
+	font-size:1.5em;
+	margin-bottom:20px;
+}
+p {
+	margin:10px 0;
+	font-size:0.75em;
+}
+
+
+
+
+
+
+/*****************/
+/* Furniture    */
+
+/* User login, register, contact and logout area */
+.user-controls {
+	position:absolute;
+	right:5px;
+	top:35px;
+	font-size:0.82em;
+	text-align:right;
+}
+.user-controls a {
+	margin-right: 8px;
+	padding: 0 10px 0 0;
+	border-right: 1px solid #D3CCD3;
+}
+.user-controls a:last-child {
+	border-right:none;
+}
+
+
+
+
+/************/
+/* HELPERS */
+.clear {clear:both;}
+
+
+
+
+
+/************/
+/* Content */
+
+
+
+
+
+
+
+
+/******************/
+/* Components    */
+
+/* Ajax overlay */
+#ajax_overlay {
+	overflow:hidden;
+	border:none;
+	z-index:66557;
+}
+.ajax_loader {
+	background: url("../../_images/spinner_squares_circle.gif") no-repeat center center transparent;
+	width:100%;
+	height:100%;
+}
+
+
+
+
+
+/*******************/
+/* Ajax + forms	  */
+
+.pre-window-wrap {min-height:300px;text-align:left;overflow:hidden;padding:15px;}
+.pre-window-wrap input[type="submit"] {display:none;}
+
+/* forms */
+form .input-wrap {margin:0 0 15px 0;overflow:hidden;}
+form .input-wrap label {color:#6c6c6c;font-size:1.25em;width:120px;padding:10px 5px 0 0;float:left;line-height:1.12em;}
+form .input-wrap input, 
+form .input-wrap textarea {border:1px solid #bfbfbf;font-size:1.37em;height:32px;line-height:32px;padding:5px;width:225px;float:left;}
+form .input-wrap textarea {height:100px;}
+form .input-wrap .check {width:auto;margin:-1px 0 0;}
+
+/* Form submit button area wrap */
+.register-action,  
+.contact-action {margin:30px 0 0px;}
+
+/* Response errors */
+.error-wrap {color:#b10000;font-weight:bold;line-height:1em;overflow:hidden;padding-right: 10px;}
+
+/* Login form */
+#reg-auto label, 
+.forgot-password {font-size:0.75em;}
+
+/* Registration form */
+#registration {width:520px;}
+#registration label {width:200px}
+#registration input {width:300px}
+
+/* Contact us form */
+#contact input, 
+#contact textarea {width:400px;}
+#contact textarea {height:250px;}
+
+/* Change password form */
+#change-password {width:680px;}
+#change-password label {width:250px;}
+#change-password input {width:410px;}
+#change-password input[type="submit"] {width:100px;}
+
+/* forgot password form */
+#forgot {padding-top:10px;}
+
+
+
+/************/
+/* BUTTONS */
+
+.framework-button {
+	border-radius:4px;
+	background: #efefef; 
+	background: -moz-linear-gradient(center top , #fff, #efefef)  repeat scroll 0 0 #f6f6f6;
+	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#efefef));
+	border:1px solid #ccc;
+	cursor:pointer;
+	display:inline-block;
+	padding:1px 0.5em!important;
+	white-space:nowrap;
+	outline:none;
+}
+
+.framework-button:hover, 
+.framework-button:focus {
+	box-shadow:0px 0px 3px #999;
+}
+
+.framework-button:active {
+	box-shadow:0 0 3px #666;
+	background:-moz-linear-gradient(center top , #ececec, #fff)  repeat scroll 0 0 #f6f6f6;
+	background:-webkit-gradient(linear, left top, left bottom, from(#ececec), to(#fff));
+}
+
+/* Large style ajax buttons */
+.register-button, 
+.login-button, 
+.contact-button,
+.forgot-button {
+	float:right;
+	font-size:1.18em;
+	height:2.4em;
+}
+
+
+/* Sprites in large buttons  */
+.framework-button div {
+	float:left;
+	overflow:hidden;
+	width:26px;
+	height:22px;
+	margin:0 8px 0 3px;
+}
+.register-button div, 
+.contact-button div {
+	background-position:-1px -114px;
+}
+.login-button div,
+.forgot-button div {
+	background-position:-29px -114px;
+}
+
+
+
+
+
+
+
+
+
+
+
+

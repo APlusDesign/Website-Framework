@@ -1,5 +1,0 @@
-User-agent: *
-Disallow: /_code/
-Disallow: /_content/ajax/
-Disallow: /_templates/
-Disallow: /ajax/
