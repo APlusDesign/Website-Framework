@@ -37,6 +37,8 @@ class websiteFramework {
 	@$this->mail 	- the mail object
 	**/
 	function __construct(){
+
+		// Config
 		include(APPLICATION_PATH . 'config.inc.php');
 
 		// Database object + connection
@@ -45,20 +47,20 @@ class websiteFramework {
 
 		// User object 
 		$this->user = $user = new uFlex();
-		$user->db['host'] = DB_SERVER;
-		$user->db['user'] = DB_USER;
-		$user->db['pass'] = DB_PASS;
-		$user->db['name'] = DB_DATABASE;
+		$user->db['host'] 	= DB_SERVER;
+		$user->db['user'] 	= DB_USER;
+		$user->db['pass'] 	= DB_PASS;
+		$user->db['name'] 	= DB_DATABASE;
 
 		// Mail object
 		$this->mail = $mail = new PHPMailer;
-		$mail->isSMTP();                            // Set mailer to use SMTP
-		$mail->SMTPAuth = true;                     // Enable SMTP authentication
-		$mail->Host = MAIL_HOST;  					// Specify main and backup server
-		$mail->Username = MAIL_USERNAME;            // SMTP username
-		$mail->Password = MAIL_PASSWORD;            // SMTP password
-		$mail->Port = MAIL_PORT;  					// SMTP port
-		$mail->SMTPSecure = 'ssl';                  // Enable encryption
+		$mail->isSMTP();							// Set mailer to use SMTP
+		$mail->SMTPAuth 	= true;					// Enable SMTP authentication
+		$mail->Host 		= MAIL_HOST;			// Specify main and backup server
+		$mail->Username 	= MAIL_USERNAME;		// SMTP username
+		$mail->Password 	= MAIL_PASSWORD;		// SMTP password
+		$mail->Port 		= MAIL_PORT;  			// SMTP port
+		$mail->SMTPSecure 	= 'ssl';				// Enable encryption
 
 		// echo "<pre>";
 		// print_r($this);
@@ -89,21 +91,29 @@ class websiteFramework {
 
 	// Loads a view with a template, or just a view!
 	public function load_view() { 
-		$name = $this->mvc['template'];
-		$template_path = BASE_PATH . 'templates/' . $name . '/index.php';
-		if($this->mvc['view']) {
-			if($name!='') {
+		// View and template data
+		$view 			= $this->mvc['view'];
+		$viewPath		= BASE_PATH . 'views' . $this->mvc['route'] . $view . '.php'; 
+		$template 		= $this->mvc['template'];
+		$template_path 	= BASE_PATH . 'templates/' . $template . '/index.php';
+		// Include them
+		if(file_exists($viewPath)) {
+			if($template) {
 				if(file_exists($template_path)) {
 					include_once $template_path;
 				} else {
-					die('The template <strong>' . $name . '.php</strong> could not be found at <pre>' . $template_path . '</pre>');
+					die('The template <strong>' . $template . '.php</strong> could not be found at <pre>' . $template_path . '</pre>');
 				}
 			} else {
-				// This lets us skip including a template, good for ajax calls
-				include_once  BASE_PATH . 'views/'.$this->mvc['route'].$this->mvc['view'].'.php';
+				// This lets us skip including a template when displaying a view, good for ajax calls
+				include_once  $viewPath;
 			}
+		} else {
+			die('The view <strong>' . $view . '.php</strong> could not be found at <pre>' . $viewPath . '</pre>');
 		} 		
 	}
+
+
 
 
 	/**
@@ -115,6 +125,8 @@ class websiteFramework {
 		$html = "<p>Hello World</p>\n\t";
 		return $html;
 	}
+
+
 
 
 
