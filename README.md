@@ -19,7 +19,7 @@ Lets assume I'm using WAMP and I want my new website to appear at 'http://local.
 
 1. Unzip the Website Framework package into a new website space (e.g. c:\wamp\www\mysite)
 
-2. Set up a new website as you normally would with a new vhosts record. Point the root to the '\website\' folder in (\wamp\www\mysite)
+2. Set up a new website as you normally would with a new vhosts record, there is an example below. Point the root to the '\website\' folder in (\wamp\www\mysite)
 
 3. Create a database for this website. For more detailed descriptions on creating a database please see. (http://www.youtube.com/watch?v=nBz2lG_jm-A)
 
@@ -40,9 +40,9 @@ Lets assume I'm using WAMP and I want my new website to appear at 'http://local.
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 
-5. Open '/framework/application/config.inc.php' in a text editor and fill in the fields marked 'XXXXXXXXX' with your site details, including your database settings. More detailed explanations can be found here (www.website-framwork.com/config). 
+5. Open '/framework/application/config.inc.php' edit the fields marked 'XXXXXXXXX' with your site details, including your database and mail settings. More detailed explanations can be found here (www.website-framwork.com/config) 
 
-6. Double check you've configured your site correctly, there is a example here (www.website-framwork.com/configure-wamp)
+6. Double check you've configured your site correctly, no seriously!  
 
 7. Browse to your new website (e.g. http://local.mysite.com/)
 
