@@ -8,22 +8,26 @@
 	*/
 
 
-	// Local version of user
+	// Local version of user object
 	$user = $this->user;
 
-	// Local version of mail
+	// Local version of mail object
 	$mail = $this->mail;
+
+	// Local version of database object
+	$db = $this->db;
 
 
 	
+	/*******************************************
+		Calls with views
+		------------------------
+		Some calls to this controller will have an identifier named type to determine a view
+
+	*/
 	if (isset($_REQUEST['type'])) {
 		
-		/*******************************************
-			Calls with views
-			------------------------
-			Some calls to this controller will have an identifier named type to determine a view
-
-		*/
+		
 		$this->mvc['view'] = $_REQUEST['type'];
 
 		// Methods
@@ -51,6 +55,7 @@
 			Some calls just return a json object, they will have an identifier named flag to determine output, but don't have a view!
 
 		*/
+
 		if (isset($_REQUEST["flag"])) {
 			$flag = $_REQUEST["flag"];
 		} else {
@@ -113,12 +118,12 @@
 				$reg = $user->register($data,true);
 				if($reg){
 					if(isset($data['email'])) {
-						
-						$mail->FromName = 'Website Framework';
+						$mail->From = $this->site_email;
+						$mail->FromName = $this->site_name . ' (Do not reply)';
 						$mail->AddAddress($data['email']);  
 
 						$mail->Subject = $this->site_name . " - Account Activation";
-						$mail->Body    = "Thanks for registering with us ".$data['username'].", All you have to do is click the confirmation link below to activate your account.\r\n" . 'http://'.$url."/ajax/type/activate/c/" . $reg; 
+						$mail->Body    = "Thanks for registering with us ".$data['username']." \r\n\n Click the confirmation link below to activate your account.\r\n\n" . 'http://'.$url."/ajax?type=activate&c=" . $reg; 
 						
 						$mail->Send();
 						
@@ -142,29 +147,26 @@
 			case 'forgot':
 				
 				if($_REQUEST['email']){
-					$res = $user->pass_reset($_REQUEST['email']);
+					$data = $user->pass_reset($_REQUEST['email']);
 					$url = $_SERVER['SERVER_NAME'];
 					
-					if($res){
+					if($data){
 						//Hash succesfully generated
-						//You would send an email to $res['email'] with the URL+HASH $res['hash'] to enter the new password
+						//You would send an email to $data['email'] with the URL+HASH $data['hash'] to enter the new password
 						//In this demo we will just redirect the user directly
+						// Send a verification response to user if valid email
 						
-						if(isset($res['email'])) {
-							
-							$mail->FromName = 'Website Framework';
-							$mail->AddAddress($res['email']);  
+						if(isset($data['email'])) {
+							$mail->From = $this->site_email;
+							$mail->FromName = $this->site_name . ' (Do not reply)';
+							$mail->AddAddress($data['email']);  
 
 							$mail->Subject = $this->site_name . " - Password Reset";
-							$mail->Body    = "Hi " . $res['username']. " please click the link below and enter a new password.\r\n" . 'http://'.$url."/user/changepassword?c=" . $res['hash']; 
+							$mail->Body    = "Hi " . $data['username']. ", you have requested a password change. You may change your password by following this link.\r\n" . 'http://'.$url."/user/changepassword?c=" . $data['hash']; 
 							
 							$mail->Send();
-							
 						}
 							
-						//$url = "change_password.php?c=" . $res['hash'];
-						
-						
 						//If there is not error
 						if(!$user->has_error()){
 							//A workaround to display a confirmation message in this specific  Example
@@ -215,26 +217,28 @@
 					
 					
 					// Insert email to a table called 'contact' if you desire
+					// YOu will have to create the table though
 					/*
-					$db = registry::get('db');
 					$db->query("INSERT INTO contact (name, phone, email, message) VALUES('$name', '$phone', '$email', '$message')"); 
 					$db->close();
 					*/
-					 
-					$mail->FromName = 'Website Framework';
+					
+
+					$mail->From 		= $this->site_email;
+					$mail->FromName 	= $this->site_name . ' (Do not reply)';
 					$mail->AddAddress($this->site_email);  
-					$mail->Subject = "$name_field has contacted " . $this->site_name;
-					$mail->Body    = "From: $name_field\n\n E-Mail: $email_field\n\n Message: $email_message\n\n "; 
+					$mail->Subject 		= "$name_field has contacted " . $this->site_name;
+					$mail->Body    		= "From: $name_field\n\n E-Mail: $email_field\n\n Message: $email_message\n\n "; 
 					$mail->Send();
 					
 					
 					// Send a verification response to user if valid email
 					if($email_field!='') {
-						
-						$mail->FromName = 'Website Framework (Do not reply)';
+						$mail->From 		= $this->site_email;
+						$mail->FromName 	= $this->site_name . ' (Do not reply)';
 						$mail->AddAddress($email_field);  
-						$mail->Subject = $this->site_name." - Contact Confirmation"; 
-						$mail->Body    = "Thanks for contacting us $name_field\n\n We will be in contact with you shortly\n\n\n Your Message to '".$this->site_name."': $email_message"; 
+						$mail->Subject 		= $this->site_name." - Contact Confirmation"; 
+						$mail->Body    		= "Thanks for contacting us $name_field\n\n We will be in contact with you shortly\n\n\n Your Message to '".$this->site_name."': $email_message"; 
 						$mail->Send();
 						
 					}  

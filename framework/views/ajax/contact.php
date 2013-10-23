@@ -1,7 +1,7 @@
 <div class="pre-window-wrap">
 	<h3>Contact us</h3>
 	<div class="user-form">
-		<form id="contact" method="post" action="/ajax/flag/contact/">
+		<form id="contact" method="post" action="/ajax?flag=contact">
 			<div class="input-wrap">
 				<label for="name">Name</label>
 				<input type="text" name="name" id="contact-name" value="">

@@ -13,14 +13,14 @@ RewriteRule ^(.*)$ http://www.%{HTTP_HOST}/$1 [R=301,L]
 
 
 # url key/value rewrites
-RewriteRule ^(user/profile.php)/([^/]*)/([^/]*)(/.*)?$ /$1/$4?$2=$3 [L,QSA,NC]
-RewriteRule ^(profile)/?$ /$1.php [L,NC]
+#RewriteRule ^(user/profile.php)/([^/]*)/([^/]*)(/.*)?$ /$1/$4?$2=$3 [L,QSA,NC]
+#RewriteRule ^(profile)/?$ /$1.php [L,NC]
 
-RewriteRule ^(test.php)/([^/]*)/([^/]*)(/.*)?$ /$1/$4?$2=$3 [L,QSA,NC]
-RewriteRule ^(test)/?$ /$1.php [L,NC]
+#RewriteRule ^(test.php)/([^/]*)/([^/]*)(/.*)$ /$1/$4?$2=$3 [L,QSA,NC]
+#RewriteRule ^(test)/$ /$1.php [L,NC]
 
-RewriteRule ^(ajax)/([^/]*)/([^/]*)(/.*)?$ /$1/$4?$2=$3 [L,QSA,NC]
-RewriteRule ^(ajax)/?$ /$1.php [L,NC]
+#RewriteRule ^(ajax)/([^/]*)/([^/]*)(/.*)?$ /$1/$4?$2=$3 [L,QSA,NC]
+#RewriteRule ^(index)/?$ /$1.php [L,NC]
 
 
 # Pretty url's

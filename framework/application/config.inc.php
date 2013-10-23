@@ -16,6 +16,7 @@ $this->site_name			= 'xxxxxxxxxx';
 /****
 	site_email 		- String
 	eg. 			- (admin@websiteframework.com) 
+	What			- The email address which you want contact messages and other site info mailed to.
 	Note 			- It has to be a valid email for the user registration and contact forms to work
 */
 $this->site_email			= 'xxxxxxxxxx';
@@ -87,8 +88,8 @@ if($this->local) {
 	define('DB_DATABASE', 		"xxxxxxxxxx");	
 	
 	// MAIL settings, if you don't know your servers MAIL settings use the same one you use for local
-	define('MAIL_HOST', 		"xxxxxxxxxx");
-	define('MAIL_PORT', 		"xxxxxxxxxx");
+	define('MAIL_HOST', 		"mail.yourdomain.com");   
+	define('MAIL_PORT', 		"465");
 	define('MAIL_USERNAME', 	"xxxxxxxxxx");
 	define('MAIL_PASSWORD', 	"xxxxxxxxxx");
 }

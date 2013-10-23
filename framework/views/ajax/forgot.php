@@ -1,6 +1,6 @@
 <div class="pre-window-wrap">
 	<h3>Forgotten your password?</h3>
-	<form id="forgot" method="post" action="/ajax/flag/forgot/">
+	<form id="forgot" method="post" action="/ajax?flag=forgot">
 		<div id="forgot-email" class="input-wrap">
 			<label>Email: </label>
 			<input name="email" type="text" value="">

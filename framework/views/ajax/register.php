@@ -1,6 +1,6 @@
 <div class="pre-window-wrap">
 	<h3>Register</h3>
-	<form id="registration" method="post" action="/ajax/flag/register">
+	<form id="registration" method="post" action="/ajax?flag=register">
 		<div id="reg-username" class="input-wrap">
 			<label>Username:</label>
 			<input type="text" name="username">

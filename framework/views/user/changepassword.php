@@ -27,5 +27,6 @@
 		</form>
 	</div>
 	<?php } else { ?>
+		<p>Password changed</p>
 		<a href="/">Return to <?php echo $this->href; ?></a>
 	<?php } ?>
