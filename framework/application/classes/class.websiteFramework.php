@@ -97,20 +97,22 @@ class websiteFramework {
 		$template 		= $this->mvc['template'];
 		$template_path 	= BASE_PATH . 'templates/' . $template . '/index.php';
 		// Include them
-		if(file_exists($viewPath)) {
-			if($template) {
-				if(file_exists($template_path)) {
-					include_once $template_path;
+		if(!is_null($view)) {
+			if(file_exists($viewPath)) {
+				if($template) {
+					if(file_exists($template_path)) {
+						include_once $template_path;
+					} else {
+						die('The template <strong>' . $template . '.php</strong> could not be found at <pre>' . $template_path . '</pre>');
+					}
 				} else {
-					die('The template <strong>' . $template . '.php</strong> could not be found at <pre>' . $template_path . '</pre>');
+					// This lets us skip including a template when displaying a view, good for ajax calls
+					include_once  $viewPath;
 				}
 			} else {
-				// This lets us skip including a template when displaying a view, good for ajax calls
-				include_once  $viewPath;
-			}
-		} else {
-			die('The view <strong>' . $view . '.php</strong> could not be found at <pre>' . $viewPath . '</pre>');
-		} 		
+				die('The view <strong>' . $view . '.php</strong> could not be found at <pre>' . $viewPath . '</pre>');
+			} 
+		}			
 	}
 
 
