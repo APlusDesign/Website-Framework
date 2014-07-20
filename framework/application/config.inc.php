@@ -1,6 +1,7 @@
 <?php
 
 
+
 /*******************************************
  FRAMEWORK CONFIG - 
  	(Change these)
@@ -48,50 +49,56 @@ $this->seo = array (
 
 
 /*******************************************
- Environment variables - 
- 	(Don't change these)
- 		For detailed descriptions please see (www.website-framework.com/config#environment)
+ DATABASE CONFIG
+ 	(Change these to your server setttings)
+ 		For detailed descriptions please see (www.website-framework.com/config#database)
 */
- 		
-// Switch to determine development environment - Live or Local (true:false)
-$this->local 	= ('http://'.$_SERVER['SERVER_NAME'].'/' == $this->local_url ? true : false);
-// Websites top level URL ie. (http://www.website-framework.com/ OR http://local.website-framework.com/)
-$this->href 	= ($this->local ? $this->local_url : 'http://'.$_SERVER['SERVER_NAME'].'/');
 
+// DATABASE server settings
+$database_host 			= "127.0.0.1";
+$database_name 			= "xxxxxxxxxx";
+$database_user 			= "xxxxxxxxxx";
+$database_password 		= "xxxxxxxxxx";
 
 
 
 
 /*******************************************
- Database & MAIL config for both Local and Live versions of your site - 
+ MAIL CONFIG
  	(Change these to your server setttings)
- 		For detailed descriptions please see (www.website-framework.com/config#database)
  		For detailed descriptions please see (www.website-framework.com/config#mail)
 */
-if($this->local) {
-	// Local database server details, see (www.website-framework.com/config)
-	define('DB_SERVER', 		"127.0.0.1");  		
-	define('DB_USER', 			"root"); 			 	
-	define('DB_PASS', 			"");
-	define('DB_DATABASE', 		"xxxxxxxxxx");
-	
-	// MAIL settings, you can actually just use your gmail for emailing
-	define('MAIL_HOST', 		"smtp.gmail.com");
-	define('MAIL_PORT', 		"465");
-	define('MAIL_USERNAME', 	"xxxxxxxxxx@gmail.com");
-	define('MAIL_PASSWORD', 	"xxxxxxxxxx");
-} else {
-	// Live database server details, see (www.website-framework.com/config)
-	define('DB_SERVER', 		"xxxxxxxxxx");
-	define('DB_USER', 			"xxxxxxxxxx");
-	define('DB_PASS', 			"xxxxxxxxxx");
-	define('DB_DATABASE', 		"xxxxxxxxxx");	
-	
-	// MAIL settings, if you don't know your servers MAIL settings use the same one you use for local
-	define('MAIL_HOST', 		"mail.yourdomain.com");   
-	define('MAIL_PORT', 		"465");
-	define('MAIL_USERNAME', 	"xxxxxxxxxx");
-	define('MAIL_PASSWORD', 	"xxxxxxxxxx");
-}
 
+// MAIL server settings 
+$mail_port 				= "465";
+$mail_host 				= "mail.yourdomain.com";
+$mail_username 			= "xxxxxxxxxx@yourdomain.com";
+$mail_password 			= "xxxxxxxxxx";
+
+
+
+
+
+
+/********************************************************************
+	Local server settings 
+		- isLocal()
+			returns bool
+				true = local server
+*/
+if($this->isLocal()) {
+	// Overide database settings for local server
+	$database_user 			= "root";
+	$database_password 		= "";
+	// Overide mail settings for local server
+	$this->site_email		= 'xxxxxxxxxx@gmail.com';
+	$mail_host 				= "smtp.gmail.com";
+	$mail_username 			= "xxxxxxxxxx@gmail.com";
+	$mail_password 			= "xxxxxxxxxx";
+} 
+
+
+/********************************************************************
+	End config
+*/
 ?>

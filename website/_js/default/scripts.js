@@ -6,11 +6,49 @@
 function startApplication() {
 	// Base url for all your ajax calls
   	websiteFramework.BASE_URL = document.getElementsByTagName('base')[0].href;
+  	// Local switch
+	websiteFramework.LOCAL 		= $('#local-root').length;
 	// User login, register, logout, contact controls
 	websiteFramework.controls = userControls();
+	// Fancy box set-up
+	fancy_setup();
+	// New windows on class '_blank'
+	newWindow_setup();
 	// View the website object
 	console.log(websiteFramework)
 }
+
+
+
+/*******************/
+/* New windows    */
+/*****************/
+function newWindow_setup() {
+	var tmp = $("._blank");
+	$.each(tmp, function(i, val) { 
+		$(this).attr('target', '_blank').removeClass('_blank')
+	});
+}
+
+
+
+/*******************/
+/* Fancybox setup */
+/*****************/
+function fancy_setup() {
+	$(".fancylink").fancybox({
+		nextMethod : 'resizeIn',
+		nextSpeed  : 250,
+		prevMethod : false,
+		beforeShow : function() {
+			// Maybe edit the title?
+		}
+	});
+}
+
+
+
+
 
 
 
@@ -23,7 +61,13 @@ function userControls () {
 	// Login Button event + Login page actions
 	var btnLogin = $('.btn-login');
 	if(btnLogin.length) {
-		btnLogin.fancybox({
+		btnLogin.fancybox({ 
+			ajax : {
+				type: 'GET',
+				data: {
+					ajax: 1
+				}
+			},
 			afterShow : function() {
 				new loginUser();
 			}
@@ -45,6 +89,12 @@ function userControls () {
 	var btnRegister = $('.btn-register');
 	if(btnRegister.length) {
 		btnRegister.fancybox({
+			ajax : {
+				type: 'GET',
+				data: {
+					ajax: 1
+				}
+			},
 			afterShow : function() {
 				new registerUser();
 			},
@@ -54,11 +104,17 @@ function userControls () {
 			}
 		});	
 	}
-	
+
 	// Contact Button event + Contact page actions
 	var btnContact = $('.btn-contact');
 	if(btnContact.length) {
 		btnContact.fancybox({
+			ajax : {
+				type: 'GET',
+				data: {
+					ajax: 1
+				}
+			},
 			afterShow : function() {
 				new contact();
 			}
@@ -75,12 +131,15 @@ function userControls () {
 }
 
 
+
+
 /*********************************************************/
 /* Controls and actions for the AJAXIAN USER system 	*/
 /*******************************************************/
 
+
 /***********************/
-/* Registering a user */
+/* Registering a user */ 
 
 function registerUser (el, options) {
 	
@@ -107,7 +166,7 @@ function registerUser (el, options) {
 	this.setElements = function(t){
 		var obj = this;
 		this.button = $("<button>")
-			.html('<div></div><span>Register with us<span>')
+			.html('<div></div><span>Register with us</span>')
 			.addClass('framework-button large register-button')
 			.click(function (e) { 
 				e.preventDefault();		
@@ -143,7 +202,7 @@ function registerUser (el, options) {
 				$('.fancybox-wrap').find(".pre-window-wrap").html(res.html);
 			}
 		}
-		$.getJSON(websiteFramework.BASE_URL+'ajax', this.data, oCallback);
+		$.getJSON(websiteFramework.BASE_URL+'ajax/', this.data, oCallback);
 	}	
 	
 	this.init();
@@ -225,7 +284,8 @@ function loginUser (el, options) {
 					$.fancybox.close()
 					if (res.updates) {
 						// Successful login action
-						window.location.reload();
+						//console.log(res);
+						window.location = '/user';
 						// You might want to take them to the user page after login, I typically do not want that to happen so I just refresh the page.
 					} else {
 						alert("Error: Not sure what went wrong with your request, please refresh the page");
@@ -313,12 +373,13 @@ var logoutUser = function (o, parent) {
 		type	: "POST",
 		cache	: false,
 		url		: websiteFramework.BASE_URL+'ajax/',
-		data	: {'flag':'logout'},
+		data	: {'flag':'logout', 'ajax': 1},
 		complete : function(data) {
 			window.location.reload();
 		}
 	});
 }
+
 
 
 /*******************/
@@ -339,6 +400,7 @@ function contact (el, options) {
 		this.form 		= $('#contact');
 		this.name 		= $('#contact-name');
 		this.email 		= $('#contact-email');
+		this.phone 		= $('#contact-phone');
 		this.message 	= $('#contact-message');
 		this.wrapper = $('.contact-action');
 		// Remove the submit button in favor of a nicer button
@@ -348,7 +410,7 @@ function contact (el, options) {
 	this.setElements = function(t){
 		var obj = this;
 		
-		this.button = $("<button>").html('<div></div><span>Contact us</span>').addClass('framework-button large contact-button').click(function (e) {
+		this.button = $("<button>").html('<div></div><span>Submit</span>').addClass('framework-button large contact-button').click(function (e) {
 			e.preventDefault();																																							
 			obj.formCheck();
 			return false;
@@ -363,6 +425,7 @@ function contact (el, options) {
 		this.data = {	
 			'name' 		: this.name.val(),
 			'email' 	: this.email.val(),
+			'phone' 	: this.phone.val(),
 			'message'	: this.message.val(),
 			'flag'		: 'contact'
 		}
@@ -452,12 +515,11 @@ function ajaxLoader (el, options) {
 		var overlay = $('<div></div>').css({
 			'background-color': this.options.bgColor,
 			'opacity':this.options.opacity,
-			'width':container.width(),
-			'height':container.height(),
+			'width':container.outerWidth(),
+			'height':container.outerHeight(),
 			'position':'absolute',
-			'top':'0px',
-			'left':'0px',
-			'z-index':1000
+			'top':'0',
+			'left':'0'
 		}).addClass('ajax_overlay');
 		// add an overiding class name to set new loader style 
 		if (this.options.classOveride) {
@@ -498,4 +560,35 @@ function isEmpty(object) {
 	for(var i in object) { return true; }
 	return false;
 }
+
+// transitions helper
+(function ($, F) {
+	F.transitions.resizeIn = function() {
+		var previous = F.previous,
+			current  = F.current,
+			startPos = previous.wrap.stop(true).position(),
+			endPos   = $.extend({opacity : 1}, current.pos);
+
+		startPos.width  = previous.wrap.width();
+		startPos.height = previous.wrap.height();
+
+		previous.wrap.stop(true).trigger('onReset').remove();
+
+		delete endPos.position;
+
+		current.inner.hide();
+
+		current.wrap.css(startPos).animate(endPos, {
+			duration : current.nextSpeed,
+			easing   : current.nextEasing,
+			step     : F.transitions.step,
+			complete : function() {
+				F._afterZoomIn();
+
+				current.inner.fadeIn("fast");
+			}
+		});
+	};
+
+}(jQuery, jQuery.fancybox));
 

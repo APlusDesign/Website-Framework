@@ -41,16 +41,34 @@ class websiteFramework {
 		// Config
 		include(APPLICATION_PATH . 'config.inc.php');
 
+		/********************************************************************
+			Defining server settings
+		*/
+		define('DB_SERVER', 		$database_host);
+		define('DB_DATABASE', 		$database_name);
+		define('DB_USER', 			$database_user);
+		define('DB_PASS', 			$database_password);
+		define('MAIL_HOST', 		$mail_host);
+		define('MAIL_PORT', 		$mail_port);
+		define('MAIL_USERNAME', 	$mail_username);
+		define('MAIL_PASSWORD', 	$mail_password);
+
 		// Database object + connection
 		$this->db = $db = Database::obtain(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
 		$db->connect();
 
 		// User object 
-		$this->user = $user = new uFlex();
-		$user->db['host'] 	= DB_SERVER;
-		$user->db['user'] 	= DB_USER;
-		$user->db['pass'] 	= DB_PASS;
-		$user->db['name'] 	= DB_DATABASE;
+		//Instantiate the User object
+		$this->user = new ptejada\uFlex\User();
+
+		//Add database credentials
+		$this->user->config->database->host = DB_SERVER;
+		$this->user->config->database->user = DB_USER;
+		$this->user->config->database->password = DB_PASS;
+		$this->user->config->database->name = DB_DATABASE; 
+
+		$this->user->start();
+
 
 		// Mail object
 		$this->mail = $mail = new PHPMailer;
@@ -61,6 +79,14 @@ class websiteFramework {
 		$mail->Password 	= MAIL_PASSWORD;		// SMTP password
 		$mail->Port 		= MAIL_PORT;  			// SMTP port
 		$mail->SMTPSecure 	= 'ssl';				// Enable encryption
+
+		/*******************************************
+		 Environment variables - 
+		 	(Don't change these)
+		 		For detailed descriptions please see (www.website-framework.com/config#environment)
+		*/
+		// Websites top level URL ie. (http://www.website-framework.com/ OR http://local.website-framework.com/)
+		$this->href 	= ($this->local ? $this->local_url : 'http://'.$_SERVER['SERVER_NAME'].'/');
 
 		// echo "<pre>";
 		// print_r($this);
@@ -129,6 +155,14 @@ class websiteFramework {
 	}
 
 
+	/**
+	Return true for local environment
+	@return bool
+	@scope public
+	**/
+	public function isLocal(){
+		return ('http://'.$_SERVER['SERVER_NAME'].'/' == $this->local_url ? true : false);
+	}
 
 
 
@@ -142,8 +176,15 @@ class websiteFramework {
 		$data = trim($data);
 		$data = stripslashes($data);
 		$data = htmlspecialchars($data);
+		$data = mysql_real_escape_string($data);
 		return $data;
 	}
+	
+	
+
+	/**
+	Some general redirect functions
+	**/
 	
 	/* Anytime you need to redirect to your 404 */
 	public function _404(){
@@ -163,6 +204,15 @@ class websiteFramework {
 		exit();
 	}
 	
+	/* Anytime you need to redirect to your admin */
+	public function _admin(){
+		$newplace="http://".$_SERVER['HTTP_HOST']."/user/admin";
+		header("HTTP/1.0");
+		header("Location: $newplace");
+		header("Connection: close");
+		exit();
+	}
+
 	/* redirect anywhere */
 	public function _redirect($url, $title){
 		header("HTTP/1.0 $title");

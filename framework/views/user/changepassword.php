@@ -16,8 +16,8 @@
 				<input type="submit" value="Change" class="framework-button large login-button">
 				<div class="error-wrap">
 					<?php
-						if(count($_POST) and $this->user->has_error()){
-							foreach($this->user->error() as $i=>$x){
+						if(count($_POST) and $this->user->log->getFormErrors()){
+							foreach($this->user->log->getFormErrors() as $i=>$x){
 								echo "<p class='reg-error'>$x</p>";
 							}
 						}
@@ -28,5 +28,6 @@
 	</div>
 	<?php } else { ?>
 		<p>Password changed</p>
-		<a href="/">Return to <?php echo $this->href; ?></a>
+		<p>You have been logged out</p>
+		<p><a href="/">Return to <?php echo $this->href; ?></a></p>
 	<?php } ?>

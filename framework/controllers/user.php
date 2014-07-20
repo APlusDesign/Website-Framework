@@ -1,25 +1,16 @@
 <?php 
 
-	/*
-		echo "<pre>";
-		print_r($_REQUEST);
-		echo "</pre>";
-		exit;
-	*/
 
 	// User is signed in
-	if($this->user->signed && !isset($_REQUEST['id'])) {
 
-		$tmp = $this->user->data;
+	if($this->user->isSigned() && !isset($_REQUEST['id'])) {
 
-		$username 	= $tmp['username'];
-		$date       = $tmp['reg_date'];
 		$type       = 'private';
 
 	} else {
-	// Viewing a public profile
 
-		$query = "SELECT u.* FROM users AS u ";
+		// Viewing a public profile
+		$query = "SELECT u.* FROM Users AS u ";
 				   
 		/* ID for public user lookup */
 		$uid = $_REQUEST['id'];
@@ -30,9 +21,9 @@
 		} 
 		
 		// Select the user
-		$query .= " WHERE u.user_id = '{$uid}'"; 
+		$query .= " WHERE u.ID = '{$uid}'"; 
 		$tmp = $this->db->fetch_array($query);
-	   	
+		
 
 		// exit if no user to 404
 		if(count($tmp)) {
@@ -41,12 +32,11 @@
 			$this->_404();
 		}
 
-		$username   = $user['username'];
-		$date       = $user['reg_date'];
 		$type       = 'public';
 	}
 
-	
+	$username 	= $this->user->Username;
+	$date       = $this->user->RegDate;
 	
 	// View data
 	$this->type   			= $type;

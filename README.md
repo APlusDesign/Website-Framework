@@ -21,23 +21,38 @@ Lets assume I'm using WAMP and I want my new website to appear at 'http://local.
 
 2. Set up a new website as you normally would with a new vhosts record, there is an example below. Point the root to the '\website\' folder in (\wamp\www\mysite)
 
-3. Create a database for this website. For more detailed descriptions on creating a database please see. (http://www.youtube.com/watch?v=nBz2lG_jm-A)
+3. Create a database for this website. For more detailed descriptions on creating a database please see. (http://www.youtube.com/watch?v=nBz2lG_jm-A), the easy way is to run this sql query, replace 'MyDatabaseName' with your site name
+
+		CREATE DATABASE IF NOT EXISTS MyDatabaseName;
+
 
 4. Run the MySQL below to create a table in the database you just created 
 
 
-		CREATE TABLE IF NOT EXISTS `users` (
-		  `user_id` int(7) NOT NULL AUTO_INCREMENT,
-		  `username` varchar(15) NOT NULL,
-		  `password` varchar(35) NOT NULL,
-		  `email` varchar(35) NOT NULL,
-		  `activated` int(1) NOT NULL DEFAULT '0',
-		  `confirmation` varchar(35) NOT NULL,
-		  `reg_date` int(11) NOT NULL,
-		  `last_login` int(11) NOT NULL DEFAULT '0',
-		  `group_id` int(2) NOT NULL DEFAULT '1',
-		  PRIMARY KEY (`user_id`)
-		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+		-- v1.1
+		CREATE TABLE IF NOT EXISTS `Users` (
+		  `ID` INT(7) UNSIGNED NOT NULL AUTO_INCREMENT,
+		  `Username` VARCHAR(15) NOT NULL,
+		  `Password` VARCHAR (40) NOT NULL,
+		  `Email` VARCHAR (100) NOT NULL,
+		  `Activated` TINYINT(1)  UNSIGNED NOT NULL DEFAULT '0',
+		  `Confirmation` CHAR(40) NOT NULL,
+		  `RegDate` INT(11) UNSIGNED NOT NULL,
+		  `LastLogin` INT(11) UNSIGNED NOT NULL DEFAULT '0',
+		  `GroupID` INT(2) UNSIGNED NOT NULL DEFAULT '1',
+		  PRIMARY KEY (`ID`)
+		) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+		-- v1.0
+		CREATE TABLE IF NOT EXISTS `contact` (
+		  `id` int(11) NOT NULL AUTO_INCREMENT,
+		  `name` text,
+		  `email` text,
+		  `phone` text,
+		  `date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+		  `message` text,
+		  PRIMARY KEY (`id`)		
+		) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
 5. Open '/framework/application/config.inc.php' edit the fields marked 'XXXXXXXXX' with your site details, including your database and mail settings. More detailed explanations can be found here (www.website-framwork.com/config) 

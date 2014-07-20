@@ -1,4 +1,6 @@
-<?php include($_SERVER['DOCUMENT_ROOT'] .'/../framework/index.php'); ?>
+<?php 
+$start = microtime(true);
+include($_SERVER['DOCUMENT_ROOT'] .'/../framework/index.php'); ?>
 <?php
 	// Define MVC data
 	$framework->mvc = array (
@@ -15,4 +17,8 @@
 		"page_keywords" => "website, framework, php, html5, css3, jquery"
 	);
 ?>
-<?php $framework->init(); ?>
+<?php $framework->init(); 
+$end = microtime(true);
+$creationtime = ($end - $start);
+printf("<br><br><p>Page created in %.6f seconds.</p>", $creationtime);
+?>

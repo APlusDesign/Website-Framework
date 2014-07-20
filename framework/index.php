@@ -33,10 +33,11 @@ define('CLASS_PATH', APPLICATION_PATH . 'classes/');
 define('WEBSITE',  $_SERVER['DOCUMENT_ROOT']); 
 
 // Classes
-include(CLASS_PATH . 'phpmailer/PHPMailerAutoload.php'); 
+
 include(CLASS_PATH . 'class.json.php'); 
 include(CLASS_PATH . 'class.database.php');
-include(CLASS_PATH . 'class.uFlex.php'); 
+include(CLASS_PATH . 'phpmailer/PHPMailerAutoload.php'); 
+include(CLASS_PATH . 'uflex/autoload.php');  
 include(CLASS_PATH . 'class.websiteFramework.php');
 
 // Start the Framework

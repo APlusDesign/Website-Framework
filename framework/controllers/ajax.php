@@ -32,6 +32,7 @@
 
 		// Methods
 		switch ($this->mvc['view']) {
+			
 			case 'activate':
 				if (isset($_REQUEST["c"])) {
 					$activated = $user->activate($_REQUEST["c"]);
@@ -44,6 +45,17 @@
 					header( 'Location: ' . $this->href) ;
 				}
 			break;
+
+			// Security check to make sure these pages were called using ajax
+			case 'contact':
+			case 'login':
+			case 'register':
+			case 'logout':
+				if(!isset($_REQUEST['ajax'])) {
+					$this->_404();
+				} 
+			break;
+
 		}	
 
 
@@ -73,24 +85,41 @@
 		
 			/* Login */
 			case 'login':
-				$username 	= $_REQUEST['username'];
-				$password 	= $_REQUEST['password'];
+				$username 	= $this->check_input($_REQUEST['username']);
+				$password 	= $this->check_input($_REQUEST['password']);
+
 				$auto 		= (isset($_REQUEST['auto']) ? $_REQUEST['auto'] : 0 );  
+				
 				$user->login($username,$password,$auto);
-				if($user->signed){
-					$html = "<div class='responses'>";
-					$html .= "<p>Thanks for Logging in.</p>";
-					$html .= "</div>";
-					$results = array (    
-						'html'  		=> $html,
-						'url'			=> $_SERVER['SERVER_NAME'],
-						'updates'		=> array (  
-											'current-user' => $user 
-										   )
-					);  
-				}else{
+
+				/*
+				echo $user->isSigned();
+				echo "<pre>";
+				print_r($user->log->getErrors());
+				echo "</pre>";
+				exit;
+				*/
+
+				if($username) {
+					if($user->isSigned()){
+						$html = "<div class='responses'>";
+						$html .= "<p>Thanks for Logging in.</p>";
+						$html .= "</div>";
+						$results = array (    
+							'html'  		=> $html,
+							'url'			=> $_SERVER['SERVER_NAME'],
+							'updates'		=> array (  
+												'current-user' => $user 
+												)
+						);  
+					} else {
+						$error = true;
+					}
+				} else {
 					$error = true;
+					$user->log->error(7);
 				}
+				
 			break;
 			
 			
@@ -107,26 +136,25 @@
 			case 'register':
 				
 				$url = $_SERVER['SERVER_NAME'];	
-
+		
 				$data = array (    
-					'username'  	=> $_REQUEST['username'],
-					'password'		=> $_REQUEST['password'],
-					'password2'  	=> $_REQUEST['password2'],
-					'email'  		=> $_REQUEST['email']
+					'Username'  	=> $this->check_input($_REQUEST['username']),
+					'Password'		=> $this->check_input($_REQUEST['password']),
+					'Password2'  	=> $this->check_input($_REQUEST['password2']),
+					'Email'  		=> $this->check_input($_REQUEST['email']),
+					'GroupID'  		=> 2 // default
 				);
 				
-				$reg = $user->register($data,true);
-				if($reg){
-					if(isset($data['email'])) {
+				$registered = $user->register($data,true);
+
+				if($registered){
+					if(isset($data['Email'])) {
 						$mail->From = $this->site_email;
 						$mail->FromName = $this->site_name . ' (Do not reply)';
-						$mail->AddAddress($data['email']);  
-
-						$mail->Subject = $this->site_name . " - Account Activation";
-						$mail->Body    = "Thanks for registering with us ".$data['username']." \r\n\n Click the confirmation link below to activate your account.\r\n\n" . 'http://'.$url."/ajax?type=activate&c=" . $reg; 
-						
+						$mail->AddAddress($data['Email']);  
+						$mail->Subject = $this->site_name . " - Account Registration";
+						$mail->Body    = "Thanks for registering with us ".$data['Username']." \r\n\n Click the confirmation link below to activate your account.\r\n\n" . 'http://'.$url."/ajax?type=activate&c=" . $registered; 
 						$mail->Send();
-						
 					}
 					
 					// Redirect to a thank you page
@@ -134,53 +162,50 @@
 
 					// Or use an ajax response and redirect.. This approach is not recommended
 					$results = array (    
-						'html'  		=> '<p>Thanks for registering</p><p>We have sent you an email just to verify you as real human</p>'
-					);  
+						'html'  		=> '<h3>Registered</h3><p>Thanks for registering</p><p>We have sent you a confirmation email</p>'
+					);
 					/**/
-			    }else{
-			        $error = true;	
-			    }
+				}else{
+					$error = true;	
+				}
+
 			break;
+			
+
 			
 			
 			/* forgotten password */
 			case 'forgot':
 				
-				if($_REQUEST['email']){
-					$data = $user->pass_reset($_REQUEST['email']);
-					$url = $_SERVER['SERVER_NAME'];
-					
-					if($data){
-						//Hash succesfully generated
-						//You would send an email to $data['email'] with the URL+HASH $data['hash'] to enter the new password
-						//In this demo we will just redirect the user directly
-						// Send a verification response to user if valid email
-						
-						if(isset($data['email'])) {
-							$mail->From = $this->site_email;
-							$mail->FromName = $this->site_name . ' (Do not reply)';
-							$mail->AddAddress($data['email']);  
+				$url 	= $_SERVER['SERVER_NAME'];
+				$email 	= null;
 
-							$mail->Subject = $this->site_name . " - Password Reset";
-							$mail->Body    = "Hi " . $data['username']. ", you have requested a password change. You may change your password by following this link.\r\n" . 'http://'.$url."/user/changepassword?c=" . $data['hash']; 
-							
-							$mail->Send();
-						}
-							
-						//If there is not error
-						if(!$user->has_error()){
-							//A workaround to display a confirmation message in this specific  Example
-							$results['html'] = '<h2>Password Reset</h2> <p>please check your email</p>';  
-						}
-						
-					} else {
-						$error = true;	
-					} 
+				if (isset($_REQUEST['email'])) {
+					$email = $_REQUEST['email'];
+				} 
+
+				$data = $user->resetPassword($email);
+
+				if($data){
+					// Hash succesfully generated
+
+					// Send a verification response to user if valid email
+					if($email) {
+						$mail->From = $this->site_email;
+						$mail->FromName = $this->site_name . ' (Do not reply)';
+						$mail->AddAddress($email);  
+						$mail->Subject = $this->site_name . " - Password Reset";
+						$mail->Body    = "Hi " . $user->Username . ", you have requested a password change. You may change your password by following this link.\r\n" . 'http://'.$url."/user/changepassword?c=" . $data->Confirmation; 
+						$mail->Send();
+					}
+					
+					$results = array (    
+						'html'  		=> '<h3>Password Reset</h3> <p>please check your email.</p>'
+					);	
+					
 				} else {
 					$error = true;	
-					unset($user->console['errors']);
-					$user->error("Please enter an email address");
-				}
+				} 
 				
 				
 			break;
@@ -191,59 +216,50 @@
 
 			/* Contact, store record, verification */
 			case 'contact':
+
 				$name 			= $this->check_input($_REQUEST['name']);
 				$email 			= $this->check_input($_REQUEST['email']);
+				// $phone 			= $this->check_input($_REQUEST['phone']);
 				$message 		= $this->check_input($_REQUEST['message']);
 				
 				// Validations
 				$errorStr 		= array();
 				if(strlen($name) < 3) {
-					$errorStr[] = "That name is too short";
+					$errorStr[] = "Name is not long enough";
 				}
 				if(!preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/",$email)) {
-					$errorStr[] = "That email is not valid";
+					$errorStr[] = "Email is not a valid address";
 				}
 				if(strlen($message) < 10) {
-					$errorStr[] = "That Message is too short";
+					$errorStr[] = "Message is not long enough";
 				}
+
+				// Everything ok or has error
 				if(count($errorStr)) {
 					$results['errors'] = $errorStr;
 				} else {
 					
-					// Format data
-					$name_field = stripcslashes($name); 
-					$email_field = stripcslashes($email); 
-					$email_message = stripcslashes($message);
-					
-					
 					// Insert email to a table called 'contact' if you desire
-					// YOu will have to create the table though
-					/*
-					$db->query("INSERT INTO contact (name, phone, email, message) VALUES('$name', '$phone', '$email', '$message')"); 
-					$db->close();
-					*/
+					//$db->query("INSERT INTO contact (name, phone, email, message) VALUES('$name', '$phone', '$email', '$message')"); 
+					//$db->close();
 					
-
-					$mail->From 		= $this->site_email;
-					$mail->FromName 	= $this->site_name . ' (Do not reply)';
+					$mail->From 		= $email;
+					$mail->FromName 	= $this->site_name . ' (Website)';
 					$mail->AddAddress($this->site_email);  
-					$mail->Subject 		= "$name_field has contacted " . $this->site_name;
-					$mail->Body    		= "From: $name_field\n\n E-Mail: $email_field\n\n Message: $email_message\n\n "; 
+					$mail->Subject 		= "$name has contacted " . $this->site_name;
+					$mail->Body    		= "From: $name\n\n E-Mail: $email\n\n Message: $message\n\n "; 
 					$mail->Send();
-					
+					$mail->ClearAddresses();
 					
 					// Send a verification response to user if valid email
-					if($email_field!='') {
-						$mail->From 		= $this->site_email;
-						$mail->FromName 	= $this->site_name . ' (Do not reply)';
-						$mail->AddAddress($email_field);  
-						$mail->Subject 		= $this->site_name." - Contact Confirmation"; 
-						$mail->Body    		= "Thanks for contacting us $name_field\n\n We will be in contact with you shortly\n\n\n Your Message to '".$this->site_name."': $email_message"; 
-						$mail->Send();
+					$mail->From 		= $this->site_email;
+					$mail->FromName 	= $this->site_name . ' (Do not reply)';
+					$mail->AddAddress($email);  
+					$mail->Subject 		= $this->site_name." - Contact Confirmation"; 
+					$mail->Body    		= "Thanks for contacting us $name\n\n We will be in contact with you shortly\n\n\n Your Message to '".$this->site_name."': $message"; 
+					$mail->Send();
 						
-					}  
-					
-					$results['html'] = '<h2>Thanks for contacting us</h2> <p>We will respond shortly</p>';  
+					$results['html'] = '<h3>Thanks for contacting '.$this->site_name.'</h3> <br> <p>Hi, '.$name.' we will respond to your enquiry shortly</p>';  
 				}
 				
 			break;
@@ -259,7 +275,7 @@
 		// Printing the errors if defaults fail...
 		if($error) {
 			$results = array (    
-				'errors' => $user->error()
+				'errors' => $user->log->getErrors()
 			); 
 		} 
 		
