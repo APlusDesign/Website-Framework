@@ -109,3 +109,7 @@ Guess that is actually only 7 steps ;)
 4. PHP EXTENSIONS
 
 	You'll need to activate the 'php_openssl' extension
+
+
+
+

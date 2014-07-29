@@ -4,10 +4,8 @@
 /****************/
 
 function startApplication() {
-	// Base url for all your ajax calls
-  	websiteFramework.BASE_URL = document.getElementsByTagName('base')[0].href;
-  	// Local switch
-	websiteFramework.LOCAL 		= $('#local-root').length;
+	// Local switch
+	websiteFramework.LOCAL = $('#local-root').length;
 	// User login, register, logout, contact controls
 	websiteFramework.controls = userControls();
 	// Fancy box set-up
@@ -15,7 +13,7 @@ function startApplication() {
 	// New windows on class '_blank'
 	newWindow_setup();
 	// View the website object
-	console.log(websiteFramework)
+	console.log(websiteFramework);
 }
 
 
@@ -23,10 +21,10 @@ function startApplication() {
 /*******************/
 /* New windows    */
 /*****************/
+
 function newWindow_setup() {
-	var tmp = $("._blank");
-	$.each(tmp, function(i, val) { 
-		$(this).attr('target', '_blank').removeClass('_blank')
+	$.each($("._blank"), function() { 
+		$(this).attr('target', '_blank').removeClass('_blank');
 	});
 }
 
@@ -35,6 +33,7 @@ function newWindow_setup() {
 /*******************/
 /* Fancybox setup */
 /*****************/
+
 function fancy_setup() {
 	$(".fancylink").fancybox({
 		nextMethod : 'resizeIn',
@@ -48,84 +47,63 @@ function fancy_setup() {
 
 
 
-
-
-
-
 /******************/
 /* USER CONTROLS */
 /****************/
 
 function userControls () {
 
-	// Login Button event + Login page actions
-	var btnLogin = $('.btn-login');
-	if(btnLogin.length) {
-		btnLogin.fancybox({ 
-			ajax : {
-				type: 'GET',
-				data: {
-					ajax: 1
-				}
-			},
-			afterShow : function() {
-				new loginUser();
-			}
-		});
-	}
-	
 	// Logout Button event + Logout actions
 	var btnLogout = $('.btn-logout');
 	if(btnLogout.length) {
-		btnLogout.bind({
-		 'click' : function(e){
+		btnLogout.click(function(e){
 			e.preventDefault(); 
 			logoutUser();
-		  }
 		});
 	}
 
-	// Register Button event + Register page actions
-	var btnRegister = $('.btn-register');
-	if(btnRegister.length) {
-		btnRegister.fancybox({
-			ajax : {
-				type: 'GET',
-				data: {
-					ajax: 1
-				}
-			},
-			afterShow : function() {
-				new registerUser();
-			},
-			afterClose: function() {
-				// Do you need a redirect after login?
-				// window.location.reload();
-			}
-		});	
-	}
-
-	// Contact Button event + Contact page actions
-	var btnContact = $('.btn-contact');
-	if(btnContact.length) {
-		btnContact.fancybox({
-			ajax : {
-				type: 'GET',
-				data: {
-					ajax: 1
-				}
-			},
-			afterShow : function() {
-				new contact();
-			}
-		});	
-	}
 	
+	// Add these buttons to the framework object
 	return {
-		'login'		: btnLogin,
-		'logout'	: btnLogout,
-		'register'	: btnRegister,
-		'contact' 	: btnContact
+		'login'		: fancyboxAjaxForm($('.btn-login'), function() {
+			new formHelper({
+				'formId': 'login',
+				'buttonTxt': 'Login',
+				'callback': function(res) {
+					$.fancybox.close()
+					if (res.updates) {
+						// Successful login action
+						window.location.reload();
+					} else {
+						alert("Error: Not sure what went wrong with your request, please refresh the page");
+					}
+				}
+			});
+			// Other actions
+			var btnForgot = $('.forgot-password');
+			if(btnForgot.length) {
+				btnForgot.fancybox({
+					afterShow : function() {
+						new formHelper({
+							'formId': 'forgot',
+							'buttonTxt': 'Reset',
+						});
+					}
+				});	
+			}
+		}),
+		'register'	: fancyboxAjaxForm($('.btn-register'), function() {
+			new formHelper({
+				'formId': 'register',
+				'buttonTxt': 'Register',
+			});
+		}),
+		'contact' 	: fancyboxAjaxForm($('.btn-contact'), function() {
+			new formHelper({
+				'formId': 'contact'
+			});
+		}),
+		'logout'	: btnLogout
 	}
 	
 }
@@ -138,229 +116,93 @@ function userControls () {
 /*******************************************************/
 
 
-/***********************/
-/* Registering a user */ 
+/*******************************************/
+/* Helper to set up the fancybox requests */
 
-function registerUser (el, options) {
-	
-	var settings = {}
-
-	this.options 	= jQuery.extend(settings, options);
-	
-	this.init = function(){
-		this.getElements();
-		this.setElements();
-	},
-	
-	this.getElements = function(t){
-		this.form 		= $('#registration');
-		this.userName 	= $('#reg-username input');
-		this.userPass 	= $('#reg-password input');
-		this.userPass2 	= $('#reg-password2 input');
-		this.userEmail 	= $('#reg-email input');
-		this.wrapper 	= $('.register-action');
-		// Remove the submit button in favor of a nicer button
-		this.wrapper.find('input[type="submit"]').remove();
-	},
-	
-	this.setElements = function(t){
-		var obj = this;
-		this.button = $("<button>")
-			.html('<div></div><span>Register with us</span>')
-			.addClass('framework-button large register-button')
-			.click(function (e) { 
-				e.preventDefault();		
-				obj.regCheck();
-				return false;
-			});
-		this.wrapper.append(this.button);
-		this.error = new errorHelper(this.wrapper);
-	},
-	
-	this.regCheck = function() {
-		this.button.attr('disabled', 'disabled');
-		this.overlay = new ajaxLoader('.fancybox-wrap');
-		this.data = {	
-			'username' 	: this.userName.val(),
-			'password' 	: this.userPass.val(),
-			'password2' : this.userPass2.val(),
-			'email' 	: this.userEmail.val(),
-			'flag'		: 'register'
-		}
-		this.save();	
-	},	
-	
-	this.save = function() {
-		var obj = this;
-		var oCallback = function (response) {
-			var res = response;
-			obj.overlay.remove();
-			if (res.errors) {
-				obj.error.insertErrors(res);
-				obj.button.attr('disabled', false);
-			} else {
-				$('.fancybox-wrap').find(".pre-window-wrap").html(res.html);
-			}
-		}
-		$.getJSON(websiteFramework.BASE_URL+'ajax/', this.data, oCallback);
-	}	
-	
-	this.init();
-};
-
-
-
-/****************/
-/* Login users */
-
-function loginUser (el, options) {
-	
-	var settings = {}
-
-	this.options 	= jQuery.extend(settings, options);
-	
-	this.init = function(){
-		this.getElements();
-		this.setElements();
-	},
-	
-	this.getElements = function(t){
-		this.form 		= $('#login');
-		this.userName 	= $('#reg-username input');
-		this.userPass 	= $('#reg-password input');
-		this.auto 		= $('#reg-auto input[name=auto]');
-		this.wrapper 	= $('.login-action');
-		// Remove the submit button in favor of a nicer button
-		this.wrapper.find('input[type="submit"]').remove();
-	},
-	
-	this.setElements = function(t){
-		var obj = this;
-		// Forgot password link
-		// Dragons, attaches fancybox event everytime we open the login window..
-		var btnForgot = $('.forgot-password');
-		if(btnForgot.length) {
-			btnForgot.fancybox({
-				afterShow : function() {
-					new forgotUser();
+function fancyboxAjaxForm(btn, aftershow) {
+	// Attach event to a btn, run a function after fancybox content is loaded
+	if(btn.length) {
+		btn.fancybox({
+			'type': 'ajax',
+			'ajax': {
+				type: 'GET',
+				data: {
+					ajax: 1
 				}
-			});	
-		}
-		// Submit login details button
-		this.button = $("<button>")
-			.html('<div></div><span>Login</span>')
-			.addClass('framework-button large login-button')
-			.click(function (e) {
-				e.preventDefault();																																							
-				obj.regCheck();
-				return false;
-			});
-		this.wrapper.append(this.button);
-		this.error = new errorHelper(this.wrapper);	
-	},
-	
-	this.regCheck = function() {
-		this.button.attr('disabled', 'disabled');
-		this.overlay = new ajaxLoader('.fancybox-wrap');
-		this.data = {	
-			'username' 	: this.userName.val(),
-			'password' 	: this.userPass.val(),
-			'auto'		: this.auto.val(),
-			'flag'		: 'login'
-		}
-		this.save();	
-	},	
-	
-	this.save = function() {
-		
-		var obj = this;
-		var oCallback = function (response) {
-				var res = response;
-				obj.overlay.remove();
-				if (res.errors) {
-					obj.error.insertErrors(res);
-					obj.button.attr('disabled', false);
-				} else {
-					$.fancybox.close()
-					if (res.updates) {
-						// Successful login action
-						//console.log(res);
-						window.location = '/user';
-						// You might want to take them to the user page after login, I typically do not want that to happen so I just refresh the page.
-					} else {
-						alert("Error: Not sure what went wrong with your request, please refresh the page");
-					}
-				}
-			
-		}
-		$.getJSON(websiteFramework.BASE_URL+'ajax/', this.data, oCallback);
-	}	
-	
-	this.init();
-};
+			},
+			'afterShow': aftershow
+		});	
+	}
+	return btn
+}
 
 
-/**************************/
-/* Forgot password users */
+/*********************/
+/* Ajax form helper */
 
-function forgotUser (el, options) {
+function formHelper (options) {
 	
-	var settings = {}
+	var settings = {
+		formId: '',
+		buttonClass: '',
+		buttonTxt: 'Submit',
+		callback: function(res) {
+			$("#ajax-form").html(res.html);
+		}
+	}
 
 	this.options 	= jQuery.extend(settings, options);
 	
 	this.init = function(){
 		this.getElements();
 		this.setElements();
-		return this;
 	},
 	
 	this.getElements = function(t){
-		this.form 		= $('#forgot');
-		this.userEmail 	= $('#forgot-email input');
-		this.wrapper 	= $('.forgot-action');
-		// Remove the submit button in favor of a nicer button
-		this.wrapper.find('input[type="submit"]').remove();
+		this.form 		= $('#'+this.options.formId);
+		this.submit 	= this.form.find('input[type="submit"]');
+		this.wrapper 	= $('.actions');
 	},
 	
 	this.setElements = function(t){
-		var obj = this;
-		this.button = $("<button>").html('<div></div><span>Reset</span>').addClass('framework-button large forgot-button').click(function (e) {
-			e.preventDefault();																																							
-			obj.regCheck();
+		var $this = this;
+		this.submit.remove();
+		this.button = $("<button class='framework-button large "+this.options.formId+"-button'></button>")
+		.html('<div></div><span>'+this.options.buttonTxt+'</span>')
+		.addClass(this.options.buttonClass)
+		.click(function (e) {
+			e.preventDefault();		
+			$this.formCheck();
 			return false;
 		});
 		this.wrapper.append(this.button);
-		this.error = new errorHelper(this.wrapper);	
+		this.error = new errorHelper(this.form);	
 	},
 	
-	this.regCheck = function() {
+	this.formCheck = function() {
 		this.button.attr('disabled', 'disabled');
 		this.overlay = new ajaxLoader('.fancybox-wrap');
-		this.data = {	
-			'email' 	: this.userEmail.val(),
-			'flag'		: 'forgot'
-		}
-		this.save();	
+		this.send();	
 	},	
 	
-	this.save = function() {
-		var obj = this;
+	this.send = function() {
+		var $this = this;
 		var oCallback = function (response) {
 			var res = response;
-			obj.overlay.remove();
+			$this.overlay.remove();
 			if (res.errors) {
-				obj.error.insertErrors(res);
-				obj.button.attr('disabled', false);
+				$this.error.insertErrors(res);
+				$this.button.attr('disabled', false);
 			} else {
-				$('.fancybox-wrap').find(".pre-window-wrap").html(res.html);
+				$this.options.callback(res);
 			}
 		}
-		$.getJSON(websiteFramework.BASE_URL+'ajax/', this.data, oCallback);
+		$.getJSON(this.form.attr('action'), this.form.serializeObject(), oCallback);
 	}	
 	
-	return this.init();
+	this.init();
 };
+
 
 
 /*******************/
@@ -372,83 +214,13 @@ var logoutUser = function (o, parent) {
 	$.ajax({
 		type	: "POST",
 		cache	: false,
-		url		: websiteFramework.BASE_URL+'ajax/',
+		url		: '/ajax/',
 		data	: {'flag':'logout', 'ajax': 1},
 		complete : function(data) {
 			window.location.reload();
 		}
 	});
 }
-
-
-
-/*******************/
-/* Contact script */
-
-function contact (el, options) {
-	
-	var settings = {}
-
-	this.options 	= jQuery.extend(settings, options);
-	
-	this.init = function(){
-		this.getElements();
-		this.setElements();
-	},
-	
-	this.getElements = function(t){
-		this.form 		= $('#contact');
-		this.name 		= $('#contact-name');
-		this.email 		= $('#contact-email');
-		this.phone 		= $('#contact-phone');
-		this.message 	= $('#contact-message');
-		this.wrapper = $('.contact-action');
-		// Remove the submit button in favor of a nicer button
-		this.wrapper.find('input[type="submit"]').remove();
-	},
-	
-	this.setElements = function(t){
-		var obj = this;
-		
-		this.button = $("<button>").html('<div></div><span>Submit</span>').addClass('framework-button large contact-button').click(function (e) {
-			e.preventDefault();																																							
-			obj.formCheck();
-			return false;
-		});
-		this.wrapper.append(this.button);
-		this.error = new errorHelper(this.wrapper);	
-	},
-	
-	this.formCheck = function() {
-		this.button.attr('disabled', 'disabled');
-		this.overlay = new ajaxLoader('.fancybox-wrap');
-		this.data = {	
-			'name' 		: this.name.val(),
-			'email' 	: this.email.val(),
-			'phone' 	: this.phone.val(),
-			'message'	: this.message.val(),
-			'flag'		: 'contact'
-		}
-		this.send();	
-	},	
-	
-	this.send = function() {
-		var obj = this;
-		var oCallback = function (response) {
-			var res = response;
-			obj.overlay.remove();
-			if (res.errors) {
-				obj.error.insertErrors(res);
-				obj.button.attr('disabled', false);
-			} else {
-				$('.fancybox-wrap').find(".pre-window-wrap").html(res.html);
-			}
-		}
-		$.getJSON(websiteFramework.BASE_URL+'ajax/', this.data, oCallback);
-	}	
-	
-	this.init();
-};
 
 
 
@@ -463,41 +235,127 @@ function errorHelper (el, options) {
 	
 	this.init = function(){
 		this.errorWrapper = $("<div>").addClass('error-wrap');
-		this.parent.append(this.errorWrapper);
+		this.form.append(this.errorWrapper);
 	},
 	
 	this.insertErrors = function(res) {
 		var 
-			obj = this,
+			$this = this,
 			err = res.errors;
-		obj.removeErrors();
+		this.removeErrors();
 		$.each(err, function(i, val) { 
-			obj.insertError(val);
+			$this.insertError(val);
+			$this.displayError(i);
 		});
 	},
 	
 	this.insertError = function(val) {
-		this.errorWrapper.append($("<p>").html(val).addClass('reg-error'));
+		this.errorWrapper.append($("<p class='reg-error'></p>").html(val));
+	},
+
+	this.displayError = function(i) {
+		var tmp = $('#'+i);
+		if(tmp.length) {
+			tmp.parent().addClass('error');
+		}
 	},
 	
 	this.removeErrors = function() {
 		this.errorWrapper.find("p.reg-error").remove();
+		this.form.find(".error").removeClass('error');
 	}
 	
-	this.parent = el;
-	if(this.parent) {
+	this.form = el;
+	if(this.form.length) {
 		this.init();
 	}
 };
 	
 
 
+
+
+
+
+
+
+/*******************/
+/* Helper Methods */
+/*****************/
+
+
+
+/*******************************************************************/
+/* Serialises a forms input data into a json object for transport */
+
+$.fn.serializeObject = function(){
+	var o = {};
+	var a = this.serializeArray();
+	$.each(a, function() {
+		if (o[this.name]) {
+			if (!o[this.name].push) {
+				o[this.name] = [o[this.name]];
+			}
+			o[this.name].push(this.value || '');
+		} else {
+			o[this.name] = this.value || '';
+		}
+	});
+	return o;
+};	
+
+
+
+/********************/
+/* is empty object */
+
+function isEmpty(object) {
+	for(var i in object) { return true; }
+	return false;
+}
+
+
+
+/***********************/
+/* transitions helper */
+
+(function ($, F) {
+	F.transitions.resizeIn = function() {
+		var previous = F.previous,
+			current  = F.current,
+			startPos = previous.wrap.stop(true).position(),
+			endPos   = $.extend({opacity : 1}, current.pos);
+
+		startPos.width  = previous.wrap.width();
+		startPos.height = previous.wrap.height();
+
+		previous.wrap.stop(true).trigger('onReset').remove();
+
+		delete endPos.position;
+
+		current.inner.hide();
+
+		current.wrap.css(startPos).animate(endPos, {
+			duration : current.nextSpeed,
+			easing   : current.nextEasing,
+			step     : F.transitions.step,
+			complete : function() {
+				F._afterZoomIn();
+
+				current.inner.fadeIn("fast");
+			}
+		});
+	};
+
+}(jQuery, jQuery.fancybox));
+
+
+
 /****************/
 /* Ajax loader */
-/**************/
 
 function ajaxLoader (el, options) {
-	// Becomes this.options
+
 	var defaults = {
 		bgColor 		: '#fff',
 		duration		: 300,
@@ -548,47 +406,3 @@ function ajaxLoader (el, options) {
 
 	this.init();
 }	
-
-
-	
-/*******************/
-/* Helper Methods */
-/*****************/
-
-/* is empty object */
-function isEmpty(object) {
-	for(var i in object) { return true; }
-	return false;
-}
-
-// transitions helper
-(function ($, F) {
-	F.transitions.resizeIn = function() {
-		var previous = F.previous,
-			current  = F.current,
-			startPos = previous.wrap.stop(true).position(),
-			endPos   = $.extend({opacity : 1}, current.pos);
-
-		startPos.width  = previous.wrap.width();
-		startPos.height = previous.wrap.height();
-
-		previous.wrap.stop(true).trigger('onReset').remove();
-
-		delete endPos.position;
-
-		current.inner.hide();
-
-		current.wrap.css(startPos).animate(endPos, {
-			duration : current.nextSpeed,
-			easing   : current.nextEasing,
-			step     : F.transitions.step,
-			complete : function() {
-				F._afterZoomIn();
-
-				current.inner.fadeIn("fast");
-			}
-		});
-	};
-
-}(jQuery, jQuery.fancybox));
-

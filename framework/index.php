@@ -24,23 +24,22 @@
 */
  
 // Error reporting
-// error_reporting(0);
+error_reporting(E_ALL);
 
 // Paths
-define('BASE_PATH',  __DIR__ . '/'); 
+define('BASE_PATH', __DIR__ . '/'); 
 define('APPLICATION_PATH', BASE_PATH . 'application/');
 define('CLASS_PATH', APPLICATION_PATH . 'classes/');
-define('WEBSITE',  $_SERVER['DOCUMENT_ROOT']); 
+define('WEBSITE', $_SERVER['DOCUMENT_ROOT']); 
 
 // Classes
-
 include(CLASS_PATH . 'class.json.php'); 
 include(CLASS_PATH . 'class.database.php');
 include(CLASS_PATH . 'phpmailer/PHPMailerAutoload.php'); 
 include(CLASS_PATH . 'uflex/autoload.php');  
+include(CLASS_PATH . 'class.functions.php');
 include(CLASS_PATH . 'class.websiteFramework.php');
 
 // Start the Framework
-$framework = new websiteFramework();
-
+$framework = new WebsiteFramework();
 ?>

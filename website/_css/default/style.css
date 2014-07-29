@@ -148,32 +148,35 @@ p {
 /*******************/
 /* Ajax + forms	  */
 
-.pre-window-wrap {min-height:300px;text-align:left;overflow:hidden;padding:15px;}
-.pre-window-wrap input[type="submit"] {display:none;}
+#ajax-form {text-align:left;overflow:hidden;padding:15px;}
+#ajax-form input[type="submit"] {display:none;} 
 
 /* forms */
-form .input-wrap {margin:0 0 15px 0;overflow:hidden;}
-form .input-wrap label {color:#6c6c6c;font-size:1.25em;width:120px;padding:10px 5px 0 0;float:left;line-height:1.12em;}
-form .input-wrap input, 
-form .input-wrap textarea {border:1px solid #bfbfbf;font-size:1.37em;height:32px;line-height:32px;padding:5px;width:225px;float:left;}
-form .input-wrap textarea {height:100px;}
-form .input-wrap .check {width:auto;margin:-1px 0 0;}
+.input-wrap {margin:0 0 15px 0;overflow:hidden;}
+.input-wrap label {color:#6c6c6c;font-size:1.25em;width:120px;padding:10px 5px 0 0;float:left;line-height:1.12em;}
+.input-wrap input, 
+.input-wrap textarea {border:1px solid #bfbfbf;font-size:1.37em;height:32px;line-height:32px;padding:5px;width:225px;float:left;}
+.input-wrap textarea {height:100px;}
+.input-wrap .check {width:auto;margin:-1px 0 0;}
+/*.input-wrap.error label { color:#d10808;}*/
+.input-wrap.error input, 
+.input-wrap.error textarea { background:#ffd8d8;}
+
 
 /* Form submit button area wrap */
-.register-action,  
-.contact-action {margin:30px 0 0px;}
+.actions {margin:30px 0 0px;clear:both;}
 
 /* Response errors */
 .error-wrap {color:#b10000;font-weight:bold;line-height:1em;overflow:hidden;padding-right: 10px;}
 
 /* Login form */
-#reg-auto label, 
+.small-label label, 
 .forgot-password {font-size:0.75em;}
 
 /* Registration form */
-#registration {width:520px;}
-#registration label {width:200px}
-#registration input {width:300px}
+#register {width:520px;}
+#register label {width:200px}
+#register input {width:300px}
 
 /* Contact us form */
 #contact input, 
@@ -184,10 +187,11 @@ form .input-wrap .check {width:auto;margin:-1px 0 0;}
 #change-password {width:680px;}
 #change-password label {width:250px;}
 #change-password input {width:410px;}
-#change-password input[type="submit"] {width:100px;}
+
 
 /* forgot password form */
 #forgot {padding-top:10px;}
+
 
 
 
@@ -222,12 +226,15 @@ form .input-wrap .check {width:auto;margin:-1px 0 0;}
 .register-button, 
 .login-button, 
 .contact-button,
-.forgot-button {
+.forgot-button,
+.change-password-button {
 	float:right;
 	font-size:1.18em;
 	height:2.4em;
 }
-
+.change-password-button {
+	width:200px!important;
+}
 
 /* Sprites in large buttons  */
 .framework-button div {

@@ -19,9 +19,15 @@ head.load([
 	{ 'fancybox': 		"/_js/jquery.fancybox.min.js" },
 	{ 'plugins': 		"/_js/default/plugins.min.js" },
 	{ 'scripts': 		"/_js/default/scripts.min.js" },
+	{ 'print_css': 		"/_css/default/print.min.css" },
 	{ 'fancybox_css': 	"/_css/_plugins/fancybox/jquery.fancybox.min.css" }
-], function() {});
+]);
 
+
+// Horrible hack to include a print stylesheet because head.js does not support media types
+head.ready("jquery", function() {
+	$('link[href="/_css/default/print.min.css"]').attr('media','print');
+});
 
 
 /*
@@ -42,7 +48,7 @@ _gaq.push(['_trackPageview']);
 
 /*******************
  document.ready */
-head.ready(function() {
+head.ready('scripts', function() {
 	startApplication();
 });
 

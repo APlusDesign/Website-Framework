@@ -28,7 +28,7 @@ $this->site_email			= 'xxxxxxxxxx';
 	Note 			- Arguably the frameworks most inportant config option. If you are developing on a local environment put the full local URL of the site
 						This way you can define different database and mail options below for the different environments!
 */
-$this->local_url			= 'http://build.website-framework.com/';
+$this->local_url			= 'http://build.website-framework.com';
 
 
 
@@ -91,10 +91,10 @@ if($this->isLocal()) {
 	$database_user 			= "root";
 	$database_password 		= "";
 	// Overide mail settings for local server
-	$this->site_email		= 'xxxxxxxxxx@gmail.com';
+	$this->site_email		= 'simon.ilett@gmail.com';
 	$mail_host 				= "smtp.gmail.com";
-	$mail_username 			= "xxxxxxxxxx@gmail.com";
-	$mail_password 			= "xxxxxxxxxx";
+	$mail_username 			= "simon.ilett@gmail.com";
+	$mail_password 			= "APlusDesign01!@#";
 } 
 
 

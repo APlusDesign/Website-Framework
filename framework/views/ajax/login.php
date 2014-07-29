@@ -1,23 +1,23 @@
-<div class="pre-window-wrap">
+<div id="ajax-form">
 	<h3>Login</h3>
-	<form id="login" method="post" action="/ajax?flag=login">
-		<div id="reg-username" class="input-wrap">
+	<form id="login" method="post" action="/ajax/?flag=login">
+		<div class="input-wrap">
 			<label>Username:</label>
-			<input type="text" name="username">
+			<input type="text" name="username" id="username">
 		</div>
-		<div id="reg-password" class="input-wrap">
+		<div class="input-wrap">
 			<label>Password:</label>
-			<input type="password" name="password">
+			<input type="password" name="password" id="password">
 		</div>
-		<div id="reg-auto" class="input-wrap">
+		<div class="input-wrap small-label">
 			<label>Remember me?:</label>
-			<input type="checkbox" name="auto" class="check">
+			<input type="checkbox" name="auto" class="check" id="auto">
 		</div>
 		<p>
-		   <a href="/ajax?type=forgot" class="forgot-password fancybox.ajax">Forgot password?</a>
+		   <a href="/ajax/?view=forgot" class="forgot-password fancybox.ajax">Forgot password?</a>
 		</p>
-		<div class="login-action">
-			<input type="submit" value="Login" class="framework-button large login-button">
+		<div class="actions">
+			<input type="submit" value="Submit">
 		</div>
 	</form>
 </div>

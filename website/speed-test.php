@@ -1,10 +1,12 @@
-<?php include($_SERVER['DOCUMENT_ROOT'] .'/../framework/index.php'); ?>
+<?php 
+$start = microtime(true);
+include($_SERVER['DOCUMENT_ROOT'] .'/../framework/index.php'); ?>
 <?php
 	// Define MVC data
 	$framework->mvc = array (
 		"route" 		=> "/",				// The path to your view file, '/' = root
 		"controller" 	=> "",				// The controller you wish to use, if left empty uses 'controllers/default.php'
-		"view" 			=> "home",			// The view you wish to display
+		"view" 			=> "",				// The view you wish to display
 		"template" 		=> "default"		// The Template you wish to use
 	);
 
@@ -15,4 +17,8 @@
 		"page_keywords" => "website, framework, php, html5, css3, jquery"
 	);
 ?>
-<?php $framework->init(); ?>
+<?php $framework->init(); 
+$end = microtime(true);
+$creationtime = ($end - $start);
+printf("<br><br><p>Page created in %.6f seconds.</p>", $creationtime);
+?>

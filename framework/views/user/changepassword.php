@@ -1,6 +1,6 @@
 
 	<h3>Change Password</h3>
-	<?php if(!$this->passChanged) { ?>
+	<?php if(!$this->controller->passChanged) { ?>
 	<div class="user-form">
 		<form id="change-password" method="post" action="">
 			<input name="c" type="hidden" value="<?php echo (isset($_GET['c']) ? $_GET['c'] : ''); ?>">
@@ -13,11 +13,11 @@
 				<input name="password2" type="password" autocomplete="off">
 			</div>
 			<div class="change-action">
-				<input type="submit" value="Change" class="framework-button large login-button">
+				<input type="submit" value="Change" class="framework-button large change-password-button">
 				<div class="error-wrap">
 					<?php
-						if(count($_POST) and $this->user->log->getFormErrors()){
-							foreach($this->user->log->getFormErrors() as $i=>$x){
+						if($this->controller->user->log->getFormErrors()){
+							foreach($this->controller->user->log->getFormErrors() as $i=>$x){
 								echo "<p class='reg-error'>$x</p>";
 							}
 						}

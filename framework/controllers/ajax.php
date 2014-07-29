@@ -3,34 +3,28 @@
 		Ajax Controller
 		------------------------
 
-		It might look scary but it basically handles all the requests for the user login/registration system,
-
+		It might look scary but it basically handles all the requests for the user login/registration and contact system,
 	*/
 
 
 	// Local version of user object
 	$user = $this->user;
 
-	// Local version of mail object
-	$mail = $this->mail;
-
-	// Local version of database object
-	$db = $this->db;
-
 
 	
 	/*******************************************
 		Calls with views
 		------------------------
-		Some calls to this controller will have an identifier named type to determine a view
-
+		Some calls to this controller will have an identifier named view, 
+		this allows you to return views that are not wrapped in a template
+		
 	*/
-	if (isset($_REQUEST['type'])) {
+	if (isset($_REQUEST['view'])) {
 		
 		
-		$this->mvc['view'] = $_REQUEST['type'];
+		$this->mvc['view'] = $_REQUEST['view'];
 
-		// Methods
+		
 		switch ($this->mvc['view']) {
 			
 			case 'activate':
@@ -51,9 +45,10 @@
 			case 'login':
 			case 'register':
 			case 'logout':
+				// Comment this out if you want non ajax forms
 				if(!isset($_REQUEST['ajax'])) {
 					$this->_404();
-				} 
+				}
 			break;
 
 		}	
@@ -80,25 +75,16 @@
 		// Return JSON array
 		$results = array();
 		
-		// Methods
+		// Flag methods
 		switch ($flag) {
 		
 			/* Login */
 			case 'login':
 				$username 	= $this->check_input($_REQUEST['username']);
 				$password 	= $this->check_input($_REQUEST['password']);
-
 				$auto 		= (isset($_REQUEST['auto']) ? $_REQUEST['auto'] : 0 );  
 				
 				$user->login($username,$password,$auto);
-
-				/*
-				echo $user->isSigned();
-				echo "<pre>";
-				print_r($user->log->getErrors());
-				echo "</pre>";
-				exit;
-				*/
 
 				if($username) {
 					if($user->isSigned()){
@@ -127,8 +113,6 @@
 			case 'logout':
 				// Log the user out
 				$user->logout();
-				// Redirect to index
-				$this->_index();
 			break;
 			
 			
@@ -142,29 +126,29 @@
 					'Password'		=> $this->check_input($_REQUEST['password']),
 					'Password2'  	=> $this->check_input($_REQUEST['password2']),
 					'Email'  		=> $this->check_input($_REQUEST['email']),
-					'GroupID'  		=> 2 // default
+					'GroupID'  		=> 1 
 				);
 				
 				$registered = $user->register($data,true);
 
 				if($registered){
 					if(isset($data['Email'])) {
+						$mail = $this->createMailObj();
 						$mail->From = $this->site_email;
 						$mail->FromName = $this->site_name . ' (Do not reply)';
 						$mail->AddAddress($data['Email']);  
 						$mail->Subject = $this->site_name . " - Account Registration";
-						$mail->Body    = "Thanks for registering with us ".$data['Username']." \r\n\n Click the confirmation link below to activate your account.\r\n\n" . 'http://'.$url."/ajax?type=activate&c=" . $registered; 
+						$mail->Body    = "Thanks for registering with us ".$data['Username']." \r\n\n Click the confirmation link below to activate your account.\r\n\n" . 'http://'.$url."/ajax?view=activate&c=" . $registered; 
 						$mail->Send();
 					}
 					
 					// Redirect to a thank you page
-					//_redirect("http://".$_SERVER['HTTP_HOST']."/_content/ajax/registered", 'Thanks for registering');
+					//$this->_redirect("http://".$_SERVER['HTTP_HOST']."/_content/ajax/registered", 'Thanks for registering');
 
 					// Or use an ajax response and redirect.. This approach is not recommended
 					$results = array (    
 						'html'  		=> '<h3>Registered</h3><p>Thanks for registering</p><p>We have sent you a confirmation email</p>'
 					);
-					/**/
 				}else{
 					$error = true;	
 				}
@@ -188,9 +172,9 @@
 
 				if($data){
 					// Hash succesfully generated
-
 					// Send a verification response to user if valid email
 					if($email) {
+						$mail = $this->createMailObj();
 						$mail->From = $this->site_email;
 						$mail->FromName = $this->site_name . ' (Do not reply)';
 						$mail->AddAddress($email);  
@@ -219,19 +203,18 @@
 
 				$name 			= $this->check_input($_REQUEST['name']);
 				$email 			= $this->check_input($_REQUEST['email']);
-				// $phone 			= $this->check_input($_REQUEST['phone']);
 				$message 		= $this->check_input($_REQUEST['message']);
 				
 				// Validations
 				$errorStr 		= array();
 				if(strlen($name) < 3) {
-					$errorStr[] = "Name is not long enough";
+					$errorStr['name'] = "Name is not long enough";
 				}
 				if(!preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/",$email)) {
-					$errorStr[] = "Email is not a valid address";
+					$errorStr['email'] = "Email is not a valid address";
 				}
 				if(strlen($message) < 10) {
-					$errorStr[] = "Message is not long enough";
+					$errorStr['message'] = "Message is not long enough";
 				}
 
 				// Everything ok or has error
@@ -240,9 +223,15 @@
 				} else {
 					
 					// Insert email to a table called 'contact' if you desire
-					//$db->query("INSERT INTO contact (name, phone, email, message) VALUES('$name', '$phone', '$email', '$message')"); 
+					//$db = $this->db;
+					//$db->connect();
+					//$db->query("INSERT INTO contact (name, email, message) VALUES('$name', '$email', '$message')"); 
 					//$db->close();
-					
+
+					// Create PHPMailer object
+					$mail = $this->createMailObj();
+
+					// Email 1: send contact to $this->site_email;
 					$mail->From 		= $email;
 					$mail->FromName 	= $this->site_name . ' (Website)';
 					$mail->AddAddress($this->site_email);  
@@ -251,7 +240,7 @@
 					$mail->Send();
 					$mail->ClearAddresses();
 					
-					// Send a verification response to user if valid email
+					// Email 2: Send a verification response to user if valid email
 					$mail->From 		= $this->site_email;
 					$mail->FromName 	= $this->site_name . ' (Do not reply)';
 					$mail->AddAddress($email);  
