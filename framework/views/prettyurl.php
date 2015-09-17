@@ -1,4 +1,4 @@
 		
-		<div>
-			<p>Look at the pretty URL</p>
-		</div>
+		<br>
+		<p>Look at the pretty URL</p>
+		

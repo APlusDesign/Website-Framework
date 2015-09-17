@@ -1,3 +1,3 @@
-<div class="_404">
+	
+	<br>
     <h2>404 - page not found</h2>
-</div>

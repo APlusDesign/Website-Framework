@@ -19,27 +19,27 @@
 //    along with this program.  If not, see http://www.gnu.org/licenses/gpl-3.0.html.
 // ---------------------------------------------------------------------------
 
-/*
- Use this file as your top level global include for classes, libraries 
-*/
  
 // Error reporting
 error_reporting(E_ALL);
 
-// Paths
-define('BASE_PATH', __DIR__ . '/'); 
+// Define Helper Paths
+define('BASE_PATH',  __DIR__ . '/'); 
+define('INCLUDES_PATH', BASE_PATH . 'views/includes/');
 define('APPLICATION_PATH', BASE_PATH . 'application/');
 define('CLASS_PATH', APPLICATION_PATH . 'classes/');
-define('WEBSITE', $_SERVER['DOCUMENT_ROOT']); 
+define('WEBSITE',  $_SERVER['DOCUMENT_ROOT']); 
 
-// Classes
+// Define Classes
 include(CLASS_PATH . 'class.json.php'); 
-include(CLASS_PATH . 'class.database.php');
+include(CLASS_PATH . 'class.db.php');
 include(CLASS_PATH . 'phpmailer/PHPMailerAutoload.php'); 
 include(CLASS_PATH . 'uflex/autoload.php');  
 include(CLASS_PATH . 'class.functions.php');
+include(CLASS_PATH . 'class.mvc.php');
 include(CLASS_PATH . 'class.websiteFramework.php');
 
-// Start the Framework
-$framework = new WebsiteFramework();
+// Initiate the Framework
+$framework = new mvcClass();
+
 ?>

@@ -2,13 +2,13 @@
 /**
  Add Custom functions here
 **/
+
 class Functions 
-{
+{	
 
 	/**
 	Some general helper functions
 	**/
-
 
 	/**
 	User Input security
@@ -20,20 +20,36 @@ class Functions
 		$str = strip_tags($str);
 		$str = trim($str);
 		$str = stripslashes($str);
-		$str = htmlspecialchars($str);
-		// $str = mysql_real_escape_string($str);
+		$str = htmlentities($str);
 		return $str;
 	}
 
 	/**
-	Outputs the welcome text
-	@return html
-	@scope public
+	Return include as html
 	**/
-	public function helloWorld(){
-		$html = "Hello World";
+	public function returnIncludeAsHtml($includePath) {
+		ob_start();
+		include(BASE_PATH .$includePath);
+		$html = ob_get_contents();
+		ob_end_clean();
 		return $html;
 	}
+
+	/**
+	Helps collect and print tags & categories in the blog
+	**/
+	public function pre($arr, $exit=0) {
+		echo "<pre>";
+		print_r($arr);
+		echo "<pre>";
+		if($exit) {
+			exit;
+		}
+	}
+
+
+
+
 
 
 	/**
@@ -74,5 +90,15 @@ class Functions
 		header("Connection: close");
 		exit();
 	}
+
+
+	/**
+	Testing output
+	@scope public
+	**/
+	public function helloWorld1(){
+		echo "HelloWorld";
+	}
+	
 }
 ?>

@@ -1,6 +1,6 @@
-<div id="ajax-form">
-	<h3>Register</h3>
-	<form id="register" method="post" action="/ajax/?flag=register">
+<div class="window-wrapper">
+	<h2>Register</h2>
+	<form id="register" class="ajax-form framework-form" method="post" action="/ajax/?flag=register">
 		<div class="input-wrap">
 			<label>Username:</label>
 			<input type="text" name="username" id="username">
@@ -21,5 +21,4 @@
 			<input type="submit" value="Register">
 		</div>
 	</form>
-</div>
-
+</div>  

@@ -9,7 +9,6 @@
 	<?php include(BASE_PATH .'/templates/default/header.php'); ?>
 	<?php $this->get_view(); ?>
 	</div>
-	<?php include(BASE_PATH .'/templates/default/aside.php'); ?>
 	<?php include(BASE_PATH .'/templates/default/footer.php'); ?>
 </body> 
 </html>

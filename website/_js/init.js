@@ -8,51 +8,41 @@
 /*******************
  Website Object
 */ 
-var websiteFramework = {} || null;
 
+var websiteFramework = {} || null;
 
 /*******************
  Asynchronous loading of scripts
 */   
+
 head.load([
-	{ 'jquery': 		"/_js/jquery.min.js" }, 
-	{ 'fancybox': 		"/_js/jquery.fancybox.min.js" },
-	{ 'plugins': 		"/_js/default/plugins.min.js" },
-	{ 'scripts': 		"/_js/default/scripts.min.js" },
-	{ 'print_css': 		"/_css/default/print.min.css" },
-	{ 'fancybox_css': 	"/_css/_plugins/fancybox/jquery.fancybox.min.css" }
-]);
-
-
-// Horrible hack to include a print stylesheet because head.js does not support media types
-head.ready("jquery", function() {
-	$('link[href="/_css/default/print.min.css"]').attr('media','print');
-});
-
+	{ 'fancybox_css': 	"/_css/_plugins/fancybox/jquery.fancybox.min.css" },  // I like to add this directly to my CSS
+	{ 'jquery': 		"/_js/_plugins/jquery.min.js" }, 
+	{ 'fancybox': 		"/_js/_plugins/jquery.fancybox.min.js" },
+	{ 'scripts': 		"/_js/default/scripts.min.js" }
+], function() {});   
 
 /*
-// Comment in for Google analytics and add your tracking code
+// Google Analytics
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-var _gaq = _gaq || [];
-_gaq.push(['_setAccount', 'UA-XXXXXXXX-X']);
-_gaq.push(['_trackPageview']);
+// Your GA site code
+ga('create', 'UA-xxxxxxxx-xx', 'auto');
+ga('send', 'pageview');
 
-(function() {
-	var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-	ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-	var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-})();
 */
 
-
-
 /*******************
- document.ready */
-head.ready('scripts', function() {
+ document.ready 
+*/  
+
+head.ready(function() {
+	// see scripts.min.js
 	startApplication();
 });
-
-
 
 
 

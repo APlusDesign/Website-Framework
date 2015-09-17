@@ -12,7 +12,7 @@
 	site_name 		- String
 	eg. 			- (Website Framework) 
 */
-$this->site_name			= 'xxxxxxxxxx';
+$this->site_name			= 'Website Name';
 
 /****
 	site_email 		- String
@@ -33,17 +33,21 @@ $this->local_url			= 'http://build.website-framework.com';
 
 
 
+
+
+
 /*******************************************
  SEO template variables - 
  	(Change these)
  		Define some default SEO data, these can be used in your templates as defaults until you overide them.
  		 eg. Look in website/index.php to see an example of using different values, it's pretty basic :)
 */
-$this->seo = array (
+$this->defaultSeo = array (
 	"page_title" 			=> "xxxxxxxxxx",
 	"page_desc"				=> "xxxxxxxxxx",
 	"page_keywords" 		=> "xxxxxxxxxx"
 );
+
 
 
 
@@ -63,6 +67,7 @@ $database_password 		= "xxxxxxxxxx";
 
 
 
+
 /*******************************************
  MAIL CONFIG
  	(Change these to your server setttings)
@@ -71,10 +76,9 @@ $database_password 		= "xxxxxxxxxx";
 
 // MAIL server settings 
 $mail_port 				= "465";
-$mail_host 				= "mail.yourdomain.com";
-$mail_username 			= "xxxxxxxxxx@yourdomain.com";
+$mail_host 				= "xxxxxxxxxx";
+$mail_username 			= "xxxxxxxxxx";
 $mail_password 			= "xxxxxxxxxx";
-
 
 
 
@@ -90,12 +94,8 @@ if($this->isLocal()) {
 	// Overide database settings for local server
 	$database_user 			= "root";
 	$database_password 		= "";
-	// Overide mail settings for local server
-	$this->site_email		= 'simon.ilett@gmail.com';
-	$mail_host 				= "smtp.gmail.com";
-	$mail_username 			= "simon.ilett@gmail.com";
-	$mail_password 			= "APlusDesign01!@#";
 } 
+
 
 
 /********************************************************************

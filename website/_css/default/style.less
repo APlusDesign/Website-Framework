@@ -1,0 +1,481 @@
+/*************/
+/*  Reset   */
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:top;background:transparent;vertical-align: baseline}
+body{line-height:1;}
+td {vertical-align: top}
+ol,ul{list-style:none;}
+blockquote,q{quotes:none;}
+blockquote:before,blockquote:after,
+q:before,q:after{content:'';content:none;}
+:focus{outline:0;}
+ins{text-decoration:none;}
+del{text-decoration:line-through;}
+table{border-collapse:collapse;border-spacing:0;}
+a{text-decoration:none}
+button::-moz-focus-inner {border:0;}
+html {height:100%;}
+body {height:100%;color:#333;font:100%/1.4 Arial,Helvetica,sans-serif;text-align:center;overflow-x: hidden;}
+header, footer, nav, section, aside, article {display:block;}
+input, select, option, textarea, a, a:active {outline:none;}
+
+
+
+/*************/
+/* Fonts 	*/
+
+@font-face {
+  font-family: 'fontello';
+  src: url('/_css/_fonts/fontello.eot');
+  src: url('/_css/_fonts/fontello.eot?#iefix') format('embedded-opentype'),
+	   url('/_css/_fonts/fontello.woff') format('woff'),
+	   url('/_css/_fonts/fontello.ttf') format('truetype'),
+	   url('/_css/_fonts/fontello.svg?#fontello') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.fontello {
+	font-family: 'fontello';
+}
+
+ 
+ 
+
+
+/**********************************************************/
+/* Prevent multiple requests for image sprite            */
+/* Declare all elements that use your image sprite once */
+
+.sprite-transparent {
+	background: url("/_images/default/sprite.png") no-repeat;
+}
+
+
+
+
+/*************/
+/* Globals  */
+
+a {
+	color:#007ed6;
+	&:hover {
+		color:#67baf4;
+	}
+}
+
+
+
+
+/*************/
+/* Template */
+
+/* Header */
+header {
+	padding: 40px 0 20px 0;
+}
+/* Content Wrapper */
+.wrapper {
+	margin:0 auto;
+	max-width:980px;
+	text-align:left;
+}
+
+
+
+
+/***************/
+/* Typography */
+h1 {
+	font-size:1.75em;
+	display: inline-block;
+}
+h2 {
+	font-size:1.25em;
+	margin:0 0 20px;
+}
+p {
+	font-size:0.75em;
+	margin:0 0 10px;
+}
+
+
+
+
+
+
+/*****************/
+/* Furniture    */
+
+/* User login, register, contact and logout links */
+.user-controls {
+	padding: 10px 0 0;
+	float: right;
+	a {
+		padding: 0 10px 0;
+		border-right: 1px solid #d3ccd3;
+		&:last-child {
+			border-right:none;
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+/************/
+/* Content */
+
+
+.update-user {
+	color: #c515aa;
+	&:hover {
+		color:#f85ce0;
+	}
+}
+
+// Ajax Window Content
+.window-wrapper {
+	text-align:left;
+	overflow:hidden;
+	padding:5px 15px;
+	h2 {
+		margin:0 0 25px;
+		font-size:1.75rem;
+	}
+}
+
+
+
+
+
+
+
+/******************/
+/* Components    */
+
+/* Ajax overlay */
+#ajax_overlay {
+	overflow:hidden;
+	border:none;
+	z-index:66557;
+}
+/* Ajax spinner */
+.imgSpinner {
+	color:#888;
+	font-size:5rem;
+	position:absolute;
+	top:50%;
+	left:50%;
+	z-index:4;
+	margin:-50px 0 0 -25px;
+}
+
+
+
+
+
+
+
+/************/
+/* HELPERS */
+
+.clear {clear:both;}
+
+
+
+
+
+
+
+/*************/
+/* Forms 	*/
+/***********/
+
+.framework-form {
+	
+	.input-wrap {
+		box-sizing: border-box;
+		margin:0 0 15px 0;
+	}
+
+	.input-wrap.error {
+		input, 
+		textarea, 
+		select { 
+			background-color:#ffd8d8; 
+		}
+	}	
+
+	input, 
+	textarea,
+	select {
+		font-family: arial;
+		box-sizing: border-box;
+		border:1px solid #e2e2e2;
+		font-size:1.25em;
+		padding:10px;
+		color:#949494;
+		margin: 0 0 5px 0;
+		width: 100%;
+	}
+	select {
+		.sprite-transparent;
+		-moz-appearance: none;
+		-webkit-appearance: none;
+		background-color: #fff;
+		background-position: 102% 8px;
+		cursor: pointer;
+	}
+	textarea {
+		min-height:125px;
+	}
+	input[type="text"] {
+		 
+	}
+}
+
+/* Response errors */
+.error-wrap {
+	color:#b10000;
+	font-weight:bold;
+	p {
+		margin:0 0 5px;
+	}
+}
+
+
+
+
+
+/*******************/
+/* Ajax forms	  */
+/*****************/
+
+.ajax-form {
+
+	input[type="submit"] {display:none;} 
+
+	.input-wrap {
+		padding-right: 140px;
+		&.small {
+			label {
+				font-size:0.75rem;
+			}
+		}	
+	}
+	
+	input, 
+	textarea,
+	select  {
+		margin: 0 0 0 140px;
+	}
+
+	.check {
+		position: relative;
+		top:8px;
+		width:auto;
+	}
+
+	label {
+		color: #6c6c6c;
+		font-size:1.25em;
+		padding:0 5px 0 0;
+		position: absolute;
+		line-height:2.34rem;
+	}
+
+	.actions {
+		margin:20px 0 0;
+		clear:both;
+	}
+
+}
+
+/* Login form */
+#login {
+	max-width: 400px;
+}
+
+/* Register form */
+#register {
+	.input-wrap {
+		padding-right: 200px;
+	}
+	input {
+		margin-left:200px;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**********************/
+/* Framework BUTTONS */
+/********************/
+
+.framework-button {
+	border-radius:4px;
+	background: #efefef; 
+	background: -moz-linear-gradient(center top , #fff, #efefef)  repeat scroll 0 0 #f6f6f6;
+	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#efefef));
+	border:1px solid #ccc;
+	cursor:pointer;
+	display:inline-block;
+	white-space:nowrap;
+	outline:none;
+	padding:20px;
+	font-size: 1rem;
+}
+
+.framework-button:hover {
+	background:-moz-linear-gradient(center top , #ececec, #fff)  repeat scroll 0 0 #f6f6f6;
+	background:-webkit-gradient(linear, left top, left bottom, from(#ececec), to(#fff));
+}
+
+.framework-button:active {
+	box-shadow: 0 0 3px #999;
+}
+
+
+/* Specific Buttons */
+
+// Can use as mixin or class
+.has-icon {
+	.fontello;
+	display: inline-block;
+	font-size: 1.34rem;
+	margin: -2px 12px 0 0;
+}
+
+// Button Icons
+.register-button,  
+.login-button, 
+.contact-button,
+.forgot-button,
+.change-password-button {
+	float:right;
+	&:before {
+		.has-icon;
+	}
+}
+.contact-button {
+	.icon-edit;
+}
+.login-button {
+	.icon-lock;
+}
+.register-button {
+	.icon-users-outline;
+}
+.forgot-button,
+.change-password-button {
+	.icon-lock-open;
+}
+.change-password-button {
+	width: 200px!important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*******************/ 
+/* Fontello icons */
+
+[class^="icon-"]:before, [class*=" icon-"]:before {
+	font-family: "fontello";
+	font-style: normal;
+	font-weight: normal;
+	speak: none;
+ 
+	display: inline-block;
+	text-decoration: inherit;
+	width: 1em;
+	margin-right: .2em;
+	text-align: center;
+	/* opacity: .8; */
+ 
+	/* For safety - reset parent styles, that can break glyph codes*/
+	font-variant: normal;
+	text-transform: none;
+ 
+	/* fix buttons height, for twitter bootstrap */
+	line-height: 1em;
+ 
+	/* Animation center compensation - margins should be symmetric */
+	/* remove if not needed */
+	margin-left: .2em;
+ 
+	/* you can be more comfortable with increased icons size */
+	/* font-size: 120%; */
+ 
+	/* Font smoothing. That was taken from TWBS */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+ 
+	/* Uncomment for 3D effect */
+	/* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
+}
+ 
+/* Spin animation */
+.animate-spin {
+	-moz-animation: spin 2s infinite linear;
+	-o-animation: spin 2s infinite linear;
+	-webkit-animation: spin 2s infinite linear;
+	animation: spin 2s infinite linear;
+	display: inline-block;
+}
+@-o-keyframes spin { 100% { -o-transform: rotate(360deg); } }
+@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+
+
+/* Edited to allow mixin behaviour */
+.icon-spin5 { 
+	&:before {
+		.animate-spin;
+		content: '\e800'; 
+	} 
+} /* '' */
+.icon-users-outline{ &:before { content: '\e801'; }} /* '' */
+.icon-edit{ &:before { content: '\e803'; }} /* '' */
+.icon-lock{ &:before { content: '\e804'; }} /* '' */
+.icon-lock-open{ &:before { content: '\e805'; }} /* '' */
+
+
+
+
+
+
+
+
+

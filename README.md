@@ -30,7 +30,7 @@ Lets assume I'm using WAMP and I want my new website to appear at 'http://local.
 
 
 		-- v1.1
-		CREATE TABLE IF NOT EXISTS `Users` (
+		CREATE TABLE IF NOT EXISTS `users` (
 		  `ID` INT(7) UNSIGNED NOT NULL AUTO_INCREMENT,
 		  `Username` VARCHAR(15) NOT NULL,
 		  `Password` VARCHAR (40) NOT NULL,

@@ -6,23 +6,28 @@
 			so classname = default+Class
 							= defaultClass 
 	*/
-	class defaultClass extends WebsiteFramework {
-		// See controllers don't really have to do anything special
-		var $demo = 'Hello World';
 
-		function __construct(){
-			parent::__construct();
+	// Controllers don't really have to do anything special, but they do need to exist
+	class defaultClass extends WebsiteFramework {
+		
+		// Demo variable	
+		var $someVariable = 'Hello World';
+
+		// Don't change __construct
+		function __construct($mvc, $seo){
+			parent::__construct($mvc, $seo);
 			$this->init();
+			parent::load_view();
 		}
 
-		// Runs when this controller is used for a page
+		// Do stuff before the view gets loaded
 		public function init(){
-			
+			$this->someOtherVariable = 'Some Value';
 		}
 
 		// Demo function
 		public function helloWorld2(){
-			return $this->helloWorld();
+			echo "HelloWorld";
 		}
 	}
 ?>

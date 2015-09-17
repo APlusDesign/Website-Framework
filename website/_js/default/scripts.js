@@ -8,48 +8,83 @@ function startApplication() {
 	websiteFramework.LOCAL = $('#local-root').length;
 	// User login, register, logout, contact controls
 	websiteFramework.controls = userControls();
-	// Fancy box set-up
-	fancy_setup();
-	// New windows on class '_blank'
-	newWindow_setup();
-	// View the website object
+	// Dom Helper
+	domHelpers();
+	// View the website framework object
 	console.log(websiteFramework);
 }
 
 
 
-/*******************/
-/* New windows    */
-/*****************/
 
-function newWindow_setup() {
-	$.each($("._blank"), function() { 
-		$(this).attr('target', '_blank').removeClass('_blank');
+/********************************/
+/* Special dom imporvements    */
+/******************************/
+
+function domHelpers() {
+	// New windows on class '_blank'
+	newWindows();
+	// Fancybox links for images, galleries and normal links
+	fancyLinks();
+}
+
+
+/*****************************/
+/* New windows	 			*/
+/***************************/
+
+function newWindows() {
+	$("._blank").each( function( index, element ){
+	    $(this).attr('target', '_blank').removeClass('_blank');
 	});
 }
 
 
+/*********************************/
+/* Fancy Box links + Galleries  */
+/*******************************/
 
-/*******************/
-/* Fancybox setup */
-/*****************/
-
-function fancy_setup() {
+function fancyLinks() {
 	$(".fancylink").fancybox({
 		nextMethod : 'resizeIn',
 		nextSpeed  : 250,
 		prevMethod : false,
+		type : 'ajax',
+		beforeLoad : function(){
+			// If gallery link, remove ajax type
+  			var el = $(this.element);
+  			if(el.data('fancyboxGroup') == 'gallery') {
+  				this.type = 'image';
+  			}
+ 		},
 		beforeShow : function() {
-			// Maybe edit the title?
+			// Normal images
+			if(this.title != '') {
+				this.title += ' - ';	
+			}
+			this.title += '<a class="btn-contact" href="/ajax?view=contact">Contact Us</a>';	
+		},
+		helpers : {
+			overlay : {
+				locked : false
+			}
 		}
 	});
 }
 
 
 
+
+
+
+/*******************************/
+/* Begin Framework ************/
+/*****************************/
+
+
+
 /******************/
 /* USER CONTROLS */
-/****************/
 
 function userControls () {
 
@@ -65,7 +100,7 @@ function userControls () {
 	
 	// Add these buttons to the framework object
 	return {
-		'login'		: fancyboxAjaxForm($('.btn-login'), function() {
+		'login'	 : fancyboxAjaxForm($('.btn-login'), function() {
 			new formHelper({
 				'formId': 'login',
 				'buttonTxt': 'Login',
@@ -83,6 +118,7 @@ function userControls () {
 			var btnForgot = $('.forgot-password');
 			if(btnForgot.length) {
 				btnForgot.fancybox({
+					type : 'ajax',
 					afterShow : function() {
 						new formHelper({
 							'formId': 'forgot',
@@ -119,7 +155,7 @@ function userControls () {
 /*******************************************/
 /* Helper to set up the fancybox requests */
 
-function fancyboxAjaxForm(btn, aftershow) {
+function fancyboxAjaxForm(btn, callback) {
 	// Attach event to a btn, run a function after fancybox content is loaded
 	if(btn.length) {
 		btn.fancybox({
@@ -130,7 +166,7 @@ function fancyboxAjaxForm(btn, aftershow) {
 					ajax: 1
 				}
 			},
-			'afterShow': aftershow
+			'afterShow': callback
 		});	
 	}
 	return btn
@@ -147,7 +183,7 @@ function formHelper (options) {
 		buttonClass: '',
 		buttonTxt: 'Submit',
 		callback: function(res) {
-			$("#ajax-form").html(res.html);
+			$(".window-wrapper").html(res.html);
 		}
 	}
 
@@ -167,8 +203,8 @@ function formHelper (options) {
 	this.setElements = function(t){
 		var $this = this;
 		this.submit.remove();
-		this.button = $("<button class='framework-button large "+this.options.formId+"-button'></button>")
-		.html('<div></div><span>'+this.options.buttonTxt+'</span>')
+		this.button = $("<button class='framework-button "+this.options.formId+"-button'></button>")
+		.html(this.options.buttonTxt)
 		.addClass(this.options.buttonClass)
 		.click(function (e) {
 			e.preventDefault();		
@@ -208,8 +244,7 @@ function formHelper (options) {
 /*******************/
 /* Log a user out */
 
-var logoutUser = function (o, parent) {
-	var options = o;
+var logoutUser = function () {
 	new ajaxLoader('body');
 	$.ajax({
 		type	: "POST",
@@ -279,8 +314,13 @@ function errorHelper (el, options) {
 
 
 
+
+
+
+
+
 /*******************/
-/* Helper Methods */
+/* Helpers 		  */
 /*****************/
 
 
@@ -304,15 +344,6 @@ $.fn.serializeObject = function(){
 	return o;
 };	
 
-
-
-/********************/
-/* is empty object */
-
-function isEmpty(object) {
-	for(var i in object) { return true; }
-	return false;
-}
 
 
 
@@ -351,19 +382,21 @@ function isEmpty(object) {
 
 
 
+
+
 /****************/
 /* Ajax loader */
 
 function ajaxLoader (el, options) {
 
 	var defaults = {
-		bgColor 		: '#fff',
-		duration		: 300,
-		opacity			: 0.7,
-		classOveride 	: false
+		bgColor         : '#fff',
+		duration        : 300,
+		opacity         : 0.7,
+		classOveride    : false
 	}
-	this.options 	= jQuery.extend(defaults, options);
-	this.container 	= $(el);
+	this.options    = jQuery.extend(defaults, options);
+	this.container  = $(el);
 	
 	this.init = function() {
 		var container = this.container;
@@ -386,7 +419,7 @@ function ajaxLoader (el, options) {
 		// insert overlay and loader into DOM 
 		container.append(
 			overlay.append(
-				$('<div></div>').addClass('ajax_loader')
+				$('<div></div>').addClass('imgSpinner icon-spin5')
 			).fadeIn(this.options.duration)
 		);
 	};
@@ -401,8 +434,9 @@ function ajaxLoader (el, options) {
 					overlay.remove();
 				});
 			}
-		}	
+		}   
 	}
 
 	this.init();
-}	
+}   
+

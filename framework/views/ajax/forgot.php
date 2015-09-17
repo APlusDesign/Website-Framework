@@ -1,6 +1,6 @@
-<div id="ajax-form">
-	<h3>Forgotten your password?</h3>
-	<form id="forgot" method="post" action="/ajax/?flag=forgot">
+<div class="window-wrapper">
+	<h2>Forgotten Your Password?</h2>
+	<form id="forgot" class="ajax-form framework-form" method="post" action="/ajax/?flag=forgot">
 		<div class="input-wrap">
 			<label>Email: </label>
 			<input name="email" type="text" value="" id="email">
@@ -9,4 +9,4 @@
 			<input type="submit" value="Submit">
 		</div>
 	</form>
-</div>
+</div>  

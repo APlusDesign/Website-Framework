@@ -11,23 +11,7 @@ class WebsiteFramework extends Functions {
 	var $site_name			= null;
 	var $site_email			= null;
 	var $local_url			= null;
-	var $local				= null;
 	var $href				= null;
-
-	// MVC control
-	var $mvc = array (
-		"route" 			=> "",
-		"controller" 		=> "",
-		"view" 				=> "",
-		"template" 			=> ""	
-	);
-
-	// Seo control
-	var $seo = array (
-		"page_title" 		=> "",
-		"page_desc" 		=> "",
-		"page_keywords" 	=> ""	
-	);
 
 	
 	/**
@@ -37,15 +21,18 @@ class WebsiteFramework extends Functions {
 	@$this->mail 	- the mail object (Optional)
 	@$this->href    - the url object
 	**/
-	function __construct(){
+	public function __construct($mvc, $seo){
 
 
 		/*******************************************
 		 Server config - 
 			(Change these dependant on your server setup)
 		*/
+		$this->mvc = $mvc;
+		$this->seo = $seo;
 		include(APPLICATION_PATH . 'config.inc.php');
-		
+		$this->mergeSeo($this->seo);
+
 
 		/********************************************************************
 			Defining the global server settings
@@ -59,26 +46,13 @@ class WebsiteFramework extends Functions {
 		if (!defined('MAIL_USERNAME')) 	define('MAIL_USERNAME', 	$mail_username);
 		if (!defined('MAIL_PASSWORD')) 	define('MAIL_PASSWORD', 	$mail_password);
 
-		
-		/*******************************************
-		 Create the database object - (always available but not connected till you need it)
-			, open connection to database when needed. ie in you controller. $this->db->connect();
-				obj: $this->db;
-		*/
-		$this->db = Database::obtain(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
-		
+
 
 		/*******************************************
-		 Create the user object - (always available)
+		 Create the user object - (this project :: always available global)
 				obj: $this->user;
 		*/
-		$user = new ptejada\uFlex\User();
-		//Add database credentials
-		$user->config->database->host 		= DB_SERVER;
-		$user->config->database->user 		= DB_USER;
-		$user->config->database->password 	= DB_PASS;
-		$user->config->database->name 		= DB_DATABASE;
-		$this->user = $user->start();
+		$this->user = $this->createUserObj();
 
 
 		/*******************************************
@@ -94,57 +68,20 @@ class WebsiteFramework extends Functions {
 			(Don't change these)
 				For detailed descriptions please see (www.website-framework.com/config#environment)
 		*/
-		// Websites top level URL ie. (http://www.website-framework.com/ OR http://local.website-framework.com/)
-		$this->href 	= ($this->local ? $this->local_url : 'http://'.$_SERVER['SERVER_NAME']);
+		// Websites top level URL ie. (http://local.website-framework.com/ OR http://www.website-framework.com/)
+		$this->href 	= ($this->isLocal() ? $this->local_url : 'http://'.$_SERVER['SERVER_NAME']);
 
 
-		// echo "<pre>". print_r($this) . "</pre>";
-		// exit;
 	}
 	
 
-	/**
-	Constructing the MVC output
-	**/
-	public function init() {
-		$this->load_controller();
-		$this->load_view();
-	}
-
-
-	/**
-	Includes a controller and instantiates controller class if it exists
-	@include controller by name 
-	@scope private
-	**/
-	private function load_controller() {
-		$controller = $this->mvc['controller'];
-		// If a controller is specified load it.
-		if($controller) {
-			$controller_path = BASE_PATH . 'controllers/' . $controller . '.php';
-			if(file_exists($controller_path)) {
-				include_once $controller_path;
-			} else {
-				die('The controller <strong>' . $controller . '.php</strong> could not be found at <pre>' . $controller_path . '</pre>');
-			}
-		} else {
-			$controller = 'default';
-			include_once BASE_PATH . 'controllers/default.php';
-		}
-		// Your controller can be a class or procedural, I personally don't care.
-		$classname = $controller.'Class';
-		if (class_exists($classname)) {
-		   $this->controller = new $classname();
-		}
-	}
-
-
+	
 	/**
 	Wraps a view file include in a template or prints a naked view
 	@include template by name & path
-	@scope private
+	@scope public
 	**/
-	private function load_view() { 
+	public function load_view() { 
 		$template = $this->mvc['template'];
 		// If we are given a template, use it
 		if($template) {
@@ -164,9 +101,9 @@ class WebsiteFramework extends Functions {
 	/**
 	Includes a view file or leaves empty for an ajax response
 	@include view file name
-	@scope private
+	@scope public
 	**/
-	private function get_view() {
+	public function get_view() {
 		$view = $this->mvc['view'];
 		// If we are given a view load it
 		if($view) {
@@ -180,7 +117,6 @@ class WebsiteFramework extends Functions {
 		} 
 		// else : view was deliberately left empty for AJAX, so no error messages or content!
 	}
-
 
 	/**
 	Return true for local environment
@@ -209,5 +145,37 @@ class WebsiteFramework extends Functions {
 		return $mail;
 	}
 	
+
+	/**
+	Return User object with database config options set
+	@return $user object
+	@scope public
+	**/
+	public function createUserObj(){
+		$user = new ptejada\uFlex\User();
+		$user->config->database->host 		= DB_SERVER;
+		$user->config->database->user 		= DB_USER;
+		$user->config->database->password 	= DB_PASS;
+		$user->config->database->name 		= DB_DATABASE;
+		return $user->start();
+	}
+
+
+	/**
+	Help merge SEO data
+	@scope public
+	**/
+	public function mergeSeo($arr){
+		$this->seo = array_merge($this->defaultSeo, $arr);
+	}
+
+
+	/**
+	Testing output
+	@scope public
+	**/
+	public function helloWorld(){
+		echo "HelloWorld";
+	}
 }
 ?>

@@ -1,266 +1,480 @@
 /*************/
 /*  Reset   */
-html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:top;background:transparent;vertical-align: baseline}
-body{line-height:1;}
-td {vertical-align: top}
-ol,ul{list-style:none;}
-blockquote,q{quotes:none;}
-blockquote:before,blockquote:after,
-q:before,q:after{content:'';content:none;}
-:focus{outline:0;}
-ins{text-decoration:none;}
-del{text-decoration:line-through;}
-table{border-collapse:collapse;border-spacing:0;}
-a{text-decoration:none}
-button::-moz-focus-inner {border:0;}
-html {height:100%;}
-body {height:100%;color:#333;font:100%/1.4 Arial,Helvetica,sans-serif;text-align:center;overflow-x: hidden;}
-header, footer, nav, section, aside, article {display:block;}
-input, select, option, textarea, a, a:active {outline:none;}
-
-
-
-
-
-
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+font,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-size: 100%;
+  vertical-align: top;
+  background: transparent;
+  vertical-align: baseline;
+}
+body {
+  line-height: 1;
+}
+td {
+  vertical-align: top;
+}
+ol,
+ul {
+  list-style: none;
+}
+blockquote,
+q {
+  quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: '';
+  content: none;
+}
+:focus {
+  outline: 0;
+}
+ins {
+  text-decoration: none;
+}
+del {
+  text-decoration: line-through;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+a {
+  text-decoration: none;
+}
+button::-moz-focus-inner {
+  border: 0;
+}
+html {
+  height: 100%;
+}
+body {
+  height: 100%;
+  color: #333;
+  font: 100%/1.4 Arial, Helvetica, sans-serif;
+  text-align: center;
+  overflow-x: hidden;
+}
+header,
+footer,
+nav,
+section,
+aside,
+article {
+  display: block;
+}
+input,
+select,
+option,
+textarea,
+a,
+a:active {
+  outline: none;
+}
+/*************/
+/* Fonts 	*/
+@font-face {
+  font-family: 'fontello';
+  src: url('/_css/_fonts/fontello.eot');
+  src: url('/_css/_fonts/fontello.eot?#iefix') format('embedded-opentype'), url('/_css/_fonts/fontello.woff') format('woff'), url('/_css/_fonts/fontello.ttf') format('truetype'), url('/_css/_fonts/fontello.svg?#fontello') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+.fontello {
+  font-family: 'fontello';
+}
 /**********************************************************/
 /* Prevent multiple requests for image sprite            */
 /* Declare all elements that use your image sprite once */
-.framework-button div {
-	background: url("../../_images/default/sprite.png") no-repeat;
+.sprite-transparent {
+  background: url("/_images/default/sprite.png") no-repeat;
 }
-
-
-
 /*************/
 /* Globals  */
 a {
-	color:#007ed6;
-	text-decoration:none;
+  color: #007ed6;
 }
-
-
-
-
+a:hover {
+  color: #67baf4;
+}
 /*************/
 /* Template */
-
 /* Header */
 header {
-	height:100px;
-	position: relative;
+  padding: 40px 0 20px 0;
 }
-/* Content Wrapper - with sticky footer */
+/* Content Wrapper */
 .wrapper {
-	margin:0 auto;
-	width:980px;
-	text-align:left;
+  margin: 0 auto;
+  max-width: 980px;
+  text-align: left;
 }
-/* Footer */
-footer {
-	
-}
-
-
-
-
 /***************/
 /* Typography */
 h1 {
-	float:left;
-	padding:25px 0 0 0;
-	font-size:1.5em;
+  font-size: 1.75em;
+  display: inline-block;
 }
-h3 {
-	font-size:1.5em;
-	margin-bottom:20px;
+h2 {
+  font-size: 1.25em;
+  margin: 0 0 20px;
 }
 p {
-	margin:10px 0;
-	font-size:0.75em;
+  font-size: 0.75em;
+  margin: 0 0 10px;
 }
-
-
-
-
-
-
 /*****************/
 /* Furniture    */
-
-/* User login, register, contact and logout area */
+/* User login, register, contact and logout links */
 .user-controls {
-	position:absolute;
-	right:5px;
-	top:35px;
-	font-size:0.82em;
-	text-align:right;
+  padding: 10px 0 0;
+  float: right;
 }
 .user-controls a {
-	margin-right: 8px;
-	padding: 0 10px 0 0;
-	border-right: 1px solid #D3CCD3;
+  padding: 0 10px 0;
+  border-right: 1px solid #d3ccd3;
 }
 .user-controls a:last-child {
-	border-right:none;
+  border-right: none;
 }
-
-
-
-
-/************/
-/* HELPERS */
-.clear {clear:both;}
-
-
-
-
-
 /************/
 /* Content */
-
-
-
-
-
-
-
-
+.update-user {
+  color: #c515aa;
+}
+.update-user:hover {
+  color: #f85ce0;
+}
+.window-wrapper {
+  text-align: left;
+  overflow: hidden;
+  padding: 5px 15px;
+}
+.window-wrapper h2 {
+  margin: 0 0 25px;
+  font-size: 1.75rem;
+}
 /******************/
 /* Components    */
-
 /* Ajax overlay */
 #ajax_overlay {
-	overflow:hidden;
-	border:none;
-	z-index:66557;
+  overflow: hidden;
+  border: none;
+  z-index: 66557;
 }
-.ajax_loader {
-	background: url("../../_images/spinner_squares_circle.gif") no-repeat center center transparent;
-	width:100%;
-	height:100%;
+/* Ajax spinner */
+.imgSpinner {
+  color: #888;
+  font-size: 5rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 4;
+  margin: -50px 0 0 -25px;
 }
-
-
-
-
-
-/*******************/
-/* Ajax + forms	  */
-
-#ajax-form {text-align:left;overflow:hidden;padding:15px;}
-#ajax-form input[type="submit"] {display:none;} 
-
-/* forms */
-.input-wrap {margin:0 0 15px 0;overflow:hidden;}
-.input-wrap label {color:#6c6c6c;font-size:1.25em;width:120px;padding:10px 5px 0 0;float:left;line-height:1.12em;}
-.input-wrap input, 
-.input-wrap textarea {border:1px solid #bfbfbf;font-size:1.37em;height:32px;line-height:32px;padding:5px;width:225px;float:left;}
-.input-wrap textarea {height:100px;}
-.input-wrap .check {width:auto;margin:-1px 0 0;}
-/*.input-wrap.error label { color:#d10808;}*/
-.input-wrap.error input, 
-.input-wrap.error textarea { background:#ffd8d8;}
-
-
-/* Form submit button area wrap */
-.actions {margin:30px 0 0px;clear:both;}
-
-/* Response errors */
-.error-wrap {color:#b10000;font-weight:bold;line-height:1em;overflow:hidden;padding-right: 10px;}
-
-/* Login form */
-.small-label label, 
-.forgot-password {font-size:0.75em;}
-
-/* Registration form */
-#register {width:520px;}
-#register label {width:200px}
-#register input {width:300px}
-
-/* Contact us form */
-#contact input, 
-#contact textarea {width:400px;}
-#contact textarea {height:250px;}
-
-/* Change password form */
-#change-password {width:680px;}
-#change-password label {width:250px;}
-#change-password input {width:410px;}
-
-
-/* forgot password form */
-#forgot {padding-top:10px;}
-
-
-
-
 /************/
-/* BUTTONS */
-
+/* HELPERS */
+.clear {
+  clear: both;
+}
+/*************/
+/* Forms 	*/
+/***********/
+.framework-form .input-wrap {
+  box-sizing: border-box;
+  margin: 0 0 15px 0;
+}
+.framework-form .input-wrap.error input,
+.framework-form .input-wrap.error textarea,
+.framework-form .input-wrap.error select {
+  background-color: #ffd8d8;
+}
+.framework-form input,
+.framework-form textarea,
+.framework-form select {
+  font-family: arial;
+  box-sizing: border-box;
+  border: 1px solid #e2e2e2;
+  font-size: 1.25em;
+  padding: 10px;
+  color: #949494;
+  margin: 0 0 5px 0;
+  width: 100%;
+}
+.framework-form select {
+  background: url("/_images/default/sprite.png") no-repeat;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  background-color: #fff;
+  background-position: 102% 8px;
+  cursor: pointer;
+}
+.framework-form textarea {
+  min-height: 125px;
+}
+/* Response errors */
+.error-wrap {
+  color: #b10000;
+  font-weight: bold;
+}
+.error-wrap p {
+  margin: 0 0 5px;
+}
+/*******************/
+/* Ajax forms	  */
+/*****************/
+.ajax-form input[type="submit"] {
+  display: none;
+}
+.ajax-form .input-wrap {
+  padding-right: 140px;
+}
+.ajax-form .input-wrap.small label {
+  font-size: 0.75rem;
+}
+.ajax-form input,
+.ajax-form textarea,
+.ajax-form select {
+  margin: 0 0 0 140px;
+}
+.ajax-form .check {
+  position: relative;
+  top: 8px;
+  width: auto;
+}
+.ajax-form label {
+  color: #6c6c6c;
+  font-size: 1.25em;
+  padding: 0 5px 0 0;
+  position: absolute;
+  line-height: 2.34rem;
+}
+.ajax-form .actions {
+  margin: 20px 0 0;
+  clear: both;
+}
+/* Login form */
+#login {
+  max-width: 400px;
+}
+/* Register form */
+#register .input-wrap {
+  padding-right: 200px;
+}
+#register input {
+  margin-left: 200px;
+}
+/**********************/
+/* Framework BUTTONS */
+/********************/
 .framework-button {
-	border-radius:4px;
-	background: #efefef; 
-	background: -moz-linear-gradient(center top , #fff, #efefef)  repeat scroll 0 0 #f6f6f6;
-	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#efefef));
-	border:1px solid #ccc;
-	cursor:pointer;
-	display:inline-block;
-	padding:1px 0.5em!important;
-	white-space:nowrap;
-	outline:none;
+  border-radius: 4px;
+  background: #efefef;
+  background: -moz-linear-gradient(center top, #ffffff, #efefef) repeat scroll 0 0 #f6f6f6;
+  background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#efefef));
+  border: 1px solid #ccc;
+  cursor: pointer;
+  display: inline-block;
+  white-space: nowrap;
+  outline: none;
+  padding: 20px;
+  font-size: 1rem;
 }
-
-.framework-button:hover, 
-.framework-button:focus {
-	box-shadow:0px 0px 3px #999;
+.framework-button:hover {
+  background: -moz-linear-gradient(center top, #ececec, #ffffff) repeat scroll 0 0 #f6f6f6;
+  background: -webkit-gradient(linear, left top, left bottom, from(#ececec), to(#ffffff));
 }
-
 .framework-button:active {
-	box-shadow:0 0 3px #666;
-	background:-moz-linear-gradient(center top , #ececec, #fff)  repeat scroll 0 0 #f6f6f6;
-	background:-webkit-gradient(linear, left top, left bottom, from(#ececec), to(#fff));
+  box-shadow: 0 0 3px #999;
 }
-
-/* Large style ajax buttons */
-.register-button, 
-.login-button, 
+/* Specific Buttons */
+.has-icon {
+  font-family: 'fontello';
+  display: inline-block;
+  font-size: 1.34rem;
+  margin: -2px 12px 0 0;
+}
+.register-button,
+.login-button,
 .contact-button,
 .forgot-button,
 .change-password-button {
-	float:right;
-	font-size:1.18em;
-	height:2.4em;
+  float: right;
+}
+.register-button:before,
+.login-button:before,
+.contact-button:before,
+.forgot-button:before,
+.change-password-button:before {
+  font-family: 'fontello';
+  display: inline-block;
+  font-size: 1.34rem;
+  margin: -2px 12px 0 0;
+}
+.contact-button:before {
+  content: '\e803';
+}
+.login-button:before {
+  content: '\e804';
+}
+.register-button:before {
+  content: '\e801';
+}
+.forgot-button:before,
+.change-password-button:before {
+  content: '\e805';
 }
 .change-password-button {
-	width:200px!important;
+  width: 200px!important;
 }
-
-/* Sprites in large buttons  */
-.framework-button div {
-	float:left;
-	overflow:hidden;
-	width:26px;
-	height:22px;
-	margin:0 8px 0 3px;
+/*******************/
+/* Fontello icons */
+[class^="icon-"]:before,
+[class*=" icon-"]:before {
+  font-family: "fontello";
+  font-style: normal;
+  font-weight: normal;
+  speak: none;
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+  margin-right: .2em;
+  text-align: center;
+  /* opacity: .8; */
+  /* For safety - reset parent styles, that can break glyph codes*/
+  font-variant: normal;
+  text-transform: none;
+  /* fix buttons height, for twitter bootstrap */
+  line-height: 1em;
+  /* Animation center compensation - margins should be symmetric */
+  /* remove if not needed */
+  margin-left: .2em;
+  /* you can be more comfortable with increased icons size */
+  /* font-size: 120%; */
+  /* Font smoothing. That was taken from TWBS */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Uncomment for 3D effect */
+  /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
 }
-.register-button div, 
-.contact-button div {
-	background-position:-1px -114px;
+/* Spin animation */
+.animate-spin {
+  -moz-animation: spin 2s infinite linear;
+  -o-animation: spin 2s infinite linear;
+  -webkit-animation: spin 2s infinite linear;
+  animation: spin 2s infinite linear;
+  display: inline-block;
 }
-.login-button div,
-.forgot-button div {
-	background-position:-29px -114px;
+@-o-keyframes spin {
+  100% {
+    -o-transform: rotate(360deg);
+  }
 }
-
-
-
-
-
-
-
-
-
-
-
-
+@-moz-keyframes spin {
+  100% {
+    -moz-transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+/* Edited to allow mixin behaviour */
+.icon-spin5:before {
+  -moz-animation: spin 2s infinite linear;
+  -o-animation: spin 2s infinite linear;
+  -webkit-animation: spin 2s infinite linear;
+  animation: spin 2s infinite linear;
+  display: inline-block;
+  content: '\e800';
+}
+/* '' */
+.icon-users-outline:before {
+  content: '\e801';
+}
+/* '' */
+.icon-edit:before {
+  content: '\e803';
+}
+/* '' */
+.icon-lock:before {
+  content: '\e804';
+}
+/* '' */
+.icon-lock-open:before {
+  content: '\e805';
+}
+/* '' */

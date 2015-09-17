@@ -2,9 +2,11 @@
 
 	class changepasswordClass extends WebsiteFramework {
 		
-		function __construct(){
-			parent::__construct();
+		// Don't change __construct
+		function __construct($mvc, $seo){
+			parent::__construct($mvc, $seo);
 			$this->init();
+			parent::load_view();
 		}
 
 		// Dealing with post data
