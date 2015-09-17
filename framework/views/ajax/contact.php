@@ -13,14 +13,6 @@
 			<label for="message">Message</label>
 			<textarea name="message" rows="2" cols="20" id="message"></textarea>
 		</div>
-		<!-- 
-		<div class="input-wrap">
-			<label for="country">Country</label>
-			<select name="country" id="country">
-				<option value="">fffff</option>
-			</select>
-		</div>
-		-->
 		<div class="actions">
 			<input type="submit" value="Submit">
 		</div>

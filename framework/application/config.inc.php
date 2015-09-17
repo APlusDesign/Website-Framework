@@ -1,7 +1,6 @@
 <?php
 
 
-
 /*******************************************
  FRAMEWORK CONFIG - 
  	(Change these)
