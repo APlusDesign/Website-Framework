@@ -52,6 +52,40 @@ class Session extends LinkedCollection
             // Link the SESSION namespace to the local $data variable
             parent::__construct($_SESSION[$namespace]);
         }
+        
+        $this->validate();
+    }
+
+    /**
+     * Validates the session
+     */
+    private function validate()
+    {
+        /*
+         * Get the correct IP
+         */
+        $server = new Collection($_SERVER);
+        $ip = $server->HTTP_X_FORWARDED_FOR;
+
+        if (is_null($ip) && $server->REMOTE_ADDR)
+        {
+            $ip = $server->REMOTE_ADDR;
+        }
+
+        if (!is_null($this->_ip)) {
+            if ($this->_ip != $ip) {
+                /*
+                 * Destroy the session in the IP stored in the session is different
+                 * then the IP of the current request
+                 */
+                $this->destroy();
+            }
+        } else {
+            /*
+             * Save the current request IP in the session
+             */
+            $this->_ip = $ip;
+        }
     }
 
     /**

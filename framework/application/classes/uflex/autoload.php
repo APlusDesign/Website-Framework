@@ -7,8 +7,6 @@
  *
  * @return void
  */
-
-
 spl_autoload_register(
     function ($class){
 
@@ -16,7 +14,7 @@ spl_autoload_register(
         $prefix = 'ptejada\\uFlex\\';
 
         // base directory for the namespace prefix
-        $base_dir = __DIR__ . '/';
+        $base_dir = __DIR__ . '/src/';
 
         // does the class use the namespace prefix?
         $len = strlen($prefix);
@@ -32,7 +30,7 @@ spl_autoload_register(
         // separators with directory separators in the relative class name, append
         // with .php
         $file = $base_dir . str_replace('\\', '/', $relative_class) . '.php';
-//echo $file; exit;
+
         // if the file exists, require it
         if (file_exists($file)) {
             require $file;
